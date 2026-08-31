@@ -1,42 +1,651 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>تكسي المسافر — حجز المطار</title>
-<meta name="theme-color" content="#0A0B0D" />
-<style>
-:root{--bg:#08090b;--bg2:#0e1013;--card:#111318;--line:#242832;--muted:#9ea3ad;--text:#f7f7f7;--gold:#d7ab58;--gold2:#f2d28c;--ok:#64d798}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:radial-gradient(1000px 560px at 80% -10%,#2a2112 0%,transparent 55%),var(--bg);color:var(--text)}button,input,textarea{font:inherit}.shell{max-width:1180px;margin:auto;padding:0 22px}.nav{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:3}.brand{display:flex;gap:11px;align-items:center;font-weight:900;font-size:21px}.brandmark{width:40px;height:40px;border:1px solid rgba(215,171,88,.55);border-radius:14px;display:grid;place-items:center;color:var(--gold);background:linear-gradient(145deg,rgba(215,171,88,.12),rgba(215,171,88,.02))}.navsmall{font-size:13px;color:#b8bbc3}.hero{min-height:560px;display:grid;grid-template-columns:1.02fr .98fr;gap:32px;align-items:center;padding:58px 0 46px;position:relative}.eyebrow{color:var(--gold2);font-size:13px;border:1px solid rgba(215,171,88,.25);display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(215,171,88,.07)}h1{font-size:clamp(48px,7vw,88px);line-height:.98;margin:20px 0 22px;letter-spacing:-2px}.lead{font-size:19px;line-height:1.9;color:#c6c9cf;max-width:620px}.cta{margin-top:30px;display:flex;gap:12px;align-items:center}.primary{border:0;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;padding:15px 25px;border-radius:16px;font-weight:900;cursor:pointer;box-shadow:0 14px 40px rgba(215,171,88,.2)}.trust{display:flex;gap:18px;margin-top:28px;color:#b8bbc3;font-size:13px;flex-wrap:wrap}.trust span:before{content:'•';color:var(--gold);margin-left:7px}.visual{height:430px;border-radius:32px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.01));box-shadow:0 40px 100px rgba(0,0,0,.45)}.visual:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,9,11,.4),transparent 60%)}.airport{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.6)),url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1400&q=80') center/cover}.floatcard{position:absolute;bottom:22px;right:22px;left:22px;z-index:2;padding:18px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(11,12,15,.72);backdrop-filter:blur(16px);display:flex;justify-content:space-between;gap:16px;align-items:center}.floatcard b{font-size:16px}.floatcard small{color:#b4b8c0}.badge{padding:9px 12px;border-radius:12px;background:rgba(215,171,88,.13);color:var(--gold2);font-size:12px;white-space:nowrap}.section{padding:72px 0}.sectionhead{text-align:center;margin-bottom:28px}.sectionhead h2{font-size:34px;margin:0 0 10px}.sectionhead p{margin:0;color:var(--muted)}.cars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.carcard{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#14171c,#0f1115);border-radius:24px;overflow:hidden;cursor:pointer;transition:.28s;min-height:350px}.carcard:hover{transform:translateY(-4px);border-color:#3c414d}.carcard.selected{border-color:var(--gold);box-shadow:0 0 0 1px rgba(215,171,88,.45),0 24px 70px rgba(215,171,88,.09)}.photo{height:235px;background:#111 center/cover no-repeat;position:relative}.photo:after{content:'';position:absolute;inset:auto 0 0;height:50%;background:linear-gradient(transparent,#111318)}.c1{background-image:url('https://img4cdn.haraj.com.sa/userfiles30/2023-10-26/800x600-1_-GO__MTY5ODMwOTg4OTc1NzEwMTc0NTg2OA.jpg')}.c2{background-image:url('https://img.autotrader.co.za/12648764')}.c3{background-image:url('https://editorial.pxcrush.net/carsales/general/editorial/2023-gmc-yukon-denali-304-s863.jpg?height=682&width=1024')}.carinfo{padding:16px 18px 18px}.carinfo h3{margin:0 0 7px;font-size:20px}.carinfo p{margin:0;color:#969ba5;font-size:13px}.check{position:absolute;top:14px;left:14px;width:32px;height:32px;border-radius:50%;background:var(--gold);color:#111;display:none;place-items:center;font-weight:900;z-index:2}.selected .check{display:grid}.flow{max-width:860px;margin:auto}.step{display:none;animation:rise .35s ease}.step.show{display:block}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}.stepbox{background:linear-gradient(180deg,#12151a,#0d0f13);border:1px solid var(--line);border-radius:26px;padding:26px}.steptop{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.stepnum{font-size:12px;color:var(--gold2);background:rgba(215,171,88,.09);padding:7px 10px;border-radius:999px}.options{display:grid;grid-template-columns:1fr 1fr;gap:14px}.option{border:1px solid #2a2e37;background:#12151a;border-radius:18px;padding:20px;cursor:pointer;transition:.2s;text-align:center}.option b{display:block;font-size:20px;margin-bottom:6px}.option small{color:#969ba5}.option.selected{border-color:var(--gold);background:linear-gradient(180deg,rgba(215,171,88,.13),rgba(215,171,88,.03));box-shadow:inset 0 0 0 1px rgba(215,171,88,.35)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:7px}.field label{font-size:13px;color:#c4c7ce}.field input,.field textarea{width:100%;background:#0b0d10;border:1px solid #282c34;color:#fff;border-radius:14px;padding:14px 15px;outline:none}.field input:focus,.field textarea:focus{border-color:#8e7441}.full{grid-column:1/-1}.counter{height:48px;display:flex;align-items:center;justify-content:space-between;border:1px solid #282c34;background:#0b0d10;border-radius:14px;overflow:hidden}.counter button{height:100%;width:52px;border:0;background:#16191e;color:var(--gold2);font-size:22px;cursor:pointer}.counter span{font-weight:900}.summary{margin-top:18px;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:12px;align-items:center}.summarytext{font-size:13px;color:#9ea3ad;line-height:1.8}.submit{border:0;border-radius:15px;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#111;font-weight:900;padding:15px 22px;min-width:180px;cursor:pointer}.success{display:none;margin-top:15px;border:1px solid rgba(100,215,152,.32);background:rgba(100,215,152,.08);color:#b9f4d1;border-radius:14px;padding:14px}.footer{padding:30px 0 45px;color:#777d87;font-size:12px;text-align:center;border-top:1px solid rgba(255,255,255,.06)}
-@media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:36px}.visual{height:330px}.cars{grid-template-columns:1fr}.photo{height:220px}.section{padding:52px 0}.navsmall{display:none}}
-@media(max-width:580px){.shell{padding:0 16px}.nav{height:68px}h1{font-size:50px}.lead{font-size:16px}.visual{height:280px;border-radius:24px}.floatcard{right:14px;left:14px;bottom:14px}.options,.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.stepbox{padding:18px;border-radius:20px}.summary{flex-direction:column;align-items:stretch}.submit{width:100%}.sectionhead h2{font-size:28px}}
-</style>
-</head>
-<body>
-<header class="shell nav"><div class="brand"><div class="brandmark">✦</div><span>تكسي المسافر</span></div><div class="navsmall">خدمة نقل المطار • بغداد</div></header>
-<main>
-<section class="shell hero"><div><span class="eyebrow">خدمة حجز مباشرة وسريعة</span><h1>المطار أقرب<br>مما تتصور.</h1><p class="lead">اختر السيارة المناسبة، حدد نوع رحلتك والمنطقة، وأرسل طلبك خلال أقل من دقيقة. تجربة حجز واضحة ومصممة للموبايل أولاً.</p><div class="cta"><button class="primary" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})">احجز الآن</button></div><div class="trust"><span>متوفر 24/7</span><span>سيارات متعددة</span><span>حجز بخطوات بسيطة</span></div></div><div class="visual"><div class="airport"></div><div class="floatcard"><div><b>رحلتك تبدأ من هنا</b><br><small>اختيار واضح، بدون نماذج طويلة.</small></div><span class="badge">Airport Transfer</span></div></div></section>
-<section id="fleet" class="shell section"><div class="sectionhead"><h2>اختار سيارتك</h2><p>ثلاث فئات، وكل فئة تنفتح لك بخطوات الحجز نفسها.</p></div><div class="cars">
-<div class="carcard" data-car="لكزس ناصية"><span class="check">✓</span><div class="photo c1"></div><div class="carinfo"><h3>لكزس ناصية</h3><p>هدوء وأناقة لرحلة مريحة.</p></div></div>
-<div class="carcard" data-car="تويوتا فورتشنر"><span class="check">✓</span><div class="photo c2"></div><div class="carinfo"><h3>تويوتا فورتشنر</h3><p>عملية، مريحة، ومناسبة للعائلة.</p></div></div>
-<div class="carcard" data-car="جمسي يوكن"><span class="check">✓</span><div class="photo c3"></div><div class="carinfo"><h3>جمسي يوكن</h3><p>مساحة أكبر وتجربة أكثر فخامة.</p></div></div>
-</div></section>
-<section class="shell section"><div class="flow">
-<div class="step" id="stepTrip"><div class="stepbox"><div class="steptop"><h2>نوع الرحلة</h2><span class="stepnum">الخطوة 2</span></div><div class="options"><div class="option" data-trip="مغادرة"><b>مغادرة</b><small>من بغداد إلى المطار</small></div><div class="option" data-trip="استقبال"><b>استقبال</b><small>من المطار إلى بغداد</small></div></div></div></div>
-<div class="step" id="stepArea" style="margin-top:16px"><div class="stepbox"><div class="steptop"><h2>حدد المنطقة</h2><span class="stepnum">الخطوة 3</span></div><div class="options"><div class="option" data-area="الكرخ"><b>الكرخ</b><small>اخترها إذا كان موقعك ضمن جانب الكرخ</small></div><div class="option" data-area="الرصافة"><b>الرصافة</b><small>اخترها إذا كان موقعك ضمن جانب الرصافة</small></div></div></div></div>
-<div class="step" id="stepForm" style="margin-top:16px"><div class="stepbox"><div class="steptop"><h2>أكمل الحجز</h2><span class="stepnum">الخطوة الأخيرة</span></div><div class="formgrid"><div class="field"><label>اسم المسافر</label><input id="name" placeholder="الاسم الكامل" autocomplete="name"></div><div class="field"><label>رقم الهاتف</label><input id="phone" inputmode="tel" placeholder="07xxxxxxxxx" autocomplete="tel"></div><div class="field"><label>عدد الحقائب</label><div class="counter"><button type="button" id="minus">−</button><span id="bags">1</span><button type="button" id="plus">+</button></div></div><div class="field"><label>التاريخ والوقت</label><input id="dt" type="datetime-local"></div><div class="field full"><label>ملاحظات <span style="color:#6f747d">(اختياري)</span></label><textarea id="notes" rows="3" placeholder="رقم الرحلة، موقع دقيق، أو أي ملاحظة إضافية"></textarea></div></div><div class="summary"><div class="summarytext" id="summary">اختياراتك تظهر هنا قبل إرسال الطلب.</div><button class="submit" id="submit">تأكيد الحجز</button></div><div class="success" id="success"></div></div></div>
-</div></section>
-</main><footer class="footer">نسخة تجريبية — تكسي المسافر</footer>
-<script>
-const state={car:'',trip:'',area:'',bags:1};
-const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
-function mark(group,el){qa(group).forEach(x=>x.classList.remove('selected'));el.classList.add('selected')}
-function refresh(){q('#summary').innerHTML=`السيارة: <b>${state.car||'—'}</b> &nbsp; • &nbsp; الرحلة: <b>${state.trip||'—'}</b> &nbsp; • &nbsp; المنطقة: <b>${state.area||'—'}</b> &nbsp; • &nbsp; الحقائب: <b>${state.bags}</b>`}
-qa('[data-car]').forEach(el=>el.addEventListener('click',()=>{mark('[data-car]',el);state.car=el.dataset.car;q('#stepTrip').classList.add('show');refresh();setTimeout(()=>q('#stepTrip').scrollIntoView({behavior:'smooth',block:'center'}),80)}));
-qa('[data-trip]').forEach(el=>el.addEventListener('click',()=>{mark('[data-trip]',el);state.trip=el.dataset.trip;q('#stepArea').classList.add('show');refresh();setTimeout(()=>q('#stepArea').scrollIntoView({behavior:'smooth',block:'center'}),80)}));
-qa('[data-area]').forEach(el=>el.addEventListener('click',()=>{mark('[data-area]',el);state.area=el.dataset.area;q('#stepForm').classList.add('show');refresh();setTimeout(()=>q('#stepForm').scrollIntoView({behavior:'smooth',block:'start'}),80)}));
-q('#minus').onclick=()=>{state.bags=Math.max(0,state.bags-1);q('#bags').textContent=state.bags;refresh()};q('#plus').onclick=()=>{state.bags++;q('#bags').textContent=state.bags;refresh()};
-q('#submit').onclick=()=>{const n=q('#name').value.trim(),p=q('#phone').value.trim();if(!n||!p){alert('اكتب اسم المسافر ورقم الهاتف');return}const id='TM-'+new Date().toISOString().slice(2,10).replaceAll('-','')+'-'+Math.random().toString(36).slice(2,6).toUpperCase();q('#success').style.display='block';q('#success').innerHTML=`تم إنشاء طلب تجريبي بنجاح<br><b>رقم الحجز: ${id}</b><br><span style="color:#8fddae">بالنسخة الرسمية يرسل هذا الطلب مباشرة إلى Telegram.</span>`;q('#success').scrollIntoView({behavior:'smooth',block:'center'})};
-refresh();
-</script>
-</body></html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#07111f" />
+    <meta
+      name="description"
+      content="تكسي المسافر — حجز نقل مريح من وإلى مطار بغداد بخطوات واضحة وسريعة."
+    />
+    <title>تكسي المسافر | نقل مطار بغداد</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="shell nav">
+        <a class="brand" href="#top" aria-label="تكسي المسافر — الصفحة الرئيسية">
+          <span class="brand-mark" aria-hidden="true">
+            <span>م</span>
+          </span>
+          <span class="brand-copy">
+            <strong>تكسي المسافر</strong>
+            <small>نقل مطار بغداد</small>
+          </span>
+        </a>
+
+        <div class="nav-actions">
+          <span class="availability">
+            <i aria-hidden="true"></i>
+            متوفرون 24/7
+          </span>
+          <button class="button button-small button-light" type="button" data-booking-open>
+            احجز الآن
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            خدمة نقل من وإلى مطار بغداد
+          </div>
+
+          <h1 id="hero-title">
+            للمطار،
+            <span>براحة تبدأ</span>
+            من بابك.
+          </h1>
+
+          <p class="hero-lead">
+            اختَر السيارة المناسبة، حدّد اتجاه رحلتك وموقعك، وأكمل الحجز خلال
+            خطوات قصيرة وواضحة من تلفونك.
+          </p>
+
+          <div class="hero-actions">
+            <button class="button button-primary" type="button" data-booking-open>
+              <span>ابدأ الحجز</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </button>
+            <a class="button button-ghost" href="#fleet">استعرض السيارات</a>
+          </div>
+
+          <div class="trust-row" aria-label="مزايا الخدمة">
+            <div>
+              <b>BGW</b>
+              <span>مطار بغداد</span>
+            </div>
+            <div>
+              <b>24/7</b>
+              <span>خدمة مستمرة</span>
+            </div>
+            <div>
+              <b>3</b>
+              <span>فئات سيارات</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-stage" aria-label="سيارة تكسي المسافر">
+          <div class="stage-grid" aria-hidden="true"></div>
+          <div class="stage-code" aria-hidden="true">BGW</div>
+          <div class="route route-start">
+            <span aria-hidden="true"></span>
+            <small>نقطة الانطلاق</small>
+            <strong>موقعك</strong>
+          </div>
+          <div class="route route-end">
+            <span aria-hidden="true"></span>
+            <small>الوجهة</small>
+            <strong>مطار بغداد</strong>
+          </div>
+          <div class="route-line" aria-hidden="true">
+            <i></i>
+          </div>
+          <img
+            class="hero-car"
+            src="/assets/lexus.webp"
+            alt="سيارة لكزس سوداء من أسطول تكسي المسافر"
+          />
+          <div class="stage-note">
+            <span class="stage-note-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 19V8l6-4 6 4v11M9 19v-5h6v5M4 19h16" />
+              </svg>
+            </span>
+            <span>
+              <small>حجز واضح</small>
+              <strong>خطوة بخطوة</strong>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="service-ribbon" aria-label="تفاصيل الخدمة">
+        <div class="shell ribbon-track">
+          <span>من بغداد إلى المطار</span>
+          <i aria-hidden="true"></i>
+          <span>من المطار إلى بغداد</span>
+          <i aria-hidden="true"></i>
+          <span>اختيار السيارة قبل الحجز</span>
+          <i aria-hidden="true"></i>
+          <span>تأكيد واضح للطلب</span>
+        </div>
+      </section>
+
+      <section class="fleet-section shell" id="fleet" aria-labelledby="fleet-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-index">01</span>
+            <p>أسطول تكسي المسافر</p>
+          </div>
+          <div>
+            <h2 id="fleet-title">سيارة تناسب رحلتك.</h2>
+            <p>
+              ثلاث فئات مرتبة بصور موحّدة ومعلومات واضحة، حتى يكون اختيارك أسرع.
+            </p>
+          </div>
+        </div>
+
+        <div class="fleet-grid">
+          <article class="vehicle-card vehicle-card-featured">
+            <div class="vehicle-visual">
+              <span class="vehicle-number">01</span>
+              <img src="/assets/lexus.webp" alt="لكزس سوداء" loading="lazy" />
+              <span class="vehicle-tag">Premium</span>
+            </div>
+            <div class="vehicle-content">
+              <div>
+                <h3>لكزس</h3>
+                <p>هدوء وأناقة لرحلات العمل والتنقل الفردي.</p>
+              </div>
+              <button class="vehicle-select" type="button" data-select-car="لكزس">
+                اختيار
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="vehicle-meta">
+              <span>راحة عالية</span>
+              <span>مكيّف</span>
+              <span>مناسب للأعمال</span>
+            </div>
+          </article>
+
+          <article class="vehicle-card">
+            <div class="vehicle-visual">
+              <span class="vehicle-number">02</span>
+              <img src="/assets/fortuner.webp" alt="تويوتا فورتشنر بيضاء" loading="lazy" />
+              <span class="vehicle-tag">SUV</span>
+            </div>
+            <div class="vehicle-content">
+              <div>
+                <h3>تويوتا فورتشنر</h3>
+                <p>مساحة عملية وراحة مناسبة للعائلة والحقائب.</p>
+              </div>
+              <button
+                class="vehicle-select"
+                type="button"
+                data-select-car="تويوتا فورتشنر"
+              >
+                اختيار
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="vehicle-meta">
+              <span>مساحة أوسع</span>
+              <span>مكيّف</span>
+              <span>مناسب للعائلة</span>
+            </div>
+          </article>
+
+          <article class="vehicle-card">
+            <div class="vehicle-visual">
+              <span class="vehicle-number">03</span>
+              <img src="/assets/yukon.webp" alt="جمسي يوكن سوداء" loading="lazy" />
+              <span class="vehicle-tag">XL</span>
+            </div>
+            <div class="vehicle-content">
+              <div>
+                <h3>جمسي يوكن</h3>
+                <p>حجم أكبر وتجربة مريحة للعائلة والمجموعات.</p>
+              </div>
+              <button class="vehicle-select" type="button" data-select-car="جمسي يوكن">
+                اختيار
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="vehicle-meta">
+              <span>حجم XL</span>
+              <span>مكيّف</span>
+              <span>مناسب للمجموعات</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="booking-story shell" aria-labelledby="booking-story-title">
+        <div class="booking-story-card">
+          <div class="story-copy">
+            <span class="section-index section-index-light">02</span>
+            <p class="story-kicker">حجز ذكي ومختصر</p>
+            <h2 id="booking-story-title">كل التفاصيل المهمة، بدون نموذج طويل.</h2>
+            <p>
+              نعرض لك كل خطوة بوقتها: اتجاه الرحلة، المنطقة، السيارة، ثم بيانات
+              المسافر. وبالنهاية تشوف الملخص كاملاً قبل التأكيد.
+            </p>
+            <button class="button button-primary" type="button" data-booking-open>
+              افتح نموذج الحجز
+            </button>
+          </div>
+
+          <ol class="story-steps">
+            <li>
+              <span>1</span>
+              <div>
+                <b>اتجاه الرحلة</b>
+                <small>مغادرة أو استقبال</small>
+              </div>
+            </li>
+            <li>
+              <span>2</span>
+              <div>
+                <b>المنطقة</b>
+                <small>الكرخ أو الرصافة</small>
+              </div>
+            </li>
+            <li>
+              <span>3</span>
+              <div>
+                <b>السيارة</b>
+                <small>اختيار الفئة المناسبة</small>
+              </div>
+            </li>
+            <li>
+              <span>4</span>
+              <div>
+                <b>التأكيد</b>
+                <small>مراجعة بيانات الطلب</small>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <a class="brand brand-footer" href="#top">
+          <span class="brand-mark" aria-hidden="true"><span>م</span></span>
+          <span class="brand-copy">
+            <strong>تكسي المسافر</strong>
+            <small>نقل مطار بغداد</small>
+          </span>
+        </a>
+        <p>رحلتك تبدأ براحة.</p>
+        <small>© <span id="year"></span> تكسي المسافر</small>
+      </div>
+    </footer>
+
+    <button class="mobile-booking-bar" type="button" data-booking-open>
+      <span>
+        <small>جاهز للرحلة؟</small>
+        <strong>ابدأ الحجز الآن</strong>
+      </span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </button>
+
+    <dialog class="booking-dialog" id="bookingDialog" aria-labelledby="bookingTitle">
+      <div class="dialog-shell">
+        <aside class="booking-aside">
+          <div>
+            <div class="dialog-brand">
+              <span class="brand-mark brand-mark-light" aria-hidden="true"><span>م</span></span>
+              <span>
+                <strong>تكسي المسافر</strong>
+                <small>طلب نقل المطار</small>
+              </span>
+            </div>
+            <div class="dialog-intro">
+              <span>حجز سريع</span>
+              <h2 id="bookingTitle">رحلتك مرتبة من أول خطوة.</h2>
+              <p>اختيارات واضحة وملخص كامل قبل تأكيد الطلب.</p>
+            </div>
+          </div>
+
+          <ol class="booking-progress" aria-label="خطوات الحجز">
+            <li class="is-active" data-progress-step="1">
+              <span>1</span>
+              <div>
+                <b>اتجاه الرحلة</b>
+                <small>مغادرة أو استقبال</small>
+              </div>
+            </li>
+            <li data-progress-step="2">
+              <span>2</span>
+              <div>
+                <b>المنطقة</b>
+                <small>حدد جانب بغداد</small>
+              </div>
+            </li>
+            <li data-progress-step="3">
+              <span>3</span>
+              <div>
+                <b>السيارة</b>
+                <small>اختر الفئة</small>
+              </div>
+            </li>
+            <li data-progress-step="4">
+              <span>4</span>
+              <div>
+                <b>البيانات</b>
+                <small>أكمل الطلب</small>
+              </div>
+            </li>
+          </ol>
+
+          <div class="aside-security">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+            <span>راجع معلوماتك قبل التأكيد</span>
+          </div>
+        </aside>
+
+        <section class="booking-main">
+          <div class="dialog-topbar">
+            <div>
+              <span id="stepCounter">الخطوة 1 من 4</span>
+              <div class="mobile-progress" aria-hidden="true">
+                <i id="mobileProgressBar"></i>
+              </div>
+            </div>
+            <button class="dialog-close" type="button" data-booking-close aria-label="إغلاق">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="booking-screen">
+            <section class="booking-step is-active" data-step="1">
+              <div class="step-heading">
+                <span>أولاً</span>
+                <h3>شنو اتجاه رحلتك؟</h3>
+                <p>اختر الاتجاه حتى نرتب بقية التفاصيل.</p>
+              </div>
+              <div class="choice-grid">
+                <button class="choice-card" type="button" data-choice="trip" data-value="مغادرة">
+                  <span class="choice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 20V5M7 10l5-5 5 5" />
+                      <path d="M5 20h14" />
+                    </svg>
+                  </span>
+                  <span>
+                    <b>مغادرة</b>
+                    <small>من بغداد إلى المطار</small>
+                  </span>
+                  <i aria-hidden="true"></i>
+                </button>
+                <button class="choice-card" type="button" data-choice="trip" data-value="استقبال">
+                  <span class="choice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 4v15M7 14l5 5 5-5" />
+                      <path d="M5 4h14" />
+                    </svg>
+                  </span>
+                  <span>
+                    <b>استقبال</b>
+                    <small>من المطار إلى بغداد</small>
+                  </span>
+                  <i aria-hidden="true"></i>
+                </button>
+              </div>
+            </section>
+
+            <section class="booking-step" data-step="2">
+              <div class="step-heading">
+                <span>الموقع</span>
+                <h3>بأي جانب من بغداد؟</h3>
+                <p>حدد المنطقة الرئيسية، والتفاصيل الدقيقة تكتبها بالخطوة الأخيرة.</p>
+              </div>
+              <div class="choice-grid">
+                <button class="choice-card" type="button" data-choice="area" data-value="الكرخ">
+                  <span class="choice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 21s6-5 6-11a6 6 0 10-12 0c0 6 6 11 6 11z" />
+                      <circle cx="12" cy="10" r="2" />
+                    </svg>
+                  </span>
+                  <span>
+                    <b>الكرخ</b>
+                    <small>جانب الكرخ</small>
+                  </span>
+                  <i aria-hidden="true"></i>
+                </button>
+                <button class="choice-card" type="button" data-choice="area" data-value="الرصافة">
+                  <span class="choice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 21s6-5 6-11a6 6 0 10-12 0c0 6 6 11 6 11z" />
+                      <circle cx="12" cy="10" r="2" />
+                    </svg>
+                  </span>
+                  <span>
+                    <b>الرصافة</b>
+                    <small>جانب الرصافة</small>
+                  </span>
+                  <i aria-hidden="true"></i>
+                </button>
+              </div>
+            </section>
+
+            <section class="booking-step" data-step="3">
+              <div class="step-heading">
+                <span>السيارة</span>
+                <h3>اختَر السيارة المناسبة.</h3>
+                <p>كل الفئات مهيأة لخدمة نقل المطار.</p>
+              </div>
+              <div class="booking-fleet">
+                <button
+                  class="booking-vehicle"
+                  type="button"
+                  data-choice="car"
+                  data-value="لكزس"
+                >
+                  <img src="/assets/lexus.webp" alt="" />
+                  <span>
+                    <b>لكزس</b>
+                    <small>Premium • راحة عالية</small>
+                  </span>
+                  <i aria-hidden="true"></i>
+                </button>
+                <button
+                  class="booking-vehicle"
+                  type="button"
+                  data-choice="car"
+                  data-value="تويوتا فورتشنر"
+                >
+                  <img src="/assets/fortuner.webp" alt="" />
+                  <span>
+                    <b>تويوتا فورتشنر</b>
+                    <small>SUV • مناسبة للعائلة</small>
+                  </span>
+                  <i aria-hidden="true"></i>
+                </button>
+                <button
+                  class="booking-vehicle"
+                  type="button"
+                  data-choice="car"
+                  data-value="جمسي يوكن"
+                >
+                  <img src="/assets/yukon.webp" alt="" />
+                  <span>
+                    <b>جمسي يوكن</b>
+                    <small>XL • مساحة أكبر</small>
+                  </span>
+                  <i aria-hidden="true"></i>
+                </button>
+              </div>
+            </section>
+
+            <section class="booking-step" data-step="4">
+              <div class="step-heading step-heading-compact">
+                <span>التفاصيل</span>
+                <h3>آخر خطوة ونجهّز طلبك.</h3>
+                <p>اكتب المعلومات الصحيحة حتى يكون التواصل والحجز واضحين.</p>
+              </div>
+
+              <form class="booking-form" id="bookingForm" novalidate>
+                <div class="field">
+                  <label for="passengerName">اسم المسافر</label>
+                  <input
+                    id="passengerName"
+                    name="passengerName"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="الاسم الكامل"
+                    minlength="3"
+                    required
+                  />
+                  <small class="field-error" data-error-for="passengerName"></small>
+                </div>
+                <div class="field">
+                  <label for="passengerPhone">رقم الهاتف</label>
+                  <input
+                    id="passengerPhone"
+                    name="passengerPhone"
+                    type="tel"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    placeholder="07xxxxxxxxx"
+                    maxlength="11"
+                    required
+                  />
+                  <small class="field-error" data-error-for="passengerPhone"></small>
+                </div>
+                <div class="field">
+                  <label for="bookingDate">تاريخ الرحلة</label>
+                  <input id="bookingDate" name="bookingDate" type="date" required />
+                  <small class="field-error" data-error-for="bookingDate"></small>
+                </div>
+                <div class="field">
+                  <label for="bookingTime">وقت وصول السيارة</label>
+                  <input id="bookingTime" name="bookingTime" type="time" required />
+                  <small class="field-error" data-error-for="bookingTime"></small>
+                </div>
+                <div class="field">
+                  <label>عدد المسافرين</label>
+                  <div class="counter" data-counter="passengers">
+                    <button type="button" data-counter-action="minus" aria-label="تقليل عدد المسافرين">
+                      −
+                    </button>
+                    <output id="passengersCount">1</output>
+                    <button type="button" data-counter-action="plus" aria-label="زيادة عدد المسافرين">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>عدد الحقائب</label>
+                  <div class="counter" data-counter="bags">
+                    <button type="button" data-counter-action="minus" aria-label="تقليل عدد الحقائب">
+                      −
+                    </button>
+                    <output id="bagsCount">1</output>
+                    <button type="button" data-counter-action="plus" aria-label="زيادة عدد الحقائب">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="field field-full">
+                  <label for="bookingNotes">
+                    العنوان والملاحظات
+                    <span>اختياري</span>
+                  </label>
+                  <textarea
+                    id="bookingNotes"
+                    name="bookingNotes"
+                    rows="3"
+                    placeholder="العنوان الدقيق، رقم الرحلة، أو أي ملاحظة مهمة"
+                  ></textarea>
+                </div>
+              </form>
+
+              <div class="booking-summary" aria-live="polite">
+                <div class="summary-top">
+                  <span>ملخص الحجز</span>
+                  <button type="button" data-edit-booking>تعديل الاختيارات</button>
+                </div>
+                <dl>
+                  <div>
+                    <dt>الرحلة</dt>
+                    <dd id="summaryTrip">—</dd>
+                  </div>
+                  <div>
+                    <dt>المنطقة</dt>
+                    <dd id="summaryArea">—</dd>
+                  </div>
+                  <div>
+                    <dt>السيارة</dt>
+                    <dd id="summaryCar">—</dd>
+                  </div>
+                  <div>
+                    <dt>المسافرون / الحقائب</dt>
+                    <dd id="summaryCounts">1 / 1</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <p class="preview-notice">
+                هذه نسخة معاينة للتصميم؛ تأكيد الطلب هنا لا يرسله إلى الإدارة حالياً.
+              </p>
+            </section>
+
+            <section class="booking-success" id="bookingSuccess" aria-live="polite">
+              <span class="success-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l4 4L19 6" />
+                </svg>
+              </span>
+              <span class="success-kicker">تم تجهيز الطلب</span>
+              <h3>شكراً، معلومات رحلتك مرتبة.</h3>
+              <p>رقم طلب المعاينة</p>
+              <strong id="bookingReference">TM-000000-0000</strong>
+              <div class="success-summary" id="successSummary"></div>
+              <button class="button button-dark" type="button" data-finish-booking>
+                رجوع للموقع
+              </button>
+            </section>
+          </div>
+
+          <div class="booking-nav" id="bookingNav">
+            <button class="nav-back" type="button" id="bookingBack">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" />
+              </svg>
+              رجوع
+            </button>
+            <button class="nav-next" type="button" id="bookingNext" disabled>
+              <span>التالي</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+        </section>
+      </div>
+    </dialog>
+
+    <noscript>
+      <div class="noscript">فعّل JavaScript حتى تگدر تستخدم نموذج الحجز.</div>
+    </noscript>
+  </body>
+</html>
