@@ -1,0 +1,38 @@
+name: Apply black Tucson asset
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-tucson-black.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Point Tucson card to unified black image
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s2=re.sub(r'/assets/cars/tucson(?:-v2)?\.webp(?:\?v=[^\"\']+)?', '/assets/cars/tucson-black-final.jpg?v=20260901-4', s, count=1)
+          if s2 == s:
+              raise SystemExit('Tucson image source not found')
+          p.write_text(s2, encoding='utf-8')
+          PY
+      - name: Commit Tucson UI fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm .github/workflows/apply-tucson-black.yml
+          git commit -m "fix: show unified black Tucson in vehicle selector"
+          git push
