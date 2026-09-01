@@ -1,0 +1,3 @@
+Preview branch marker. Experimental changes belong on this branch before merging to main.
+Telegram environment variables saved; force preview redeploy for configuration verification.
+Telegram Preview variables updated; redeploy to verify active bot connection.
