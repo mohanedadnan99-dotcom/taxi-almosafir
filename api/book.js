@@ -1,3 +1,5 @@
+const { storageConfigured, saveOrder } = require('../lib/orders');
+
 const ALLOWED_CARS = new Set(['Tucson', 'Fortuner', 'Pajero', 'GMC VVIP']);
 
 function clean(value, max = 300) {
@@ -36,7 +38,10 @@ module.exports = async function handler(req, res) {
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (req.method === 'GET') {
-    return res.status(200).json({ telegramConfigured: Boolean(token && chatId) });
+    return res.status(200).json({
+      telegramConfigured: Boolean(token && chatId),
+      orderStorageConfigured: storageConfigured(),
+    });
   }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -71,7 +76,40 @@ module.exports = async function handler(req, res) {
     }
 
     const ref = reference();
+    const createdAt = new Date().toISOString();
     const maps = `https://www.google.com/maps?q=${lat},${lng}`;
+    const order = {
+      reference: ref,
+      createdAt,
+      updatedAt: createdAt,
+      status: 'new',
+      statusHistory: [{ status: 'new', at: createdAt }],
+      name,
+      phone,
+      car,
+      passengers,
+      bags,
+      address,
+      notes,
+      lat,
+      lng,
+      maps,
+      source: 'website',
+      telegram: 'pending',
+    };
+
+    let stored = false;
+    if (storageConfigured()) {
+      try {
+        await saveOrder(order);
+        stored = true;
+      } catch (error) {
+        console.error('Order storage error before Telegram', error);
+      }
+    } else {
+      console.warn('Order storage is not configured; booking will only be sent to Telegram.');
+    }
+
     const text = [
       '<b>حجز جديد — تكسي المسافر</b>',
       '',
@@ -86,23 +124,38 @@ module.exports = async function handler(req, res) {
       `<b>الوكيشن:</b> <a href="${maps}">فتح الموقع على الخريطة</a>`
     ].filter(Boolean).join('\n');
 
-    await telegram('sendMessage', {
-      chat_id: chatId,
-      text,
-      parse_mode: 'HTML',
-      disable_web_page_preview: true,
-      reply_markup: {
-        inline_keyboard: [[{ text: 'فتح الوكيشن', url: maps }]]
+    try {
+      await telegram('sendMessage', {
+        chat_id: chatId,
+        text,
+        parse_mode: 'HTML',
+        disable_web_page_preview: true,
+        reply_markup: {
+          inline_keyboard: [[{ text: 'فتح الوكيشن', url: maps }]]
+        }
+      }, token);
+
+      await telegram('sendLocation', {
+        chat_id: chatId,
+        latitude: lat,
+        longitude: lng
+      }, token);
+
+      if (stored) {
+        order.telegram = 'sent';
+        order.updatedAt = new Date().toISOString();
+        await saveOrder(order).catch((error) => console.error('Order Telegram status save error', error));
       }
-    }, token);
 
-    await telegram('sendLocation', {
-      chat_id: chatId,
-      latitude: lat,
-      longitude: lng
-    }, token);
-
-    return res.status(201).json({ ok: true, reference: ref });
+      return res.status(201).json({ ok: true, reference: ref, stored });
+    } catch (error) {
+      if (stored) {
+        order.telegram = 'failed';
+        order.updatedAt = new Date().toISOString();
+        await saveOrder(order).catch((saveError) => console.error('Order failure status save error', saveError));
+      }
+      throw error;
+    }
   } catch (error) {
     console.error('Booking Telegram error', error);
     return res.status(502).json({ error: 'تعذر إرسال الحجز للتلكرام حالياً، حاول مرة ثانية.' });
