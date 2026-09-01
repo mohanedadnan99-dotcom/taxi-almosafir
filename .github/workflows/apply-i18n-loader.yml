@@ -1,0 +1,38 @@
+name: Apply bilingual site loader
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-i18n-loader.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Add localization script to booking page
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          tag = '<script src="/assets/i18n.js?v=20260901-1"></script>'
+          if tag not in s:
+              if '</body>' not in s:
+                  raise SystemExit('Missing </body> in index.html')
+              s = s.replace('</body>', f'{tag}\n</body>', 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+          rm -f .github/workflows/apply-i18n-loader.yml
+      - name: Commit bilingual support
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html .github/workflows/apply-i18n-loader.yml
+          git commit -m "feat: enable Arabic and English site switcher"
+          git push origin main
