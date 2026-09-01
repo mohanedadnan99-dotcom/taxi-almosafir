@@ -126,6 +126,9 @@
     ['مغادرة', 'مغادرة', 'Departure'],
     ['استقبال', 'استقبال', 'Arrival'],
     ['إرسال الحجز', 'إرسال الحجز', 'Send booking'],
+    ['1 من 2', '1 من 2', '1 of 2'],
+    ['2 من 2', '2 من 2', '2 of 2'],
+    ['موقع محدد من الخريطة', 'موقع محدد من الخريطة', 'Location selected from the map'],
     ['بحث', 'بحث', 'Search'],
     ['موقعي', 'موقعي', 'My location']
   ];
@@ -203,7 +206,7 @@
   }
 
   function translateVisibleDynamic() {
-    ['#addressStatus', '#carWarning', '#infoWarning', '#sheetTitle', '#sheetSub', '#step', '#send', '#searchLocation', '#locate', '#successTrip'].forEach((selector) => {
+    ['#addressStatus', '#carWarning', '#infoWarning', '#sheetTitle', '#sheetSub', '#step', '#send', '#searchLocation', '#locate', '#successTrip', '#successAddress'].forEach((selector) => {
       const el = document.querySelector(selector);
       if (!el) return;
       const next = translateDynamicText(el.textContent, currentLang);
@@ -308,7 +311,7 @@
     for (const mutation of mutations) {
       const el = mutation.target.nodeType === Node.TEXT_NODE ? mutation.target.parentElement : mutation.target;
       if (!el) continue;
-      if (el.matches?.('#addressStatus,#carWarning,#infoWarning,#sheetTitle,#sheetSub,#step,#send,#searchLocation,#locate,#successTrip')) {
+      if (el.matches?.('#addressStatus,#carWarning,#infoWarning,#sheetTitle,#sheetSub,#step,#send,#searchLocation,#locate,#successTrip,#successAddress')) {
         const next = translateDynamicText(el.textContent, currentLang);
         if (next !== el.textContent) el.textContent = next;
       }
