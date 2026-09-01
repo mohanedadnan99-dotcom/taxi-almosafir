@@ -1,0 +1,65 @@
+name: Fix live booking UI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-live-booking-ui.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply Tucson cache bust and stable location sheet
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+
+          old='src="/assets/cars/tucson.webp"'
+          new='src="/assets/cars/tucson-v2.webp?v=20260901-2"'
+          if old not in s:
+              raise SystemExit('Tucson image marker not found')
+          s=s.replace(old,new,1)
+
+          old_state="const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];const state={lat:null,lng:null,address:'',car:'',tripType:'',passengers:1,bags:0,loadingAddress:false,confirmed:false,searching:false,resumePane:'#carPane'};"
+          new_state="const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];const state={lat:null,lng:null,address:'',car:'',tripType:'',passengers:1,bags:0,loadingAddress:false,confirmed:false,searching:false,resumePane:'#carPane',editingLocation:false};"
+          if old_state not in s:
+              raise SystemExit('state marker not found')
+          s=s.replace(old_state,new_state,1)
+
+          old_move="let moveTimer;map.on('moveend',()=>{clearTimeout(moveTimer);moveTimer=setTimeout(()=>{const c=map.getCenter();state.confirmed=false;state.lat=c.lat;state.lng=c.lng;q('#sheet').classList.remove('show');reverseAddress(c.lat,c.lng)},420)});"
+          new_move="let moveTimer;map.on('moveend',()=>{clearTimeout(moveTimer);moveTimer=setTimeout(()=>{if(state.confirmed&&!state.editingLocation)return;const c=map.getCenter();state.confirmed=false;state.lat=c.lat;state.lng=c.lng;q('#sheet').classList.remove('show');reverseAddress(c.lat,c.lng)},420)});"
+          if old_move not in s:
+              raise SystemExit('moveend marker not found')
+          s=s.replace(old_move,new_move,1)
+
+          old_confirm="q('#confirmLocation').onclick=async()=>{const c=map.getCenter();state.lat=c.lat;state.lng=c.lng;if(!state.address||state.loadingAddress)await reverseAddress(state.lat,state.lng);state.confirmed=true;q('#locationPreview').textContent=state.address||`${state.lat.toFixed(6)}, ${state.lng.toFixed(6)}`;"
+          new_confirm="q('#confirmLocation').onclick=async()=>{clearTimeout(moveTimer);const c=map.getCenter();state.lat=c.lat;state.lng=c.lng;if(!state.address||state.loadingAddress)await reverseAddress(state.lat,state.lng);state.editingLocation=false;state.confirmed=true;q('#locationPreview').textContent=state.address||`${state.lat.toFixed(6)}, ${state.lng.toFixed(6)}`;"
+          if old_confirm not in s:
+              raise SystemExit('confirm marker not found')
+          s=s.replace(old_confirm,new_confirm,1)
+
+          old_edit="q('#editLocation').onclick=()=>{state.resumePane=q('#infoPane').classList.contains('active')?'#infoPane':'#carPane';state.confirmed=false;"
+          new_edit="q('#editLocation').onclick=()=>{state.resumePane=q('#infoPane').classList.contains('active')?'#infoPane':'#carPane';state.editingLocation=true;state.confirmed=false;"
+          if old_edit not in s:
+              raise SystemExit('edit marker not found')
+          s=s.replace(old_edit,new_edit,1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit fix and remove helper workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm .github/workflows/fix-live-booking-ui.yml
+          git commit -m "fix: force Tucson refresh and keep booking sheet open"
+          git push
