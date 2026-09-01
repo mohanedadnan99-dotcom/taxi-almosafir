@@ -1,0 +1,88 @@
+name: Apply booking location polish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-booking-location-polish.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Polish confirmed location and vehicle cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+
+          old_css='.carVisual{width:104px;height:66px;flex:0 0 104px;display:grid;place-items:center}.carVisual img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 7px 8px rgba(0,0,0,.30))}'
+          new_css='.carVisual{width:104px;height:66px;flex:0 0 104px;display:grid;place-items:center;overflow:visible}.carVisual img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center;display:block;transform-origin:center;filter:drop-shadow(0 7px 8px rgba(0,0,0,.30))}.car[data-car="Tucson"] .carVisual img{transform:scale(1.1)}'
+          if old_css not in s:
+              raise SystemExit('vehicle css marker not found')
+          s=s.replace(old_css,new_css,1)
+
+          old_loc_css='.locationPreview{margin-top:9px;border:1px solid rgba(213,171,99,.2);background:rgba(213,171,99,.05);border-radius:13px;padding:9px 10px}.locationPreview span{display:block;color:#8999aa;font-size:9px}.locationPreview b{display:block;font-size:10px;line-height:1.6;margin-top:3px}'
+          new_loc_css='.confirmedLocationBar{display:flex;align-items:center;gap:10px;margin:10px 14px 0;border:1px solid rgba(114,215,162,.26);background:linear-gradient(180deg,rgba(114,215,162,.10),rgba(114,215,162,.045));border-radius:14px;padding:10px 11px}.confirmedLocationText{min-width:0;flex:1}.confirmedLocationText span{display:block;color:#9aabb9;font-size:8px}.confirmedLocationText b{display:block;margin-top:4px;font-size:10px;line-height:1.55;color:#eef7f2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.editLocation{flex:0 0 auto;border:1px solid rgba(213,171,99,.30);background:rgba(213,171,99,.08);color:var(--gold2);border-radius:10px;padding:8px 10px;font-size:9px;font-weight:900;cursor:pointer}'
+          if old_loc_css not in s:
+              raise SystemExit('location css marker not found')
+          s=s.replace(old_loc_css,new_loc_css,1)
+
+          mobile='.locationRow{gap:5px}.searchLocation,.locate{padding:0 9px;font-size:9px}.successGrid{grid-template-columns:1fr 1fr}'
+          mobile_new='.locationRow{gap:5px}.searchLocation,.locate{padding:0 9px;font-size:9px}.confirmedLocationBar{margin:8px 12px 0;padding:9px}.confirmedLocationText b{font-size:9px}.editLocation{padding:7px 8px;font-size:8px}.successGrid{grid-template-columns:1fr 1fr}'
+          if mobile not in s:
+              raise SystemExit('mobile marker not found')
+          s=s.replace(mobile,mobile_new,1)
+
+          sheet_head='<div class="sheetHead"><div><h2 id="sheetTitle">اختار السيارة</h2><p id="sheetSub">اختيار سريع وبسيط.</p></div><div id="step" class="step">1 من 2</div></div>'
+          location_bar=sheet_head+'\n<div id="confirmedLocationBar" class="confirmedLocationBar"><div class="confirmedLocationText"><span>موقع الاستلام المثبّت</span><b id="locationPreview">—</b></div><button id="editLocation" class="editLocation" type="button">تعديل الموقع</button></div>'
+          if sheet_head not in s:
+              raise SystemExit('sheet head marker not found')
+          s=s.replace(sheet_head,location_bar,1)
+
+          old_preview='<div class="locationPreview"><span>موقع الاستلام</span><b id="locationPreview">—</b></div>\n'
+          if old_preview not in s:
+              raise SystemExit('old location preview marker not found')
+          s=s.replace(old_preview,'',1)
+
+          old_state="const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];const state={lat:null,lng:null,address:'',car:'',tripType:'',passengers:1,bags:0,loadingAddress:false,confirmed:false,searching:false};"
+          new_state="const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];const state={lat:null,lng:null,address:'',car:'',tripType:'',passengers:1,bags:0,loadingAddress:false,confirmed:false,searching:false,resumePane:'#carPane'};"
+          if old_state not in s:
+              raise SystemExit('state marker not found')
+          s=s.replace(old_state,new_state,1)
+
+          old_set="function setPane(id,title,sub,step){qa('.pane').forEach(x=>x.classList.remove('active'));q(id).classList.add('active');q('#sheetTitle').textContent=title;q('#sheetSub').textContent=sub;q('#step').textContent=step}"
+          new_set="function setPane(id,title,sub,step){qa('.pane').forEach(x=>x.classList.remove('active'));q(id).classList.add('active');q('#sheetTitle').textContent=title;q('#sheetSub').textContent=sub;q('#step').textContent=step;const bar=q('#confirmedLocationBar');if(bar)bar.style.display=id==='#successPane'?'none':'flex'}"
+          if old_set not in s:
+              raise SystemExit('setPane marker not found')
+          s=s.replace(old_set,new_set,1)
+
+          old_confirm="q('#confirmLocation').onclick=async()=>{const c=map.getCenter();state.lat=c.lat;state.lng=c.lng;if(!state.address||state.loadingAddress)await reverseAddress(state.lat,state.lng);state.confirmed=true;q('#locationPreview').textContent=state.address||`${state.lat.toFixed(6)}, ${state.lng.toFixed(6)}`;setPane('#carPane','اختار السيارة','تم تثبيت الموقع. اختار السيارة حتى نكمل.','1 من 2');q('#sheet').classList.add('show')};"
+          new_confirm="q('#confirmLocation').onclick=async()=>{const c=map.getCenter();state.lat=c.lat;state.lng=c.lng;if(!state.address||state.loadingAddress)await reverseAddress(state.lat,state.lng);state.confirmed=true;q('#locationPreview').textContent=state.address||`${state.lat.toFixed(6)}, ${state.lng.toFixed(6)}`;const resume=state.resumePane==='#infoPane'&&state.car?'#infoPane':'#carPane';if(resume==='#infoPane')setPane('#infoPane','معلومات الحجز','تم تحديث الموقع وبقت معلوماتك محفوظة.','2 من 2');else setPane('#carPane','اختار السيارة','تم تثبيت الموقع. اختار السيارة حتى نكمل.','1 من 2');q('#sheet').classList.add('show')};\nq('#editLocation').onclick=()=>{state.resumePane=q('#infoPane').classList.contains('active')?'#infoPane':'#carPane';state.confirmed=false;q('#sheet').classList.remove('show');if(Number.isFinite(state.lat)&&Number.isFinite(state.lng))map.setView([state.lat,state.lng],16);setTimeout(()=>q('#locationText').focus(),320)};"
+          if old_confirm not in s:
+              raise SystemExit('confirm marker not found')
+          s=s.replace(old_confirm,new_confirm,1)
+
+          old_send="q('#send').onclick=async()=>{const name=q('#name').value.trim(),phone=q('#phone').value.trim(),notes=q('#notes').value.trim(),w=q('#infoWarning');w.style.display='none';if(!state.lat||!state.lng){w.textContent='حدد موقعك أولاً.';w.style.display='block';return}"
+          new_send="q('#send').onclick=async()=>{const name=q('#name').value.trim(),phone=q('#phone').value.trim(),notes=q('#notes').value.trim(),w=q('#infoWarning');w.style.display='none';if(!state.confirmed){w.textContent='ثبّت موقع الاستلام أولاً.';w.style.display='block';return}if(!state.lat||!state.lng){w.textContent='حدد موقعك أولاً.';w.style.display='block';return}"
+          if old_send not in s:
+              raise SystemExit('send marker not found')
+          s=s.replace(old_send,new_send,1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit polished booking flow and remove helper workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm .github/workflows/apply-booking-location-polish.yml
+          git commit -m "feat: polish confirmed location and vehicle cards"
+          git push
