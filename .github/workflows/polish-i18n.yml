@@ -1,0 +1,51 @@
+name: Polish bilingual booking copy
+
+on:
+  push:
+    paths:
+      - '.github/workflows/polish-i18n.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Complete dynamic translations and bust cache
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('assets/i18n.js')
+          s = p.read_text(encoding='utf-8')
+          marker = "    ['إرسال الحجز', 'إرسال الحجز', 'Send booking'],\n"
+          extra = (
+              "    ['1 من 2', '1 من 2', '1 of 2'],\n"
+              "    ['2 من 2', '2 من 2', '2 of 2'],\n"
+              "    ['موقع محدد من الخريطة', 'موقع محدد من الخريطة', 'Location selected from the map'],\n"
+          )
+          if "['2 من 2', '2 من 2', '2 of 2']" not in s:
+              if marker not in s:
+                  raise SystemExit('dynamic translation marker not found')
+              s = s.replace(marker, marker + extra, 1)
+          s = s.replace("'#successTrip']", "'#successTrip', '#successAddress']")
+          s = s.replace("#locate,#successTrip'))", "#locate,#successTrip,#successAddress'))")
+          p.write_text(s, encoding='utf-8')
+
+          index = Path('index.html')
+          html = index.read_text(encoding='utf-8')
+          html = html.replace('/assets/i18n.js?v=20260901-1', '/assets/i18n.js?v=20260901-2')
+          index.write_text(html, encoding='utf-8')
+          PY
+          rm -f .github/workflows/polish-i18n.yml
+      - name: Commit localization polish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/i18n.js index.html .github/workflows/polish-i18n.yml
+          git commit -m "fix: complete Arabic-English booking localization"
+          git push origin main
