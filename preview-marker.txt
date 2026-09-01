@@ -1,2 +1,2 @@
 Preview branch marker. Experimental changes belong on this branch before merging to main.
-Redeploy trigger after Telegram environment variables were configured on 2026-09-01.
+Telegram environment variables saved; force preview redeploy for configuration verification.
