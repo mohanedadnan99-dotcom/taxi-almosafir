@@ -10,6 +10,32 @@ function clean(value, max = 300) {
   return String(value ?? '').trim().slice(0, max);
 }
 
+function toLatinDigits(value) {
+  return String(value ?? '')
+    .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+    .replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+}
+
+function normalizePhone(value) {
+  const raw = toLatinDigits(clean(value, 40));
+  const digits = raw.replace(/\D/g, '');
+  if (raw.startsWith('+')) return `+${digits}`;
+  if (raw.startsWith('00') && digits.length > 2) return `+${digits.slice(2)}`;
+  return digits;
+}
+
+function validPhone(value) {
+  const digits = toLatinDigits(value).replace(/\D/g, '');
+  if (digits.length < 8 || digits.length > 15) return false;
+  if (/^(\d)\1{7,}$/.test(digits)) return false;
+  const fakeTails = new Set([
+    '00000000', '11111111', '22222222', '33333333', '44444444',
+    '55555555', '66666666', '77777777', '88888888', '99999999',
+    '12345678', '87654321'
+  ]);
+  return !fakeTails.has(digits.slice(-8));
+}
+
 function escapeHtml(value) {
   return clean(value, 1000)
     .replaceAll('&', '&amp;')
@@ -57,7 +83,7 @@ module.exports = async function handler(req, res) {
   try {
     const body = req.body || {};
     const name = clean(body.name, 80);
-    const phone = clean(body.phone, 30).replace(/\s+/g, '');
+    const phone = normalizePhone(body.phone);
     const car = clean(body.car, 40);
     const tripType = clean(body.tripType, 20);
     const address = clean(body.address, 500) || 'موقع محدد من الخريطة';
@@ -67,8 +93,11 @@ module.exports = async function handler(req, res) {
     const lat = Number(body.lat);
     const lng = Number(body.lng);
 
-    if (!name || !/^07\d{9}$/.test(phone)) {
-      return res.status(400).json({ error: 'الاسم أو رقم الهاتف غير صحيح.' });
+    if (!name) {
+      return res.status(400).json({ error: 'اكتب اسم المسافر.' });
+    }
+    if (!validPhone(phone)) {
+      return res.status(400).json({ error: 'رقم الهاتف غير صحيح. استخدم رقماً حقيقياً محلياً أو دولياً.' });
     }
     if (!ALLOWED_CARS.has(car)) {
       return res.status(400).json({ error: 'اختار نوع سيارة صحيح.' });
