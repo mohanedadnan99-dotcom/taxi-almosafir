@@ -1,6 +1,10 @@
 const { storageConfigured, saveOrder } = require('../lib/orders');
 
 const ALLOWED_CARS = new Set(['Tucson', 'Fortuner', 'Pajero', 'GMC VVIP']);
+const TRIP_LABELS = {
+  departure: 'مغادرة',
+  arrival: 'استقبال',
+};
 
 function clean(value, max = 300) {
   return String(value ?? '').trim().slice(0, max);
@@ -55,6 +59,7 @@ module.exports = async function handler(req, res) {
     const name = clean(body.name, 80);
     const phone = clean(body.phone, 30).replace(/\s+/g, '');
     const car = clean(body.car, 40);
+    const tripType = clean(body.tripType, 20);
     const address = clean(body.address, 500) || 'موقع محدد من الخريطة';
     const notes = clean(body.notes, 500);
     const passengers = Number(body.passengers);
@@ -67,6 +72,9 @@ module.exports = async function handler(req, res) {
     }
     if (!ALLOWED_CARS.has(car)) {
       return res.status(400).json({ error: 'اختار نوع سيارة صحيح.' });
+    }
+    if (!TRIP_LABELS[tripType]) {
+      return res.status(400).json({ error: 'اختار نوع الرحلة: مغادرة أو استقبال.' });
     }
     if (!Number.isInteger(passengers) || passengers < 1 || passengers > 20 || !Number.isInteger(bags) || bags < 0 || bags > 50) {
       return res.status(400).json({ error: 'عدد الأشخاص أو الحقائب غير صحيح.' });
@@ -87,6 +95,8 @@ module.exports = async function handler(req, res) {
       name,
       phone,
       car,
+      tripType,
+      tripLabel: TRIP_LABELS[tripType],
       passengers,
       bags,
       address,
@@ -114,6 +124,7 @@ module.exports = async function handler(req, res) {
       '<b>حجز جديد — تكسي المسافر</b>',
       '',
       `<b>رقم الحجز:</b> ${escapeHtml(ref)}`,
+      `<b>نوع الرحلة:</b> ${escapeHtml(TRIP_LABELS[tripType])}`,
       `<b>اسم المسافر:</b> ${escapeHtml(name)}`,
       `<b>عدد الأشخاص:</b> ${passengers}`,
       `<b>عدد الحقائب:</b> ${bags}`,
