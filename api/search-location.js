@@ -1,8 +1,21 @@
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
+  const lang = String(req.query.lang || 'ar').toLowerCase() === 'en' ? 'en' : 'ar';
   const query = String(req.query.q || '').trim().slice(0, 160);
-  if (query.length < 2) return res.status(400).json({ error: 'اكتب اسم المنطقة أو العنوان.' });
+  const messages = lang === 'en'
+    ? {
+        short: 'Enter an area or address.',
+        notFound: 'We could not find this address. Try a clearer area or street name.',
+        failed: 'Address search is currently unavailable. Please try again.'
+      }
+    : {
+        short: 'اكتب اسم المنطقة أو العنوان.',
+        notFound: 'لم نعثر على هذا العنوان. جرّب اسم منطقة أو شارع أوضح.',
+        failed: 'تعذر البحث عن العنوان حالياً. جرّب مرة أخرى.'
+      };
+
+  if (query.length < 2) return res.status(400).json({ error: messages.short });
 
   try {
     const url = new URL('https://nominatim.openstreetmap.org/search');
@@ -10,7 +23,7 @@ module.exports = async function handler(req, res) {
     url.searchParams.set('q', query);
     url.searchParams.set('limit', '5');
     url.searchParams.set('addressdetails', '1');
-    url.searchParams.set('accept-language', 'ar');
+    url.searchParams.set('accept-language', lang);
     url.searchParams.set('countrycodes', 'iq');
     // Bias results toward Baghdad without blocking valid Iraqi addresses.
     url.searchParams.set('viewbox', '43.85,33.65,44.75,32.95');
@@ -32,10 +45,10 @@ module.exports = async function handler(req, res) {
       importance: Number(item.importance || 0)
     })).filter((item) => Number.isFinite(item.lat) && Number.isFinite(item.lng)) : [];
 
-    if (!results.length) return res.status(404).json({ error: 'ما لكينا هذا العنوان. جرّب اسم منطقة أو شارع أوضح.' });
+    if (!results.length) return res.status(404).json({ error: messages.notFound });
     return res.status(200).json({ results });
   } catch (error) {
     console.error('location search error', error);
-    return res.status(502).json({ error: 'تعذر البحث عن العنوان حالياً. جرّب مرة ثانية.' });
+    return res.status(502).json({ error: messages.failed });
   }
 };
