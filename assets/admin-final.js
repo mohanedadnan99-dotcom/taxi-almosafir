@@ -11,7 +11,7 @@ function fmtDate(v){try{return new Intl.DateTimeFormat('ar-IQ',{timeZone:'Asia/B
 function toast(msg,type='ok'){if(typeof window.toast==='function'){window.toast(msg,type);return}const host=$('#toastHost');if(!host)return;const e=document.createElement('div');e.className=`toast ${type}`;e.textContent=msg;host.appendChild(e);setTimeout(()=>e.remove(),3200)}
 function getOrders(){try{if(typeof state!=='undefined'&&Array.isArray(state.orders))return state.orders}catch{}return ordersCache}
 function syncOrder(order){ordersCache=ordersCache.filter(o=>o.reference!==order.reference);ordersCache.unshift(order);try{if(typeof state!=='undefined'&&Array.isArray(state.orders)){const i=state.orders.findIndex(o=>o.reference===order.reference);if(i>=0)state.orders[i]=order;else state.orders.unshift(order);if(typeof renderAll==='function')renderAll()}}catch{}renderActivity()}
-function syncFleetGlobals(){if(!config?.vehicles)return;try{if(typeof CARS!=='undefined'&&Array.isArray(CARS)){CARS.splice(0,CARS.length,...config.vehicles.map(v=>({name:v.name,image:v.image,className:v.className,desc:v.descriptionAr||''})));if(typeof renderAll==='function')renderAll()}}catch{}populateManualCars()}
+function syncFleetGlobals(){if(!config?.vehicles)return;try{if(typeof CARS!=='undefined'&&Array.isArray(CARS)){CARS.splice(0,CARS.length,...config.vehicles.filter(v=>v.active).map(v=>({name:v.name,image:v.image,className:v.className,desc:v.descriptionAr||''})));if(typeof renderAll==='function')renderAll()}}catch{}populateManualCars()}
 function populateManualCars(){const select=$('#manualCar');if(!select||!config?.vehicles)return;const current=select.value;select.innerHTML='<option value="">اختر السيارة</option>'+config.vehicles.filter(v=>v.active).map(v=>`<option value="${esc(v.name)}">${esc(v.labelAr||v.name)}</option>`).join('');if([...select.options].some(o=>o.value===current))select.value=current}
 
 function injectNavAndPages(){
@@ -37,7 +37,7 @@ function injectNavAndPages(){
           <label class="configField"><span>هاتف خدمة العملاء</span><input id="cfgSupport" dir="ltr"></label><label class="configField"><span>هاتف العمليات</span><input id="cfgOperations" dir="ltr"></label>
           <label class="configField full"><span>البريد الإلكتروني</span><input id="cfgEmail" type="email" dir="ltr"></label>
         </div></form>
-        <article class="configCard"><header><div><b>الجلسة والأمان</b><span>معلومات الجلسة الحالية</span></div></header><div id="sessionCard" class="sessionCard"></div><div class="handoffTools"><button id="backupJson" type="button">نسخة احتياطية JSON</button><button id="printAdmin" type="button">طباعة ملخص</button></div></article>
+        <article class="configCard"><header><div><b>الجلسة والأمان</b><span>معلومات الجلسة الحالية</span></div></header><div id="sessionCard" class="sessionCard"></div><div class="handoffTools"><button class="backupJsonBtn" type="button">نسخة احتياطية JSON</button><button class="printAdminBtn" type="button">طباعة ملخص</button></div></article>
         <article class="configCard full"><header><div><b>إدارة السيارات</b><span>أي تغيير محفوظ يصبح المصدر المركزي للواجهة والـAPI</span></div><button id="addVehicle" class="btn btnSoft" type="button">+ إضافة سيارة</button></header><div id="fleetEditor" class="fleetEditor"></div><p class="configHint">يمكن تعطيل السيارة بدل حذفها حتى تبقى الطلبات القديمة والتقارير سليمة.</p></article>
         <article class="configCard full"><header><div><b>التسعير حسب المناطق</b><span>جاهز للتعبئة عند اعتماد الأسعار النهائية</span></div><label class="rowToggle"><input id="pricingEnabled" type="checkbox"> تفعيل التسعير</label></header><div class="configFields" style="margin-bottom:10px"><label class="configField"><span>العملة</span><select id="pricingCurrency"><option>IQD</option><option>USD</option></select></label></div><div id="zoneEditor" class="zoneEditor"></div><div class="configActions"><button id="addZone" class="btn btnSoft" type="button">+ إضافة منطقة</button></div><p class="configHint">التسعير يبقى غير ظاهر للزبون إلى أن يتم تفعيله واعتماد المناطق والأسعار.</p></article>
       </div>
@@ -58,7 +58,7 @@ function openExtra(name){
 }
 
 async function loadConfig(){
-  try{const r=await fetch('/api/config',{cache:'no-store'});const j=await r.json();if(!r.ok)throw new Error(j.error||'تعذر تحميل الإعدادات.');config=JSON.parse(JSON.stringify(j.config));configStorage=Boolean(j.storageConfigured);renderConfig();syncFleetGlobals();}
+  try{const r=await fetch('/api/config',{headers:token()?{Authorization:`Bearer ${token()}`}:{},cache:'no-store'});const j=await r.json();if(!r.ok)throw new Error(j.error||'تعذر تحميل الإعدادات.');config=JSON.parse(JSON.stringify(j.config));configStorage=Boolean(j.storageConfigured);renderConfig();syncFleetGlobals();}
   catch(e){toast(e.message,'bad')}
 }
 
@@ -104,7 +104,7 @@ function bind(){
     if(e.target.closest('#activityRefresh'))loadOrdersCache();
     if(e.target.closest('#activityClear')){$('#activitySearch').value='';$('#activityType').value='';renderActivity()}
     const ar=e.target.closest('[data-activity-ref]');if(ar){const ref=ar.dataset.activityRef;try{if(typeof openOrder==='function'){openOrder(ref);return}}catch{}$('#orderSearch').value=ref;document.querySelector('.navItem[data-page="orders"]')?.click()}
-    if(e.target.closest('#saveConfig'))saveConfig();if(e.target.closest('#reloadConfig'))loadConfig();if(e.target.closest('#addVehicle'))addVehicle();if(e.target.closest('#addZone'))addZone();if(e.target.closest('#backupJson'))backupJson();if(e.target.closest('#printAdmin'))window.print();
+    if(e.target.closest('#saveConfig'))saveConfig();if(e.target.closest('#reloadConfig'))loadConfig();if(e.target.closest('#addVehicle'))addVehicle();if(e.target.closest('#addZone'))addZone();if(e.target.closest('.backupJsonBtn'))backupJson();if(e.target.closest('.printAdminBtn'))window.print();
     const rv=e.target.closest('.removeVehicle');if(rv){const row=rv.closest('.fleetEditRow');config.vehicles.splice(Number(row.dataset.index),1);renderFleetEditor()}
     const rz=e.target.closest('.removeZone');if(rz){const row=rz.closest('.zoneEditRow');config.pricing.zones.splice(Number(row.dataset.index),1);renderZoneEditor()}
     const box=e.target.closest('.adminOpsBox');if(box&&e.target.closest('.saveAssignment')){const value=box.querySelector('.assignInput').value.trim();if(!value)return toast('اكتب اسم المسؤول','bad');orderAction(box.dataset.ref,{action:'assign',assignee:value})}
@@ -114,7 +114,7 @@ function bind(){
   const detail=$('#orderDetail');if(detail)new MutationObserver(()=>setTimeout(enhanceOrderDetail,0)).observe(detail,{childList:true,subtree:false});
 }
 
-function enhanceSystemPage(){const panel=$('#page-system .handoffPanel');if(panel&&!$('#systemHandoffTools'))panel.insertAdjacentHTML('beforeend','<div id="systemHandoffTools" class="handoffTools"><button id="backupJson" type="button">تصدير نسخة احتياطية JSON</button><button id="printAdmin" type="button">طباعة حالة النظام</button><button type="button" onclick="location.href=\'/\'">فتح واجهة الزبون</button></div>')}
+function enhanceSystemPage(){const panel=$('#page-system .handoffPanel');if(panel&&!$('#systemHandoffTools'))panel.insertAdjacentHTML('beforeend','<div id="systemHandoffTools" class="handoffTools"><button class="backupJsonBtn" type="button">تصدير نسخة احتياطية JSON</button><button class="printAdminBtn" type="button">طباعة حالة النظام</button><button type="button" onclick="location.href=\'/\'">فتح واجهة الزبون</button></div>')}
 
 injectNavAndPages();enhanceSystemPage();bind();loadConfig();if(token())loadOrdersCache();
 })();
