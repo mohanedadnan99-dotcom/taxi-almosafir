@@ -1,79 +1,148 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>لوحة الإدارة | تكسي المسافر</title>
-<meta name="theme-color" content="#07111f" />
-<style>
-:root{--bg:#07111f;--panel:#0b1a2a;--panel2:#102238;--line:rgba(255,255,255,.11);--text:#f7f4ee;--muted:#8fa0b3;--gold:#d5ab63;--gold2:#f3d59b;--ok:#72d7a2;--warn:#f4c46c;--bad:#ffaaaa}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif}button,input,select{font:inherit}.hidden{display:none!important}.shell{max-width:1380px;margin:auto;padding:16px}.top{display:flex;align-items:center;gap:12px;margin-bottom:16px}.brand{display:flex;align-items:center;gap:10px;margin-left:auto}.logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;border:1px solid rgba(213,171,99,.4);background:rgba(213,171,99,.08);color:var(--gold2);font-weight:900}.brand b{font-size:17px}.brand small{display:block;color:var(--gold);font-size:9px;margin-top:3px;letter-spacing:1px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{min-height:42px;border-radius:12px;padding:0 13px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-weight:800;cursor:pointer}.btn.primary{border:0;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#171008}.btn.danger{color:#ffd2d2;border-color:rgba(255,170,170,.23);background:rgba(255,170,170,.06)}.loginWrap{min-height:72vh;display:grid;place-items:center}.loginCard{width:min(430px,100%);border:1px solid var(--line);background:var(--panel);border-radius:22px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.35)}.loginCard h1{margin:0 0 7px;font-size:23px}.loginCard p{margin:0 0 17px;color:var(--muted);font-size:12px;line-height:1.7}.field{display:flex;flex-direction:column;gap:7px;margin-top:10px}.field label{font-size:11px;color:#c6d0da}.field input,.filters input,.filters select{width:100%;min-height:44px;border:1px solid var(--line);background:#071523;color:#fff;border-radius:12px;padding:0 12px;outline:none}.field input:focus,.filters input:focus,.filters select:focus{border-color:rgba(213,171,99,.55)}.loginCard .btn{width:100%;margin-top:13px}.error,.notice{margin-top:10px;padding:10px 12px;border-radius:12px;font-size:11px;line-height:1.6}.error{display:none;border:1px solid rgba(255,170,170,.22);background:rgba(255,170,170,.07);color:#ffd2d2}.notice{margin:0 0 12px;border:1px solid rgba(244,196,108,.25);background:rgba(244,196,108,.07);color:#ffe5ae}.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}.metric{border:1px solid var(--line);background:var(--panel);border-radius:17px;padding:14px;min-width:0}.metric span{display:block;color:var(--muted);font-size:10px}.metric b{display:block;font-size:25px;margin-top:7px}.metric small{display:block;color:#aab6c2;font-size:9px;margin-top:5px}.metric.gold b{color:var(--gold2)}.filters{display:grid;grid-template-columns:2fr repeat(4,1fr) auto auto;gap:8px;border:1px solid var(--line);background:var(--panel);border-radius:17px;padding:10px;margin-bottom:12px}.tablePanel{border:1px solid var(--line);background:var(--panel);border-radius:17px;overflow:hidden}.tableHead{padding:12px 13px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.tableHead b{font-size:13px}.tableHead span{font-size:10px;color:var(--muted)}.tableScroll{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1020px}th,td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.07);text-align:right;font-size:11px}th{background:#0d1d2e;color:#b9c6d2;font-size:9px}.ref{color:var(--gold2);font-weight:900}.status{display:inline-flex;align-items:center;justify-content:center;min-width:74px;padding:6px 9px;border-radius:999px;font-size:9px;font-weight:900;border:1px solid var(--line)}.status.new{color:#badaff;background:rgba(141,197,255,.08)}.status.confirmed{color:#ffe3a4;background:rgba(244,196,108,.08)}.status.completed{color:#baf1d1;background:rgba(114,215,162,.08)}.status.cancelled{color:#ffd0d0;background:rgba(255,170,170,.07)}.linkBtn{border:0;background:transparent;color:var(--gold2);font-weight:900;cursor:pointer}.empty{padding:48px 15px;text-align:center;color:var(--muted);font-size:12px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:1000;display:grid;place-items:center;padding:12px}.modalCard{width:min(680px,100%);max-height:90vh;overflow:auto;background:#0a1828;border:1px solid var(--line);border-radius:20px}.modalHead{position:sticky;top:0;background:#0a1828;border-bottom:1px solid var(--line);padding:13px 14px;display:flex;align-items:center;gap:10px}.modalHead b{margin-left:auto}.close{width:39px;height:39px;border-radius:11px;border:1px solid var(--line);background:var(--panel2);color:#fff;cursor:pointer}.detail{padding:14px}.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.detailItem{border:1px solid rgba(255,255,255,.08);background:#071523;border-radius:13px;padding:10px}.detailItem.full{grid-column:1/-1}.detailItem span{display:block;color:var(--muted);font-size:9px}.detailItem b{display:block;margin-top:4px;font-size:11px;line-height:1.7;word-break:break-word}.statusActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.statusActions button{min-height:39px;border-radius:11px;border:1px solid var(--line);background:var(--panel2);color:#fff;padding:0 11px;font-weight:800;cursor:pointer}.statusActions button.active{border-color:var(--gold);color:var(--gold2)}.mapLink{display:inline-flex;margin-top:11px;color:var(--gold2);font-size:11px;font-weight:900;text-decoration:none}.loading{opacity:.6;pointer-events:none}@media(max-width:1000px){.metrics{grid-template-columns:repeat(3,1fr)}.filters{grid-template-columns:1fr 1fr 1fr}.filters .search{grid-column:1/-1}}@media(max-width:650px){.shell{padding:10px}.top{align-items:flex-start}.metrics{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}.filters .search{grid-column:1/-1}.filters .btn{width:100%}.detailGrid{grid-template-columns:1fr}.detailItem.full{grid-column:auto}.loginCard{padding:18px}.brand b{font-size:15px}.actions .btn{min-height:38px;padding:0 10px;font-size:10px}}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>مركز الإدارة | تكسي المسافر</title>
+<link rel="icon" type="image/svg+xml" href="/assets/logo/almosafir-logo.svg">
+<link rel="stylesheet" href="/assets/admin.css?v=20260901-1">
 </head>
 <body>
-<div class="shell">
-<header class="top">
-  <div class="brand"><div class="logo">TM</div><div><b>لوحة تكسي المسافر</b><small>ADMIN DASHBOARD</small></div></div>
-  <div id="topActions" class="actions hidden"><button id="refreshBtn" class="btn" type="button">تحديث</button><button id="exportBtn" class="btn primary" type="button">تصدير Excel</button><button id="logoutBtn" class="btn danger" type="button">خروج</button></div>
-</header>
-<section id="loginWrap" class="loginWrap">
+<div id="toastHost" class="toastHost" aria-live="polite"></div>
+
+<section id="loginView" class="loginView">
+  <div class="loginBackdrop"></div>
   <form id="loginForm" class="loginCard">
-    <h1>دخول الإدارة</h1>
-    <p>استخدم بيانات الإدارة الخاصة بموقع تكسي المسافر.</p>
-    <div class="field"><label for="username">اسم المستخدم</label><input id="username" type="text" autocomplete="username" placeholder="admin" required></div>
-    <div class="field"><label for="password">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" placeholder="••••••" required></div>
-    <button id="loginBtn" class="btn primary" type="submit">دخول إلى اللوحة</button>
-    <div id="loginError" class="error"></div>
+    <div class="loginBrand"><span class="loginLogo"><img src="/assets/logo/almosafir-logo.svg" alt="تكسي المسافر"></span><div><b>تكسي المسافر</b><small>ADMIN CONTROL CENTER</small></div></div>
+    <div class="loginIntro"><span class="eyebrow">لوحة الإدارة</span><h1>مرحباً بعودتك</h1><p>دخول آمن لإدارة الحجوزات ومتابعة أداء الموقع.</p></div>
+    <label class="field"><span>اسم المستخدم</span><input id="loginUsername" autocomplete="username" required placeholder="اسم المستخدم"></label>
+    <label class="field"><span>كلمة المرور</span><div class="passwordWrap"><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="كلمة المرور"><button id="togglePassword" type="button" aria-label="إظهار كلمة المرور">إظهار</button></div></label>
+    <div id="loginError" class="formError hidden"></div>
+    <button id="loginSubmit" class="btn btnPrimary btnWide" type="submit">دخول إلى لوحة الإدارة</button>
+    <div class="loginFoot"><span>اتصال مشفّر</span><i></i><span>جلسة إدارية مؤقتة</span></div>
   </form>
 </section>
-<main id="dashboard" class="hidden">
-  <div id="notice" class="notice hidden"></div>
-  <section class="metrics">
-    <article class="metric gold"><span>إجمالي الطلبات</span><b id="mTotal">0</b><small>كل الطلبات المسجلة</small></article>
-    <article class="metric"><span>طلبات اليوم</span><b id="mToday">0</b><small>بتوقيت بغداد</small></article>
-    <article class="metric"><span>هذا الشهر</span><b id="mMonth">0</b><small>من بداية الشهر</small></article>
-    <article class="metric"><span>مكتملة</span><b id="mCompleted">0</b><small>تم تنفيذها</small></article>
-    <article class="metric"><span>ملغية</span><b id="mCancelled">0</b><small>تبقى محفوظة بالسجل</small></article>
-  </section>
-  <section class="filters">
-    <input id="search" class="search" type="search" placeholder="بحث برقم الطلب أو الاسم أو الهاتف...">
-    <select id="statusFilter"><option value="">كل الحالات</option><option value="new">جديد</option><option value="confirmed">مؤكد</option><option value="completed">مكتمل</option><option value="cancelled">ملغي</option></select>
-    <select id="carFilter"><option value="">كل السيارات</option></select>
-    <input id="dateFrom" type="date" aria-label="من تاريخ">
-    <input id="dateTo" type="date" aria-label="إلى تاريخ">
-    <button id="todayBtn" class="btn" type="button">اليوم</button>
-    <button id="clearBtn" class="btn" type="button">مسح الفلاتر</button>
-  </section>
-  <section class="tablePanel">
-    <div class="tableHead"><b>سجل الطلبات</b><span id="resultCount">0 طلب</span></div>
-    <div class="tableScroll"><table><thead><tr><th>رقم الطلب</th><th>التاريخ والوقت</th><th>المسافر</th><th>الهاتف</th><th>السيارة</th><th>الأشخاص</th><th>الحقائب</th><th>الحالة</th><th>تفاصيل</th></tr></thead><tbody id="tbody"></tbody></table><div id="empty" class="empty">لا توجد طلبات مسجلة حالياً.</div></div>
-  </section>
-</main>
+
+<div id="adminApp" class="adminApp hidden">
+  <div id="mobileShade" class="mobileShade hidden"></div>
+  <aside id="sidebar" class="sidebar">
+    <div class="sideBrand"><span class="sideLogo"><img src="/assets/logo/almosafir-logo.svg" alt="تكسي المسافر"></span><div><b>تكسي المسافر</b><small>ADMIN CENTER</small></div></div>
+    <nav class="navList" aria-label="أقسام لوحة الإدارة">
+      <button class="navItem active" data-page="overview"><span class="navIcon">⌂</span><span>نظرة عامة</span></button>
+      <button class="navItem" data-page="orders"><span class="navIcon">▤</span><span>الطلبات</span><em id="navNewCount">0</em></button>
+      <button class="navItem" data-page="reports"><span class="navIcon">⌁</span><span>التقارير</span></button>
+      <button class="navItem" data-page="fleet"><span class="navIcon">◆</span><span>السيارات</span></button>
+      <button class="navItem" data-page="system"><span class="navIcon">◉</span><span>حالة النظام</span></button>
+    </nav>
+    <div class="sideBottom">
+      <div class="adminMini"><span>AD</span><div><b>مدير النظام</b><small>صلاحية كاملة</small></div></div>
+      <button id="sideLogout" class="logoutLink" type="button">تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <header class="topbar">
+      <div class="topTitle"><button id="menuBtn" class="iconBtn menuBtn" type="button" aria-label="فتح القائمة">☰</button><div><span id="pageEyebrow" class="eyebrow">مركز الإدارة</span><h1 id="pageTitle">نظرة عامة</h1></div></div>
+      <div class="topActions">
+        <span id="lastSync" class="syncText">آخر تحديث —</span>
+        <button id="refreshBtn" class="iconBtn" type="button" title="تحديث">↻</button>
+        <button id="exportBtn" class="btn btnSoft" type="button">تصدير Excel</button>
+        <button id="newOrderBtn" class="btn btnPrimary" type="button">+ طلب يدوي</button>
+      </div>
+    </header>
+
+    <div id="globalNotice" class="globalNotice hidden"></div>
+
+    <section id="page-overview" class="page active">
+      <div class="heroRow">
+        <article class="welcomeCard">
+          <div><span class="eyebrow">تكسي المسافر</span><h2>لوحة متابعة الحجوزات</h2><p>ملخص مباشر لحركة الطلبات وأداء الخدمة من مكان واحد.</p></div>
+          <div class="liveBadge"><i></i><span>النظام متصل</span></div>
+        </article>
+        <article class="todayClock"><span>بتوقيت بغداد</span><b id="clockTime">--:--</b><small id="clockDate">—</small></article>
+      </div>
+
+      <div class="metricsGrid">
+        <article class="metricCard gold"><div class="metricTop"><span>إجمالي الطلبات</span><i>▤</i></div><b id="mTotal">0</b><small id="mTotalSub">كل الحجوزات المسجلة</small></article>
+        <article class="metricCard"><div class="metricTop"><span>طلبات اليوم</span><i>●</i></div><b id="mToday">0</b><small id="mTodaySub">منذ بداية اليوم</small></article>
+        <article class="metricCard"><div class="metricTop"><span>قيد المتابعة</span><i>◌</i></div><b id="mActive">0</b><small>جديد + مؤكد</small></article>
+        <article class="metricCard"><div class="metricTop"><span>مكتملة</span><i>✓</i></div><b id="mCompleted">0</b><small id="mCompletionRate">نسبة الإكمال 0%</small></article>
+        <article class="metricCard"><div class="metricTop"><span>المسافرون</span><i>♙</i></div><b id="mPassengers">0</b><small>إجمالي الأشخاص بالحجوزات</small></article>
+        <article class="metricCard"><div class="metricTop"><span>الملغية</span><i>×</i></div><b id="mCancelled">0</b><small id="mCancelRate">نسبة الإلغاء 0%</small></article>
+      </div>
+
+      <div class="dashboardGrid">
+        <article class="panel chartPanel wide"><header class="panelHead"><div><b>حركة الطلبات</b><span>آخر 14 يوم</span></div><span id="trendBadge" class="trendBadge">—</span></header><div class="chartBox"><canvas id="ordersTrendChart"></canvas></div></article>
+        <article class="panel chartPanel"><header class="panelHead"><div><b>حالات الطلبات</b><span>التوزيع الحالي</span></div></header><div class="chartBox donut"><canvas id="statusChart"></canvas></div><div id="statusLegend" class="miniLegend"></div></article>
+        <article class="panel chartPanel"><header class="panelHead"><div><b>السيارات المطلوبة</b><span>حسب عدد الحجوزات</span></div></header><div class="chartBox"><canvas id="carsChart"></canvas></div></article>
+      </div>
+
+      <article class="panel recentPanel">
+        <header class="panelHead"><div><b>أحدث الطلبات</b><span>آخر الحجوزات المسجلة</span></div><button class="textBtn" data-go="orders" type="button">عرض كل الطلبات ←</button></header>
+        <div class="tableWrap"><table class="dataTable compact"><thead><tr><th>رقم الطلب</th><th>الوقت</th><th>المسافر</th><th>نوع الرحلة</th><th>السيارة</th><th>الحالة</th><th></th></tr></thead><tbody id="recentBody"></tbody></table><div id="recentEmpty" class="emptyState hidden">لا توجد طلبات بعد.</div></div>
+      </article>
+    </section>
+
+    <section id="page-orders" class="page">
+      <div class="sectionLead"><div><h2>إدارة الطلبات</h2><p>بحث، فرز، تصفية، تحديث الحالة وتصدير السجل.</p></div><div class="sectionActions"><button id="ordersRefresh" class="btn btnSoft" type="button">تحديث البيانات</button><button class="btn btnPrimary openManual" type="button">+ إضافة طلب</button></div></div>
+
+      <div class="filterPanel">
+        <label class="searchBox"><span>⌕</span><input id="orderSearch" type="search" placeholder="ابحث برقم الطلب، الاسم، الهاتف أو العنوان..."></label>
+        <select id="statusFilter"><option value="">كل الحالات</option><option value="new">جديد</option><option value="confirmed">مؤكد</option><option value="completed">مكتمل</option><option value="cancelled">ملغي</option></select>
+        <select id="tripFilter"><option value="">كل الرحلات</option><option value="departure">مغادرة</option><option value="arrival">استقبال</option></select>
+        <select id="carFilter"><option value="">كل السيارات</option></select>
+        <input id="dateFrom" type="date" aria-label="من تاريخ">
+        <input id="dateTo" type="date" aria-label="إلى تاريخ">
+        <button id="clearFilters" class="btn btnGhost" type="button">مسح</button>
+      </div>
+
+      <div id="bulkBar" class="bulkBar hidden"><span><b id="selectedCount">0</b> طلب محدد</span><div><button data-bulk="confirmed" type="button">تأكيد</button><button data-bulk="completed" type="button">إكمال</button><button data-bulk="cancelled" type="button">إلغاء</button><button id="clearSelection" type="button">إلغاء التحديد</button></div></div>
+
+      <article class="panel ordersPanel">
+        <header class="panelHead"><div><b>سجل الطلبات</b><span id="ordersCount">0 طلب</span></div><div class="tableTools"><select id="pageSize"><option value="15">15 / صفحة</option><option value="25" selected>25 / صفحة</option><option value="50">50 / صفحة</option><option value="100">100 / صفحة</option></select></div></header>
+        <div class="tableWrap"><table class="dataTable ordersTable"><thead><tr><th><input id="selectAll" type="checkbox" aria-label="تحديد الكل"></th><th>رقم الطلب</th><th>التاريخ والوقت</th><th>المسافر</th><th>الهاتف</th><th>الرحلة</th><th>السيارة</th><th>الأشخاص</th><th>الأمتعة</th><th>الحالة</th><th></th></tr></thead><tbody id="ordersBody"></tbody></table><div id="ordersEmpty" class="emptyState hidden"><b>لا توجد نتائج</b><span>غيّر البحث أو الفلاتر وحاول مرة أخرى.</span></div></div>
+        <footer class="pagination"><span id="pageInfo">—</span><div><button id="prevPage" type="button">السابق</button><button id="nextPage" type="button">التالي</button></div></footer>
+      </article>
+    </section>
+
+    <section id="page-reports" class="page">
+      <div class="sectionLead"><div><h2>التقارير والتحليلات</h2><p>قراءة واضحة لأداء الحجوزات حسب الفترة والسيارة ونوع الرحلة.</p></div><button id="reportExport" class="btn btnPrimary" type="button">تصدير التقرير</button></div>
+      <div class="reportRange"><button class="rangeBtn active" data-days="7">7 أيام</button><button class="rangeBtn" data-days="30">30 يوم</button><button class="rangeBtn" data-days="90">90 يوم</button><button class="rangeBtn" data-days="365">سنة</button><span></span><label>من <input id="reportFrom" type="date"></label><label>إلى <input id="reportTo" type="date"></label><button id="applyReportRange" class="btn btnSoft" type="button">تطبيق</button></div>
+      <div class="metricsGrid reportMetrics"><article class="metricCard"><span>طلبات الفترة</span><b id="rOrders">0</b><small>إجمالي الطلبات</small></article><article class="metricCard"><span>معدل يومي</span><b id="rDailyAvg">0</b><small>طلب / يوم</small></article><article class="metricCard"><span>المسافرون</span><b id="rPassengers">0</b><small>شخص</small></article><article class="metricCard"><span>معدل الإكمال</span><b id="rCompletion">0%</b><small>من الطلبات</small></article></div>
+      <div class="dashboardGrid reportsGrid"><article class="panel chartPanel wide"><header class="panelHead"><div><b>الطلبات حسب اليوم</b><span id="reportPeriodLabel">—</span></div></header><div class="chartBox"><canvas id="reportTrendChart"></canvas></div></article><article class="panel chartPanel"><header class="panelHead"><div><b>مغادرة / استقبال</b><span>نوع الرحلة</span></div></header><div class="chartBox donut"><canvas id="tripChart"></canvas></div></article><article class="panel chartPanel"><header class="panelHead"><div><b>توزيع السيارات</b><span>الأكثر طلباً</span></div></header><div class="chartBox"><canvas id="reportCarsChart"></canvas></div></article></div>
+      <article class="panel"><header class="panelHead"><div><b>ملخص السيارات</b><span>عدد الطلبات والمسافرين لكل فئة</span></div></header><div id="carReportGrid" class="carReportGrid"></div></article>
+    </section>
+
+    <section id="page-fleet" class="page">
+      <div class="sectionLead"><div><h2>أسطول السيارات</h2><p>عرض السيارات الموجودة حالياً في واجهة الحجز مع إحصائيات الطلب.</p></div><span class="infoPill">متزامن مع واجهة الحجز</span></div>
+      <div id="fleetGrid" class="fleetGrid"></div>
+      <article class="panel fleetNote"><div><span class="noteIcon">i</span><div><b>ملاحظة التسليم</b><p>أسماء السيارات المعروضة هنا مرتبطة بالسيارات الحالية في نظام الحجز. عند اعتماد القائمة الجديدة نحدث واجهة الزبون والتحقق الخلفي ولوحة الإدارة بنفس الوقت حتى تبقى البيانات موحّدة.</p></div></div></article>
+    </section>
+
+    <section id="page-system" class="page">
+      <div class="sectionLead"><div><h2>حالة النظام</h2><p>فحص سريع للتكاملات والتخزين والأمان.</p></div><button id="systemCheckBtn" class="btn btnSoft" type="button">إعادة الفحص</button></div>
+      <div class="systemGrid">
+        <article class="systemCard"><header><span class="systemIcon">DB</span><div><b>قاعدة الطلبات</b><small>Persistent Storage</small></div><i id="sysStorageDot" class="healthDot"></i></header><strong id="sysStorage">جاري الفحص...</strong><p id="sysStorageSub">—</p></article>
+        <article class="systemCard"><header><span class="systemIcon">TG</span><div><b>إشعارات Telegram</b><small>Booking Notifications</small></div><i id="sysTelegramDot" class="healthDot"></i></header><strong id="sysTelegram">جاري الفحص...</strong><p>إرسال الحجوزات إلى مجموعة التشغيل.</p></article>
+        <article class="systemCard"><header><span class="systemIcon">API</span><div><b>Booking API</b><small>Serverless Endpoint</small></div><i id="sysApiDot" class="healthDot"></i></header><strong id="sysApi">متصل</strong><p>استقبال والتحقق من طلبات الموقع.</p></article>
+        <article class="systemCard"><header><span class="systemIcon">SEC</span><div><b>أمان الإدارة</b><small>Admin Security</small></div><i id="sysSecurityDot" class="healthDot"></i></header><strong id="sysSecurity">جاري الفحص...</strong><p id="sysSecuritySub">جلسة مؤقتة وتوثيق محمي.</p></article>
+      </div>
+      <article class="panel handoffPanel"><header class="panelHead"><div><b>جاهزية التسليم</b><span>قائمة فحص فنية للشركة</span></div><span id="handoffScore" class="scorePill">—</span></header><div class="checkList"><div class="checkItem"><i class="ok">✓</i><div><b>واجهة الحجز</b><span>موقع، اختيار سيارة، بيانات المسافر، نوع الرحلة، تأكيد الحجز.</span></div></div><div class="checkItem"><i class="ok">✓</i><div><b>عربي + English</b><span>العربية افتراضية مع دعم الاتجاه RTL/LTR.</span></div></div><div class="checkItem"><i id="checkStorageIcon">•</i><div><b>حفظ الطلبات</b><span id="checkStorageText">يتم التحقق من التخزين...</span></div></div><div class="checkItem"><i id="checkTelegramIcon">•</i><div><b>إشعارات Telegram</b><span id="checkTelegramText">يتم التحقق من الربط...</span></div></div><div class="checkItem"><i class="ok">✓</i><div><b>لوحة الإدارة</b><span>تقارير، فلاتر، حالات، تصدير، تفاصيل وطلبات يدوية.</span></div></div></div></article>
+    </section>
+  </main>
 </div>
-<div id="modal" class="modal hidden" role="dialog" aria-modal="true"><section class="modalCard"><header class="modalHead"><b>تفاصيل الطلب</b><button id="closeModal" class="close" type="button">✕</button></header><div id="detail" class="detail"></div></section></div>
+
+<div id="orderModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+  <div class="modalCard detailModal"><header class="modalHead"><div><span class="eyebrow">تفاصيل الحجز</span><h2 id="orderModalTitle">—</h2></div><button class="modalClose" data-close="orderModal" type="button">×</button></header><div id="orderDetail" class="modalBody"></div></div>
+</div>
+
+<div id="manualModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="manualTitle">
+  <form id="manualForm" class="modalCard formModal"><header class="modalHead"><div><span class="eyebrow">إضافة من الإدارة</span><h2 id="manualTitle">طلب يدوي جديد</h2></div><button class="modalClose" data-close="manualModal" type="button">×</button></header><div class="modalBody"><div class="formGrid"><label class="field"><span>اسم المسافر *</span><input id="manualName" required></label><label class="field"><span>رقم الهاتف *</span><input id="manualPhone" inputmode="tel" required placeholder="077... أو +964..."></label><label class="field"><span>السيارة *</span><select id="manualCar" required><option value="">اختر السيارة</option><option>Tucson</option><option>Fortuner</option><option>Pajero</option><option>GMC VVIP</option></select></label><label class="field"><span>نوع الرحلة *</span><select id="manualTrip" required><option value="">اختر النوع</option><option value="departure">مغادرة</option><option value="arrival">استقبال</option></select></label><label class="field"><span>عدد الأشخاص</span><input id="manualPassengers" type="number" min="1" max="20" value="1"></label><label class="field"><span>عدد الأمتعة</span><input id="manualBags" type="number" min="0" max="50" value="0"></label><label class="field full"><span>العنوان</span><input id="manualAddress" placeholder="عنوان الاستلام أو ملاحظة المكان"></label><label class="field full"><span>ملاحظة</span><textarea id="manualNotes" rows="3" placeholder="ملاحظة داخل الطلب"></textarea></label></div><div id="manualError" class="formError hidden"></div></div><footer class="modalFoot"><button class="btn btnGhost" data-close="manualModal" type="button">إلغاء</button><button id="manualSubmit" class="btn btnPrimary" type="submit">إنشاء الطلب</button></footer></form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script>
-(()=>{
-const q=s=>document.querySelector(s);const STATUS={new:'جديد',confirmed:'مؤكد',completed:'مكتمل',cancelled:'ملغي'};
-const state={username:sessionStorage.getItem('tm_admin_username')||'',password:sessionStorage.getItem('tm_admin_password')||'',orders:[],filtered:[]};
-const $={login:q('#loginWrap'),dash:q('#dashboard'),top:q('#topActions'),form:q('#loginForm'),username:q('#username'),password:q('#password'),error:q('#loginError'),notice:q('#notice'),refresh:q('#refreshBtn'),export:q('#exportBtn'),logout:q('#logoutBtn'),search:q('#search'),status:q('#statusFilter'),car:q('#carFilter'),from:q('#dateFrom'),to:q('#dateTo'),today:q('#todayBtn'),clear:q('#clearBtn'),tbody:q('#tbody'),empty:q('#empty'),count:q('#resultCount'),modal:q('#modal'),detail:q('#detail'),close:q('#closeModal')};
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function headers(){return {'X-Admin-Username':state.username,'X-Admin-Password':state.password,'Content-Type':'application/json'}}
-function setError(m){$.error.textContent=m||'';$.error.style.display=m?'block':'none'}
-function showDash(){$.login.classList.add('hidden');$.dash.classList.remove('hidden');$.top.classList.remove('hidden')}
-function showLogin(){$.dash.classList.add('hidden');$.top.classList.add('hidden');$.login.classList.remove('hidden')}
-function baghdad(value){const d=new Date(value);if(Number.isNaN(d.getTime()))return null;const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Baghdad',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d).reduce((a,x)=>(a[x.type]=x.value,a),{});return {key:`${p.year}-${p.month}-${p.day}`,month:`${p.year}-${p.month}`,display:`${p.day}/${p.month}/${p.year} ${p.hour}:${p.minute}`}}
-function todayKey(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Baghdad',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).reduce((a,x)=>(a[x.type]=x.value,a),{});return `${p.year}-${p.month}-${p.day}`}
-function pill(s){return `<span class="status ${esc(s||'new')}">${esc(STATUS[s]||'جديد')}</span>`}
-async function load(){document.body.classList.add('loading');setError('');try{const r=await fetch('/api/orders',{headers:headers(),cache:'no-store'});const j=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(j.error||'تعذر الدخول.'),{status:r.status});state.orders=Array.isArray(j.orders)?j.orders:[];showDash();if(j.warning){$.notice.textContent=j.warning;$.notice.classList.remove('hidden')}else $.notice.classList.add('hidden');populateCars();apply()}catch(e){if(e.status===401){sessionStorage.removeItem('tm_admin_username');sessionStorage.removeItem('tm_admin_password');state.username='';state.password='';showLogin();setError('اسم المستخدم أو كلمة المرور غير صحيحة.')}else{showLogin();setError(e.message||'تعذر فتح اللوحة.')}}finally{document.body.classList.remove('loading')}}
-function populateCars(){const current=$.car.value;const cars=[...new Set(state.orders.map(o=>o.car).filter(Boolean))].sort();$.car.innerHTML='<option value="">كل السيارات</option>'+cars.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');if(cars.includes(current))$.car.value=current}
-function apply(){const term=$.search.value.trim().toLowerCase(),status=$.status.value,car=$.car.value,from=$.from.value,to=$.to.value;state.filtered=state.orders.filter(o=>{const p=baghdad(o.createdAt),key=p?.key||'',hay=[o.reference,o.name,o.phone,o.car,o.address,o.notes].join(' ').toLowerCase();return(!term||hay.includes(term))&&(!status||o.status===status)&&(!car||o.car===car)&&(!from||key>=from)&&(!to||key<=to)});renderMetrics();renderRows()}
-function renderMetrics(){const t=todayKey(),m=t.slice(0,7);q('#mTotal').textContent=state.orders.length;q('#mToday').textContent=state.orders.filter(o=>baghdad(o.createdAt)?.key===t).length;q('#mMonth').textContent=state.orders.filter(o=>baghdad(o.createdAt)?.month===m).length;q('#mCompleted').textContent=state.orders.filter(o=>o.status==='completed').length;q('#mCancelled').textContent=state.orders.filter(o=>o.status==='cancelled').length}
-function renderRows(){$.count.textContent=`${state.filtered.length} طلب`;$.tbody.innerHTML=state.filtered.map(o=>`<tr><td class="ref">${esc(o.reference)}</td><td>${esc(baghdad(o.createdAt)?.display||'-')}</td><td>${esc(o.name||'-')}</td><td>${esc(o.phone||'-')}</td><td>${esc(o.car||'-')}</td><td>${Number(o.passengers)||0}</td><td>${Number(o.bags)||0}</td><td>${pill(o.status)}</td><td><button class="linkBtn" type="button" data-ref="${esc(o.reference)}">عرض</button></td></tr>`).join('');$.empty.classList.toggle('hidden',state.filtered.length>0);$.tbody.querySelectorAll('[data-ref]').forEach(b=>b.addEventListener('click',()=>openOrder(b.dataset.ref)))}
-function openOrder(ref){const o=state.orders.find(x=>x.reference===ref);if(!o)return;$.detail.innerHTML=`<div class="detailGrid"><div class="detailItem"><span>رقم الطلب</span><b class="ref">${esc(o.reference)}</b></div><div class="detailItem"><span>الحالة</span><b>${pill(o.status)}</b></div><div class="detailItem"><span>المسافر</span><b>${esc(o.name||'-')}</b></div><div class="detailItem"><span>الهاتف</span><b>${esc(o.phone||'-')}</b></div><div class="detailItem"><span>السيارة</span><b>${esc(o.car||'-')}</b></div><div class="detailItem"><span>الأشخاص / الحقائب</span><b>${Number(o.passengers)||0} / ${Number(o.bags)||0}</b></div><div class="detailItem full"><span>العنوان</span><b>${esc(o.address||'-')}</b></div><div class="detailItem full"><span>الملاحظات</span><b>${esc(o.notes||'لا توجد ملاحظات')}</b></div></div>${o.maps?`<a class="mapLink" href="${esc(o.maps)}" target="_blank" rel="noopener">فتح الموقع على الخريطة ↗</a>`:''}<div class="statusActions">${Object.entries(STATUS).map(([k,v])=>`<button type="button" data-status="${k}" class="${o.status===k?'active':''}">${v}</button>`).join('')}</div>`;$.detail.querySelectorAll('[data-status]').forEach(b=>b.addEventListener('click',()=>changeStatus(o.reference,b.dataset.status)));$.modal.classList.remove('hidden')}
-async function changeStatus(reference,status){const r=await fetch('/api/orders',{method:'PATCH',headers:headers(),body:JSON.stringify({reference,status})});const j=await r.json().catch(()=>({}));if(!r.ok){alert(j.error||'تعذر تحديث الحالة.');return}const i=state.orders.findIndex(o=>o.reference===reference);if(i>=0)state.orders[i]=j.order;apply();openOrder(reference)}
-function exportExcel(){if(!state.filtered.length){alert('ماكو طلبات ضمن الفلتر الحالي.');return}const rows=state.filtered.map(o=>({'رقم الطلب':o.reference||'','التاريخ والوقت':baghdad(o.createdAt)?.display||'','اسم المسافر':o.name||'','رقم الهاتف':o.phone||'','السيارة':o.car||'','عدد الأشخاص':Number(o.passengers)||0,'عدد الحقائب':Number(o.bags)||0,'العنوان':o.address||'','الملاحظات':o.notes||'','الحالة':STATUS[o.status]||o.status||''}));const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Orders');XLSX.writeFile(wb,`Taxi-Almosafir-Orders-${todayKey()}.xlsx`)}
-$.form.addEventListener('submit',e=>{e.preventDefault();state.username=$.username.value.trim();state.password=$.password.value;sessionStorage.setItem('tm_admin_username',state.username);sessionStorage.setItem('tm_admin_password',state.password);load()});$.refresh.addEventListener('click',load);$.export.addEventListener('click',exportExcel);$.logout.addEventListener('click',()=>{sessionStorage.clear();state.username='';state.password='';$.username.value='';$.password.value='';showLogin()});[$.search,$.status,$.car,$.from,$.to].forEach(el=>el.addEventListener(el.type==='search'?'input':'change',apply));$.today.addEventListener('click',()=>{$.from.value=todayKey();$.to.value=todayKey();apply()});$.clear.addEventListener('click',()=>{$.search.value='';$.status.value='';$.car.value='';$.from.value='';$.to.value='';apply()});$.close.addEventListener('click',()=>$.modal.classList.add('hidden'));$.modal.addEventListener('click',e=>{if(e.target===$.modal)$.modal.classList.add('hidden')});if(state.username&&state.password)load();else showLogin();
-})();
-</script>
+<script src="/assets/admin.js?v=20260901-1"></script>
 </body>
 </html>
