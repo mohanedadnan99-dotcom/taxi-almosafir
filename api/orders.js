@@ -1,7 +1,7 @@
-const { storageConfigured, storageBackend, listOrders, updateOrderStatus, saveOrder } = require('../lib/orders');
+const { storageConfigured, storageBackend, listOrders, updateOrderStatus, saveOrder, appendOrderEvent } = require('../lib/orders');
 const { authenticateRequest, securityConfigured } = require('../lib/admin-auth');
+const { loadConfig, activeVehicleNames } = require('../lib/config');
 
-const ALLOWED_CARS = new Set(['Tucson', 'Fortuner', 'Pajero', 'GMC VVIP']);
 const TRIP_LABELS = { departure: 'مغادرة', arrival: 'استقبال' };
 
 function clean(value, max = 300) {
@@ -74,7 +74,7 @@ module.exports = async function handler(req, res) {
     try {
       const name = clean(req.body?.name, 80);
       const phone = normalizePhone(req.body?.phone);
-      const car = clean(req.body?.car, 40);
+      const car = clean(req.body?.car, 60);
       const tripType = clean(req.body?.tripType, 20);
       const address = clean(req.body?.address, 500) || 'طلب يدوي من لوحة الإدارة';
       const notes = clean(req.body?.notes, 500);
@@ -84,10 +84,12 @@ module.exports = async function handler(req, res) {
       const lngRaw = req.body?.lng;
       const lat = latRaw === '' || latRaw == null ? null : Number(latRaw);
       const lng = lngRaw === '' || lngRaw == null ? null : Number(lngRaw);
+      const config = await loadConfig();
+      const allowedCars = activeVehicleNames(config);
 
       if (!name) return res.status(400).json({ error: 'اكتب اسم المسافر.' });
       if (!validPhone(phone)) return res.status(400).json({ error: 'رقم الهاتف غير صحيح.' });
-      if (!ALLOWED_CARS.has(car)) return res.status(400).json({ error: 'اختر سيارة صحيحة.' });
+      if (!allowedCars.has(car)) return res.status(400).json({ error: 'اختر سيارة فعّالة من قائمة الأسطول.' });
       if (!TRIP_LABELS[tripType]) return res.status(400).json({ error: 'اختر نوع الرحلة.' });
       if (!Number.isInteger(passengers) || passengers < 1 || passengers > 20 || !Number.isInteger(bags) || bags < 0 || bags > 50) {
         return res.status(400).json({ error: 'عدد الأشخاص أو الأمتعة غير صحيح.' });
@@ -102,7 +104,7 @@ module.exports = async function handler(req, res) {
         createdAt: now,
         updatedAt: now,
         status: 'new',
-        statusHistory: [{ status: 'new', at: now, actor: session.sub || 'admin' }],
+        statusHistory: [{ type: 'created', status: 'new', at: now, actor: session.sub || 'admin' }],
         name,
         phone,
         car,
@@ -129,6 +131,20 @@ module.exports = async function handler(req, res) {
   if (req.method === 'PATCH') {
     if (!storageConfigured()) return res.status(503).json({ error: 'تخزين الطلبات غير مفعّل بعد.', code: 'STORAGE_NOT_CONFIGURED' });
     try {
+      const action = clean(req.body?.action, 30);
+      if (action === 'note' || action === 'assign') {
+        const reference = clean(req.body?.reference, 60);
+        if (!reference) return res.status(400).json({ error: 'رقم الطلب مطلوب.' });
+        const payload = action === 'note'
+          ? { type: 'note', note: clean(req.body?.note, 600) }
+          : { type: 'assignment', assignee: clean(req.body?.assignee, 100) };
+        if (action === 'note' && !payload.note) return res.status(400).json({ error: 'اكتب الملاحظة الإدارية.' });
+        if (action === 'assign' && !payload.assignee) return res.status(400).json({ error: 'اكتب اسم المسؤول.' });
+        const order = await appendOrderEvent(reference, payload, session.sub || 'admin');
+        if (!order) return res.status(404).json({ error: 'الطلب غير موجود.' });
+        return res.status(200).json({ ok: true, order });
+      }
+
       const status = clean(req.body?.status, 30);
       if (!['new', 'confirmed', 'completed', 'cancelled'].includes(status)) return res.status(400).json({ error: 'حالة الطلب غير صحيحة.' });
 
@@ -145,8 +161,8 @@ module.exports = async function handler(req, res) {
       if (!updated.length) return res.status(404).json({ error: 'لم يتم العثور على الطلب.' });
       return res.status(200).json({ ok: true, order: updated[0], orders: updated, count: updated.length });
     } catch (error) {
-      console.error('Order status update error', error);
-      return res.status(500).json({ error: 'تعذر تحديث حالة الطلب.' });
+      console.error('Order update error', error);
+      return res.status(500).json({ error: 'تعذر تحديث الطلب.' });
     }
   }
 
