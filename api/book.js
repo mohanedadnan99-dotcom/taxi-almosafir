@@ -1,6 +1,6 @@
 const { storageConfigured, saveOrder } = require('../lib/orders');
+const { loadConfig, activeVehicleNames } = require('../lib/config');
 
-const ALLOWED_CARS = new Set(['Tucson', 'Fortuner', 'Pajero', 'GMC VVIP']);
 const TRIP_LABELS = {
   departure: 'مغادرة',
   arrival: 'استقبال',
@@ -68,9 +68,11 @@ module.exports = async function handler(req, res) {
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (req.method === 'GET') {
+    const config = await loadConfig().catch(() => null);
     return res.status(200).json({
       telegramConfigured: Boolean(token && chatId),
       orderStorageConfigured: storageConfigured(),
+      activeVehicles: config ? [...activeVehicleNames(config)] : [],
     });
   }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -84,7 +86,7 @@ module.exports = async function handler(req, res) {
     const body = req.body || {};
     const name = clean(body.name, 80);
     const phone = normalizePhone(body.phone);
-    const car = clean(body.car, 40);
+    const car = clean(body.car, 60);
     const tripType = clean(body.tripType, 20);
     const address = clean(body.address, 500) || 'موقع محدد من الخريطة';
     const notes = clean(body.notes, 500);
@@ -92,6 +94,8 @@ module.exports = async function handler(req, res) {
     const bags = Number(body.bags);
     const lat = Number(body.lat);
     const lng = Number(body.lng);
+    const config = await loadConfig();
+    const allowedCars = activeVehicleNames(config);
 
     if (!name) {
       return res.status(400).json({ error: 'اكتب اسم المسافر.' });
@@ -99,8 +103,8 @@ module.exports = async function handler(req, res) {
     if (!validPhone(phone)) {
       return res.status(400).json({ error: 'رقم الهاتف غير صحيح. استخدم رقماً حقيقياً محلياً أو دولياً.' });
     }
-    if (!ALLOWED_CARS.has(car)) {
-      return res.status(400).json({ error: 'اختار نوع سيارة صحيح.' });
+    if (!allowedCars.has(car)) {
+      return res.status(400).json({ error: 'اختر سيارة متاحة حالياً من القائمة.' });
     }
     if (!TRIP_LABELS[tripType]) {
       return res.status(400).json({ error: 'اختار نوع الرحلة: مغادرة أو استقبال.' });
@@ -120,7 +124,7 @@ module.exports = async function handler(req, res) {
       createdAt,
       updatedAt: createdAt,
       status: 'new',
-      statusHistory: [{ status: 'new', at: createdAt }],
+      statusHistory: [{ type: 'created', status: 'new', at: createdAt, actor: 'website' }],
       name,
       phone,
       car,
