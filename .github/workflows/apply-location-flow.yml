@@ -1,0 +1,84 @@
+name: Apply confirmed map location flow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-location-flow.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update booking map UX
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          s = s.replace(
+            ".centerPin{position:absolute;z-index:650;left:50%;top:50%;transform:translate(-50%,-100%);pointer-events:none;font-size:31px;filter:drop-shadow(0 6px 9px rgba(0,0,0,.3))}",
+            ".centerPin{position:absolute;z-index:650;left:50%;top:50%;transform:translate(-50%,-56%);display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:auto}.pinIcon{font-size:31px;line-height:1;filter:drop-shadow(0 6px 9px rgba(0,0,0,.3));pointer-events:none}.pinConfirm{border:1px solid rgba(213,171,99,.42);background:rgba(8,20,34,.96);color:var(--gold2);border-radius:999px;padding:7px 12px;font-size:9px;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.32);cursor:pointer;white-space:nowrap}.pinConfirm:active{transform:scale(.97)}"
+          )
+
+          s = s.replace(
+            ".locationRow{display:flex;gap:8px}.locationInput{flex:1;min-height:45px;border-radius:13px;border:1px solid rgba(255,255,255,.11);background:#071523;color:#fff;padding:0 12px;outline:none}.locate{border:1px solid rgba(213,171,99,.3);background:rgba(213,171,99,.08);color:var(--gold2);border-radius:13px;padding:0 13px;font-weight:900;cursor:pointer}",
+            ".locationRow{display:flex;gap:7px}.locationInput{flex:1;min-width:0;min-height:45px;border-radius:13px;border:1px solid rgba(255,255,255,.11);background:#071523;color:#fff;padding:0 12px;outline:none}.locationInput:focus{border-color:rgba(213,171,99,.55);box-shadow:0 0 0 3px rgba(213,171,99,.08)}.searchLocation,.locate{border:1px solid rgba(213,171,99,.3);border-radius:13px;padding:0 11px;font-weight:900;cursor:pointer;min-height:45px}.searchLocation{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#151008}.locate{background:rgba(213,171,99,.08);color:var(--gold2)}.searchLocation:disabled,.locate:disabled{opacity:.6;cursor:not-allowed}"
+          )
+
+          s = s.replace(
+            ".centerPin{font-size:28px}.successGrid",
+            ".pinIcon{font-size:28px}.pinConfirm{font-size:8px;padding:7px 10px}.locationRow{gap:5px}.searchLocation,.locate{padding:0 9px;font-size:9px}.successGrid"
+          )
+
+          s = s.replace(
+            '<div class="mapWrap"><div id="map" class="map"></div><div class="mapShade"></div><div class="centerPin">📍</div></div>',
+            '<div class="mapWrap"><div id="map" class="map"></div><div class="mapShade"></div><div class="centerPin"><span class="pinIcon">📍</span><button id="confirmLocation" class="pinConfirm" type="button">تثبيت الموقع</button></div></div>'
+          )
+
+          s = s.replace(
+            '<h1>حدد موقعك</h1><p>اضغط «موقعي» حتى نحدد مكانك والعنوان بالتفصيل، أو اختار نقطة من الخريطة.</p>\n<div class="locationRow"><input id="locationText" class="locationInput" readonly placeholder="بعده ما محدد الموقع"><button id="locate" class="locate" type="button">موقعي</button></div>',
+            '<h1>وين موقع الاستلام؟</h1><p>اكتب المنطقة أو العنوان، أو استخدم «موقعي»، وبعدها حرّك الخريطة وخلي العلامة الحمراء على المكان المطلوب.</p>\n<div class="locationRow"><input id="locationText" class="locationInput" autocomplete="street-address" placeholder="اكتب المنطقة أو العنوان"><button id="searchLocation" class="searchLocation" type="button">بحث</button><button id="locate" class="locate" type="button">موقعي</button></div>'
+          )
+
+          s = s.replace(
+            "const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];const state={lat:null,lng:null,address:'',car:'',tripType:'',passengers:1,bags:0,loadingAddress:false};",
+            "const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];const state={lat:null,lng:null,address:'',car:'',tripType:'',passengers:1,bags:0,loadingAddress:false,confirmed:false,searching:false};"
+          )
+
+          s = s.replace(
+            "async function chooseLocation(lat,lng,zoom=true){state.lat=Number(lat);state.lng=Number(lng);if(zoom)map.setView([lat,lng],16);q('#sheet').classList.add('show');await reverseAddress(state.lat,state.lng)}",
+            "async function chooseLocation(lat,lng,zoom=true){state.confirmed=false;state.lat=Number(lat);state.lng=Number(lng);q('#sheet').classList.remove('show');if(zoom)map.setView([lat,lng],16);else map.panTo([lat,lng]);await reverseAddress(state.lat,state.lng)}"
+          )
+
+          s = s.replace(
+            "map.on('click',e=>chooseLocation(e.latlng.lat,e.latlng.lng,false));\nlet moveTimer;map.on('moveend',()=>{if(!q('#sheet').classList.contains('show'))return;clearTimeout(moveTimer);moveTimer=setTimeout(()=>{const c=map.getCenter();state.lat=c.lat;state.lng=c.lng;reverseAddress(c.lat,c.lng)},450)});",
+            "map.on('click',e=>map.panTo(e.latlng));\nlet moveTimer;map.on('moveend',()=>{clearTimeout(moveTimer);moveTimer=setTimeout(()=>{const c=map.getCenter();state.confirmed=false;state.lat=c.lat;state.lng=c.lng;q('#sheet').classList.remove('show');reverseAddress(c.lat,c.lng)},420)});"
+          )
+
+          marker = "qa('.car').forEach(el=>el.onclick=()=>{qa('.car').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');state.car=el.dataset.car;q('#carWarning').style.display='none'});"
+          insert = """async function searchTypedLocation(){const term=q('#locationText').value.trim(),btn=q('#searchLocation');if(term.length<2){q('#addressStatus').style.display='block';q('#addressStatus').textContent='اكتب اسم المنطقة أو العنوان أولاً.';return}btn.disabled=true;btn.textContent='...';state.searching=true;try{const r=await fetch(`/api/search-location?q=${encodeURIComponent(term)}`);const j=await r.json();if(!r.ok)throw new Error(j.error||'ما لكينا هذا العنوان.');const first=j.results&&j.results[0];if(!first)throw new Error('ما لكينا هذا العنوان.');state.address=first.address||term;q('#locationText').value=state.address;await chooseLocation(first.lat,first.lng,true)}catch(e){q('#addressStatus').style.display='block';q('#addressStatus').textContent=e.message||'تعذر البحث عن العنوان.'}finally{state.searching=false;btn.disabled=false;btn.textContent='بحث'}}\nq('#searchLocation').onclick=searchTypedLocation;q('#locationText').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchTypedLocation()}});\nq('#confirmLocation').onclick=async()=>{const c=map.getCenter();state.lat=c.lat;state.lng=c.lng;if(!state.address||state.loadingAddress)await reverseAddress(state.lat,state.lng);state.confirmed=true;q('#locationPreview').textContent=state.address||`${state.lat.toFixed(6)}, ${state.lng.toFixed(6)}`;setPane('#carPane','اختار السيارة','تم تثبيت الموقع. اختار السيارة حتى نكمل.','1 من 2');q('#sheet').classList.add('show')};\n""" + marker
+          if marker not in s:
+              raise SystemExit('car handler marker not found')
+          s = s.replace(marker, insert)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit location flow
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "feat: require location confirmation before booking"
+          git push
