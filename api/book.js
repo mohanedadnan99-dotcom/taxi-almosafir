@@ -32,10 +32,14 @@ async function telegram(method, payload, token) {
 }
 
 module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  if (req.method === 'GET') {
+    return res.status(200).json({ telegramConfigured: Boolean(token && chatId) });
+  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
   if (!token || !chatId) {
     console.error('Telegram env vars are missing');
     return res.status(503).json({ error: 'ربط التلكرام يحتاج تفعيل بيانات البوت على Vercel.' });
