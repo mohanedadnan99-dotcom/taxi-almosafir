@@ -170,6 +170,7 @@ input[type=date],input[type=time]{color-scheme:dark}
 input.err{border-color:var(--bad)}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{position:relative}
+.chip-group{flex-basis:100%;font-size:12.5px;color:var(--gold);margin-top:4px}
 .chip input{position:absolute;opacity:0;pointer-events:none}
 .chip span{display:inline-flex;align-items:center;gap:9px;padding:9px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.1);cursor:pointer;font-size:14px;transition:all .2s;background:#0d0c11}
 .chip span i{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
@@ -561,18 +562,45 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
 body.guest>header,body.guest>main,body.guest>footer{display:none}
 body.guest #fullView>.x{display:none}
 .inv-frame.off *,.screen.off *{animation-play-state:paused!important}
+.how{padding:0 0 10px}
+.how-list{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.how-list li{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px}
+.how-list li>b{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(223,195,140,.12);color:var(--gold);font-weight:700}
+.how-list h3{font-size:17px;font-weight:600}
+.how-list p{font-size:14px;color:var(--muted);line-height:1.6}
+.tier-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:8px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.tier-head h3{font-size:22px;font-weight:600}
+.tier-head span{color:var(--muted);font-size:14.5px}
+.tier-head b{color:var(--gold);font-size:17px}
+#galNormal{margin-bottom:0}
+#galStrong{margin-bottom:44px}
+.gallery{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;gap:16px!important}
+.card{padding:10px;gap:10px;border-radius:22px}
+.card .thumb{display:block;width:100%;padding:0;border:0;cursor:pointer;aspect-ratio:9/16;border-radius:15px;background:#000}
+.play-chip{position:absolute;left:10px;bottom:10px;z-index:50;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-size:12.5px;font-weight:500}
+.card .meta{display:block;padding:0 4px}
+.card .meta h3{font-size:18px}
+.card .meta small{display:block;font-size:13px;color:var(--muted);line-height:1.5}
 @media (max-width:1000px){
   .hero .wrap,.b-grid{grid-template-columns:1fr}
-  .stage{order:-1}
+  .stage{order:0;margin-top:10px}
+  .stage .phone{width:min(240px,64vw)}
   .gallery{grid-template-columns:repeat(2,1fr)}
   .preview-col{position:relative;top:0;order:-1}
-  .preview-col .phone{width:min(250px,70vw)}
+  .preview-col .phone{width:min(210px,58vw)}
   .top nav{display:none}
   .ft3{display:none}
 }
 @media (max-width:640px){
   section{padding:68px 0}
-  .gallery,.plans{grid-template-columns:1fr}
+  .plans{grid-template-columns:1fr}
+  .gallery{grid-template-columns:repeat(2,1fr)!important;gap:12px!important}
+  .card .meta h3{font-size:16px}
+  .card .meta small{font-size:12px}
+  .card .btn-sm{padding:8px 10px;font-size:13px}
+  .how-list{grid-template-columns:1fr}
+  .hero{padding-top:36px}
+  .stats{grid-template-columns:repeat(3,auto);gap:18px}
   .row2{grid-template-columns:1fr}
   .pane{padding:22px}
   .wz-foot{padding:16px 22px}
@@ -610,42 +638,46 @@ body.guest #fullView>.x{display:none}
     <div class="aurora"><i></i><i></i><i></i></div>
     <div class="wrap">
       <div>
-        <span class="eyebrow"><i></i>دعوات رقمية متحركة · العراق</span>
-        <h1><span class="big gold-text" id="bigWord">دعوتك</span><span class="rest">تنفتح بختم، وتغنّي بأغنيتك</span></h1>
-        <p class="lead">قوالب متحركة بمستوى المواقع العالمية. تختار القالب، وتكتب معلوماتك، وتختار رابطك باسمك، وتدفع أونلاين. خلال دقائق يصير عندك رابط ترسله لكل ضيوفك.</p>
+        <span class="eyebrow"><i></i>دعوات زواج وخطوبة رقمية · العراق</span>
+        <h1><span class="big gold-text" id="bigWord">دعوتك</span><span class="rest">برابط واحد ترسله لكل ضيوفك</span></h1>
+        <p class="lead">اختار قالب متحرك، اكتب الأسماء والموعد والمكان، وادفع أونلاين. يوصلك رابط خاص باسمك ترسله على واتساب، والضيف يفتح الدعوة ويشوف العدّاد والموقع.</p>
         <div class="ctas">
           <a href="#builder" class="btn btn-gold">ابدأ دعوتك الآن</a>
-          <a href="#templates" class="btn btn-ghost">شوف القوالب تتحرك</a>
+          <a href="#templates" class="btn btn-ghost">شوف القوالب</a>
         </div>
         <div class="stats">
           <div><b class="num" data-count="5000">٥٬٠٠٠</b><span>دينار للقالب العادي</span></div>
-          <div><b class="num" data-count="10000">١٠٬٠٠٠</b><span>دينار للقوي مع أغنية</span></div>
-          <div><b class="num" data-count="3">٣</b><span>دقائق وتطلع دعوتك</span></div>
+          <div><b class="num" data-count="10000">١٠٬٠٠٠</b><span>دينار للقوي مع أغنيتك</span></div>
+          <div><b class="num">٣</b><span>دقائق وتصير جاهزة</span></div>
         </div>
       </div>
       <div class="stage" id="stage">
         <div class="tilt" id="tilt"><div class="phone"><div class="screen stack" id="heroStack"></div></div></div>
-        <div class="float-tag ft1"><span class="ic"><span class="eq"><i></i><i></i><i></i><i></i></span></span><div><b>أغنيتك بالدعوة</b><span>بالقالب القوي</span></div></div>
-        <div class="float-tag ft2"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></span><div><b>عدّاد تنازلي حي</b><span>لحظة بلحظة</span></div></div>
-        <div class="float-tag ft3"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></span><div><b>رابط باسمك</b><span>تختاره بنفسك</span></div></div>
         <div class="stage-label"><b id="heroName">ملكي</b><div class="dots" id="heroDots"></div></div>
       </div>
     </div>
-    <div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
+      </section>
+
+  <section class="how" aria-label="طريقة العمل">
+    <div class="wrap">
+      <ol class="how-list">
+        <li><b>١</b><div><h3>اختار القالب</h3><p>عادي بـ ٥٬٠٠٠ أو قوي بـ ١٠٬٠٠٠ مع أغنيتك</p></div></li>
+        <li><b>٢</b><div><h3>اكتب التفاصيل</h3><p>الأسماء، التاريخ، الساعة، المكان. وتشوف الدعوة وهي تتكوّن</p></div></li>
+        <li><b>٣</b><div><h3>ادفع واستلم رابطك</h3><p>الدفع عبر Wayl، والرابط يتفعّل مباشرة</p></div></li>
+      </ol>
+    </div>
   </section>
 
   <section id="templates">
     <div class="wrap">
       <div class="sec-head">
         <div><span class="k">المجموعة</span><h2>كل قالب <em>إله حركته</em></h2></div>
-        <p>ذهب يصعد، نجوم تلمع، أوراق تتساقط، ونقوش تدور. اضغط «معاينة كاملة» وشوف الدعوة مثل ما يشوفها الضيف، من فتح الختم لآخر صفحة.</p>
+        <p>اضغط على أي قالب وشوفه كامل مثل ما يشوفه الضيف، وبعدها اختاره.</p>
       </div>
-      <div class="filters" role="tablist" aria-label="تصفية القوالب">
-        <button type="button" class="on" data-f="all">الكل</button>
-        <button type="button" data-f="normal">عادي · ٥٬٠٠٠ د.ع</button>
-        <button type="button" data-f="strong">قوي مع أغنية · ١٠٬٠٠٠ د.ع</button>
-      </div>
-      <div class="gallery" id="gallery"></div>
+      <div class="tier-head"><h3>القوالب القوية</h3><span><b class="num">١٠٬٠٠٠</b> د.ع · تفاعلية ومعها أغنيتك</span></div>
+      <div class="gallery" id="galStrong"></div>
+      <div class="tier-head"><h3>القوالب العادية</h3><span><b class="num">٥٬٠٠٠</b> د.ع · متحركة بدون أغنية</span></div>
+      <div class="gallery" id="galNormal"></div>
     </div>
   </section>
 
@@ -1046,33 +1078,30 @@ if(!RM&&matchMedia('(pointer:fine)').matches){
   stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;tilt.style.setProperty('--ry',(x*16).toFixed(1)+'deg');tilt.style.setProperty('--rx',(-y*12).toFixed(1)+'deg')});
   stage.addEventListener('pointerleave',()=>{tilt.style.setProperty('--ry','0deg');tilt.style.setProperty('--rx','0deg')});
 }
-document.getElementById('mq').innerHTML=Array(4).fill(KEYS.map(k=>`<span>${TPL[k].name}</span>`).join('')).join('');
+
 document.querySelectorAll('[data-count]').forEach(el=>{
   if(RM)return;const to=+el.dataset.count;const t0=performance.now();const dur=1600;
   (function f(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);el.textContent=money(Math.round(to*e));if(p<1)requestAnimationFrame(f)})(t0);
 });
 
 /* ---------- gallery ---------- */
-const gal=document.getElementById('gallery');
-gal.innerHTML=KEYS.map(k=>{const t=TPL[k];return `<article class="card" data-tier="${t.tier}">
-<span class="badge ${t.tier}">${t.tier==='strong'?'<span class="eq"><i></i><i></i><i></i><i></i></span>'+(t.intro?'تفاعلي · مع أغنية':'قوي · مع أغنية'):'عادي'}</span>
-<div class="thumb"><div class="inv-frame">${thumbHTML(sample(k),k)}</div><div class="hover"><button type="button" class="btn btn-gold btn-sm" data-preview="${k}">معاينة كاملة</button></div></div>
-<div class="meta"><h3>${t.name}<small>${t.desc}</small></h3><span class="pr num">${money(PRICE[t.tier])} <small>د.ع</small></span></div>
-<button class="btn btn-ghost btn-sm" type="button" data-use="${k}">استخدم هذا القالب</button></article>`}).join('');
-gal.addEventListener('click',e=>{
+const cardHTML=k=>{const t=TPL[k];return `<article class="card">
+<button type="button" class="thumb" data-preview="${k}" aria-label="معاينة قالب ${t.name}"><div class="inv-frame">${thumbHTML(sample(k),k)}</div><span class="play-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg>معاينة</span></button>
+<div class="meta"><h3>${t.name}</h3><small>${t.desc}</small></div>
+<button class="btn btn-ghost btn-sm" type="button" data-use="${k}">اختر ${t.name}</button></article>`};
+document.getElementById('galStrong').innerHTML=KEYS.filter(k=>TPL[k].tier==='strong').map(cardHTML).join('');
+document.getElementById('galNormal').innerHTML=KEYS.filter(k=>TPL[k].tier==='normal').map(cardHTML).join('');
+document.getElementById('templates').addEventListener('click',e=>{
   const u=e.target.closest('[data-use]');if(u){pickTpl(u.dataset.use);goStep(1);scrollToBuilder();return}
   const p=e.target.closest('[data-preview]');if(p)openFull(sample(p.dataset.preview),p.dataset.preview,{});
 });
-document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.filters button').forEach(x=>x.classList.toggle('on',x===b));
-  gal.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',b.dataset.f!=='all'&&c.dataset.tier!==b.dataset.f));
-}));
 document.querySelectorAll('[data-pick]').forEach(a=>a.addEventListener('click',()=>{pickTpl(a.dataset.pick);goStep(1)}));
 function scrollToBuilder(){document.getElementById('builder').scrollIntoView({behavior:RM?'auto':'smooth'})}
 
 /* ---------- form ---------- */
 const form=document.getElementById('form');
-document.getElementById('tplChips').innerHTML=KEYS.map(k=>`<label class="chip" for="tpl-${k}"><input type="radio" name="tpl" id="tpl-${k}" value="${k}"><span><i style="background:${TPL[k].sw}"></i>${TPL[k].name}<em>${TPL[k].tier==='strong'?'١٠ آلاف':'٥ آلاف'}</em></span></label>`).join('');
+const chip=k=>`<label class="chip" for="tpl-${k}"><input type="radio" name="tpl" id="tpl-${k}" value="${k}"><span><i style="background:${TPL[k].sw}"></i>${TPL[k].name}</span></label>`;
+document.getElementById('tplChips').innerHTML=`<p class="chip-group">قوية · ١٠٬٠٠٠ د.ع مع أغنية</p>${KEYS.filter(k=>TPL[k].tier==='strong').map(chip).join('')}<p class="chip-group">عادية · ٥٬٠٠٠ د.ع</p>${KEYS.filter(k=>TPL[k].tier==='normal').map(chip).join('')}`;
 document.getElementById('typeChips').innerHTML=TYPES.map(([t],i)=>`<label class="chip" for="type-${i}"><input type="radio" name="type" id="type-${i}" value="${t}"><span>${t}</span></label>`).join('');
 document.getElementById('upChips').innerHTML=KEYS.filter(k=>TPL[k].tier==='strong').map(k=>`<button type="button" class="btn btn-ghost btn-sm" data-up="${k}"><i style="width:14px;height:14px;border-radius:50%;background:${TPL[k].sw}"></i>${TPL[k].name}</button>`).join('');
 document.getElementById('upChips').addEventListener('click',e=>{const b=e.target.closest('[data-up]');if(b){pickTpl(b.dataset.up);paintStep()}});
@@ -1142,7 +1171,7 @@ function checkSlug(){
   clearTimeout(slugT);slugT=setTimeout(async()=>{
     try{const r=await fetch('/api/slug/'+encodeURIComponent(s));const j=await r.json();if(my!==slugSeq)return;
       if(j.available){slugOK=true;st.className='slug-status ok';st.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>الرابط متاح'}
-      else{slugOK=false;st.className='slug-status bad';st.textContent=(j.message||'هذا الرابط محجوز')+'، جرّب واحد من هذني:';showSugs(s)}
+      else{slugOK=false;st.className='slug-status bad';st.textContent=j.message||'هذا الرابط محجوز، جرّب واحد من الاقتراحات';showSugs(s)}
     }catch(e){if(my!==slugSeq)return;slugOK=false;st.className='slug-status bad';st.textContent='ما كدرنا نتأكد من الرابط، تأكد من الإنترنت'}
   },350);
 }
@@ -1153,7 +1182,7 @@ function checkSlugLocal(){
   sg.innerHTML='';
   if(!/^[a-z0-9](?:[a-z0-9-]{1,28})[a-z0-9]$/.test(s)||s.includes('--')){slugOK=false;st.className='slug-status bad';st.textContent=s.length<3?'الرابط لازم يكون ٣ حروف على الأقل':'استخدم حروف إنكليزية صغيرة وأرقام وشَرطة بالنص فقط';return}
   if(!LIVE&&TAKEN.includes(s)){
-    slugOK=false;st.className='slug-status bad';st.textContent='هذا الرابط محجوز، جرّب واحد من هذني:';
+    slugOK=false;st.className='slug-status bad';st.textContent='هذا الرابط محجوز، جرّب واحد من الاقتراحات';
     const y=(new Date(state.date).getFullYear())||2027;const en=(TYPES.find(t=>t[0]===state.type)||[,'party'])[1];
     sg.innerHTML=[s+'-'+y,s+'-'+en,s+'-'+(Math.random()*90+10|0)].filter(x=>!TAKEN.includes(x)).map(x=>`<button type="button" data-s="${x}">${x}</button>`).join('');
     return;

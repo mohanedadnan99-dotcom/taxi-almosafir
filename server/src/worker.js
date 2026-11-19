@@ -55,14 +55,14 @@ async function slugState(env, slug) {
 }
 function slugProblem(slug) {
   if (!SLUG_RE.test(slug) || slug.includes('--')) return 'الرابط لازم يكون من ٣ لـ ٣٠ حرف: حروف إنكليزية صغيرة وأرقام وشَرطة بالنص';
-  if (RESERVED.has(slug)) return 'هذا الاسم محجوز للموقع، اختار غيره';
+  if (RESERVED.has(slug)) return 'هذا الاسم محجوز للموقع، جرّب واحد من الاقتراحات';
   return null;
 }
 async function slugCheck(env, slug) {
   const bad = slugProblem(slug);
   if (bad) return json({ ok: true, available: false, message: bad });
   const st = await slugState(env, slug);
-  return json({ ok: true, available: !st, message: st ? 'هذا الرابط محجوز' : 'الرابط متاح' });
+  return json({ ok: true, available: !st, message: st ? 'هذا الرابط محجوز، جرّب واحد من الاقتراحات' : 'الرابط متاح' });
 }
 
 /* ---------- validation ---------- */
