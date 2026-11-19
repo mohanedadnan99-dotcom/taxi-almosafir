@@ -25,6 +25,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--night);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
@@ -552,6 +553,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
 .t-ring{--bg:radial-gradient(ellipse at 50% 35%,#6e1729,#1d060c 75%);--ink:#fbeee6;--acc:#ecc98d;--mut:#d6aeb0;--nf:'Aref Ruqaa',serif;--nameIn:nmBlur;--sweep:rgba(255,220,180,.12)}
 .st.gold{background:#ffe3a6;box-shadow:0 0 6px #ffd27a}
 
+.gate{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:var(--night);text-align:center;padding:24px}
+.gate[hidden]{display:none}
+.gate-in{display:grid;gap:14px;justify-items:center;max-width:340px}
+.gate .brand-b{font-family:var(--display);font-size:56px;line-height:1}
+.gate p{color:var(--muted)}
+body.guest>header,body.guest>main,body.guest>footer{display:none}
+body.guest #fullView>.x{display:none}
+.inv-frame.off *,.screen.off *{animation-play-state:paused!important}
 @media (max-width:1000px){
   .hero .wrap,.b-grid{grid-template-columns:1fr}
   .stage{order:-1}
@@ -723,7 +732,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
               <div class="summary" id="summary"></div>
               <label class="check" for="c1"><input type="checkbox" id="c1" class="agree"><span>شفت المعاينة كاملة وعاجبتني<small>جرّب «افتح كأنك ضيف» تحت الموبايل قبل الدفع.</small></span></label>
               <label class="check" for="c2"><input type="checkbox" id="c2" class="agree"><span>الأسماء والتاريخ والمكان صحيحة</span></label>
-              <label class="check" for="c3"><input type="checkbox" id="c3" class="agree"><span>أوافق على الشروط<small>الرابط يبقى فعّال لحد ٣٠ يوم بعد الحفل. أي تعديل بعد الدفع مجاني لحد يوم الحفل.</small></span></label>
+              <label class="check" for="c3"><input type="checkbox" id="c3" class="agree"><span>أوافق على الشروط<small>الرابط يبقى فعّال لحد ٣٠ يوم بعد الحفل. بعد الدفع ما يتغيّر محتوى الدعوة، فراجع كلشي قبل ما تدفع.</small></span></label>
               <div class="wayl-note"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg><span>الدفع أونلاين فقط عبر <b>Wayl</b>. ينفتح لك بوابة الدفع، وأول ما يتم الدفع يتفعّل رابطك تلقائيًا.</span></div>
             </div>
             <!-- done -->
@@ -739,7 +748,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
                   <button type="button" class="btn btn-ghost" id="btnOpen2">افتح الدعوة</button>
                 </div>
               </div>
-              <p class="muted-s">هذا نموذج تجريبي: الرابط والدفع يتفعّلون فعليًا بعد ربط الموقع بالخادم وحساب Wayl.</p>
+              <p class="muted-s" id="doneNote">احفظ الرابط. يبقى شغّال لحد ٣٠ يوم بعد الحفل.</p>
             </div>
           </form>
           <div class="wz-foot" id="wzFoot">
@@ -800,10 +809,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
       <div class="sec-head" style="justify-content:center;text-align:center"><div><span class="k">الأسئلة</span><h2>قبل <em>ما تبدي</em></h2></div></div>
       <div class="faq">
         <details><summary>شوكت يتفعّل الرابط؟</summary><p>أول ما يتم الدفع عبر Wayl يتفعّل رابطك مباشرة، بدون انتظار ولا مراجعة.</p></details>
-        <details><summary>أكدر أعدّل بعد الدفع؟</summary><p>إي، تعدّل الأسماء والوقت والمكان مجانًا لحد يوم الحفل، ونفس الرابط يبقى.</p></details>
+        <details><summary>أكدر أعدّل بعد الدفع؟</summary><p>محتوى الدعوة يتثبّت لحظة الدفع، لهذا نطلب منك تشوف المعاينة كاملة وتوافق عليها قبل. راجع الأسماء والتاريخ والمكان زين.</p></details>
         <details><summary>الضيف يحتاج تطبيق؟</summary><p>لا. الرابط يفتح على أي موبايل من واتساب أو إنستغرام مباشرة.</p></details>
         <details><summary>أكدر أخفي اسم العروس؟</summary><p>إي، بضغطة وحدة بالخطوة الأولى. تطلع الدعوة باسم العريس والعائلة فقط.</p></details>
-        <details><summary>شنو طرق الدفع؟</summary><p>الدفع أونلاين فقط عبر بوابة Wayl، وهي تقبل بطاقات الدفع المحلية والعالمية.</p></details>
+        <details><summary>شنو طرق الدفع؟</summary><p>الدفع أونلاين فقط عبر بوابة Wayl الآمنة: فيزا، ماستركارد وبطاقة كي. ما نحفظ بيانات بطاقتك عندنا.</p></details>
+        <details><summary>شكد يبقى الرابط شغّال؟</summary><p>من لحظة الدفع لحد ٣٠ يوم بعد موعد الحفل.</p></details>
       </div>
     </div>
   </section>
@@ -816,20 +826,25 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
   </div>
 </footer>
 
-<!-- payment (demo) -->
+<!-- payment -->
 <div class="overlay" id="payModal" role="dialog" aria-modal="true" aria-labelledby="payTitle">
   <div class="dialog">
     <button class="x" type="button" data-close aria-label="إغلاق">✕</button>
     <h3 id="payTitle">الدفع عبر Wayl</h3>
     <div class="summary" id="paySummary"></div>
-    <p class="muted-s">بالنسخة الحقيقية، هنا ينتقل الزبون لصفحة الدفع الرسمية من Wayl، وبعد نجاح الدفع يرجع للموقع ويتفعّل رابطه تلقائيًا.</p>
+    <p class="muted-s" id="payInfo">راح تنتقل لصفحة الدفع الآمنة من Wayl، تدفع بالفيزا أو الماستركارد أو بطاقة كي. أول ما يكتمل الدفع ترجع هنا ويتفعّل رابطك تلقائيًا.</p>
+    <p class="msg" id="payMsg" aria-live="polite"></p>
     <div id="payBtns" style="display:grid;gap:10px">
-      <button type="button" class="btn btn-gold" id="btnPaid">محاكاة دفع ناجح (تجريبي)</button>
-      <button type="button" class="btn btn-ghost" data-close>إلغاء</button>
+      <button type="button" class="btn btn-gold" id="btnGoPay">انتقل للدفع</button>
+      <button type="button" class="btn btn-ghost" id="btnPaid" hidden>محاكاة دفع ناجح (معاينة فقط)</button>
+      <button type="button" class="btn btn-ghost" data-close>رجوع</button>
     </div>
-    <div id="payWait" style="display:none;text-align:center"><div class="spinner"></div><p class="muted-s">ننتظر تأكيد الدفع…</p></div>
+    <div id="payWait" style="display:none;text-align:center"><div class="spinner"></div><p class="muted-s" id="payWaitTxt">ننتظر تأكيد الدفع…</p></div>
   </div>
 </div>
+
+<!-- guest loading / not found -->
+<div class="gate" id="gate" hidden><div class="gate-in"><b class="gold-text brand-b">نقش</b><div class="spinner" id="gateSpin"></div><p id="gateTxt">نجهّز دعوتك…</p><a href="/" class="btn btn-gold btn-sm" id="gateHome" hidden>اصنع دعوتك من نقش</a></div></div>
 
 <!-- full guest view -->
 <div class="overlay full" id="fullView" role="dialog" aria-modal="true" aria-label="الدعوة كما يراها الضيف">
@@ -841,7 +856,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 (function(){
-const DOMAIN='naqsh.j8ji.com';
+let LIVE=false;
+let DOMAIN='naqsh.j8ji.com';
+const PATH=location.pathname.replace(/\/+$/,'');
+const QS=new URLSearchParams(location.search);
+const GUEST_SLUG=(location.protocol.startsWith('http')&&/^\/[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/.test(PATH)&&!/\.html$/.test(PATH)&&PATH!=='/paid')?PATH.slice(1):null;
+const PAID_REF=QS.get('referenceId')||(PATH==='/paid'?QS.get('ref'):null);
 const PRICE={normal:5000,strong:10000};
 const TPL={
   door:{name:'طَرقة',desc:'اطرق ٣ مرات وينفتح الباب',tier:'strong',intro:'door',sw:'linear-gradient(135deg,#6b4220 50%,#efe3cb 50%)'},
@@ -1017,6 +1037,7 @@ big.innerHTML='<span class="gold-text" style="display:inline-block;animation:let
 const hs=document.getElementById('heroStack'),hd=document.getElementById('heroDots'),hn=document.getElementById('heroName');
 hs.innerHTML=KEYS.map((k,i)=>`<div class="inv-frame ${i?'':'on'}">${thumbHTML(sample(k),k)}</div>`).join('');
 hd.innerHTML=KEYS.map((k,i)=>`<i class="${i?'':'on'}"></i>`).join('');
+hn.textContent=TPL[KEYS[0]].name;
 let hi=0;
 function heroGo(n){hi=n;[...hs.children].forEach((c,i)=>{c.classList.toggle('on',i===hi);if(i===hi&&!hasIntro(KEYS[i])){const cv=c.querySelector('.cover');cv.classList.remove('in');void cv.offsetWidth;cv.classList.add('in')}});[...hd.children].forEach((c,i)=>c.classList.toggle('on',i===hi));hn.textContent=TPL[KEYS[hi]].name}
 if(!RM)setInterval(()=>heroGo((hi+1)%KEYS.length),4200);
@@ -1040,7 +1061,7 @@ gal.innerHTML=KEYS.map(k=>{const t=TPL[k];return `<article class="card" data-tie
 <button class="btn btn-ghost btn-sm" type="button" data-use="${k}">استخدم هذا القالب</button></article>`}).join('');
 gal.addEventListener('click',e=>{
   const u=e.target.closest('[data-use]');if(u){pickTpl(u.dataset.use);goStep(1);scrollToBuilder();return}
-  const p=e.target.closest('[data-preview]');if(p)openFull(sample(p.dataset.preview),p.dataset.preview,false);
+  const p=e.target.closest('[data-preview]');if(p)openFull(sample(p.dataset.preview),p.dataset.preview,{});
 });
 document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.filters button').forEach(x=>x.classList.toggle('on',x===b));
@@ -1112,13 +1133,26 @@ function autoSlug(){
   document.getElementById('f-slug').value=state.slug;checkSlug();
 }
 const TAKEN=['ali-maryam','ahmed-noor','hussein-zahraa','test','admin','www','api','invite'];
-let slugOK=false;
+let slugOK=false,slugT=null,slugSeq=0;
 function checkSlug(){
+  checkSlugLocal();
+  if(!LIVE||!slugOK)return;
+  const s=state.slug,st=document.getElementById('slugStatus'),my=++slugSeq;
+  slugOK=false;st.className='slug-status';st.textContent='نتأكد من الرابط…';
+  clearTimeout(slugT);slugT=setTimeout(async()=>{
+    try{const r=await fetch('/api/slug/'+encodeURIComponent(s));const j=await r.json();if(my!==slugSeq)return;
+      if(j.available){slugOK=true;st.className='slug-status ok';st.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>الرابط متاح'}
+      else{slugOK=false;st.className='slug-status bad';st.textContent=(j.message||'هذا الرابط محجوز')+'، جرّب واحد من هذني:';showSugs(s)}
+    }catch(e){if(my!==slugSeq)return;slugOK=false;st.className='slug-status bad';st.textContent='ما كدرنا نتأكد من الرابط، تأكد من الإنترنت'}
+  },350);
+}
+function showSugs(s){const y=(new Date(state.date).getFullYear())||2027;const en=(TYPES.find(t=>t[0]===state.type)||[,'party'])[1];document.getElementById('sugs').innerHTML=[s+'-'+y,s+'-'+en,s+'-'+(Math.random()*90+10|0)].filter(x=>x.length<=30&&!TAKEN.includes(x)).map(x=>`<button type="button" data-s="${x}">${x}</button>`).join('')}
+function checkSlugLocal(){
   const s=state.slug,st=document.getElementById('slugStatus'),sg=document.getElementById('sugs');
   document.getElementById('slugPreview').textContent='https://'+DOMAIN+'/'+(s||'…');
   sg.innerHTML='';
   if(!/^[a-z0-9](?:[a-z0-9-]{1,28})[a-z0-9]$/.test(s)||s.includes('--')){slugOK=false;st.className='slug-status bad';st.textContent=s.length<3?'الرابط لازم يكون ٣ حروف على الأقل':'استخدم حروف إنكليزية صغيرة وأرقام وشَرطة بالنص فقط';return}
-  if(TAKEN.includes(s)){
+  if(!LIVE&&TAKEN.includes(s)){
     slugOK=false;st.className='slug-status bad';st.textContent='هذا الرابط محجوز، جرّب واحد من هذني:';
     const y=(new Date(state.date).getFullYear())||2027;const en=(TYPES.find(t=>t[0]===state.type)||[,'party'])[1];
     sg.innerHTML=[s+'-'+y,s+'-'+en,s+'-'+(Math.random()*90+10|0)].filter(x=>!TAKEN.includes(x)).map(x=>`<button type="button" data-s="${x}">${x}</button>`).join('');
@@ -1141,7 +1175,7 @@ function setSong(file){
   if(file.size>15*1024*1024){m.textContent='حجم الأغنية أكبر من ١٥ ميغا، اختار ملف أصغر';return}
   m.textContent='';
   if(music.url)URL.revokeObjectURL(music.url);
-  music.url=URL.createObjectURL(file);music.name=file.name;music.size=file.size;music.start=0;
+  music.url=URL.createObjectURL(file);music.file=file;music.name=file.name;music.size=file.size;music.start=0;
   pv.src=music.url;
   pv.onloadedmetadata=()=>{music.dur=pv.duration||0;startIn.max=Math.max(0,Math.floor(music.dur-10));document.getElementById('songMeta').textContent='المدة '+fmtT(music.dur)+' · '+num((file.size/1048576).toFixed(1))+' ميغا'};
   startIn.value=0;document.getElementById('startLbl').textContent=fmtT(0);
@@ -1158,7 +1192,7 @@ function pvUI(p){playIc.innerHTML=p?'<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>':'<p
 document.getElementById('btnPlay').addEventListener('click',()=>{
   if(pv.paused){pv.currentTime=music.start;pv.play().then(()=>pvUI(true)).catch(()=>{document.getElementById('msg').textContent='المتصفح ما سمح بالتشغيل، جرّب مرة ثانية'})}else{pv.pause();pvUI(false)}
 });
-document.getElementById('btnRemove').addEventListener('click',()=>{pv.pause();pvUI(false);if(music.url)URL.revokeObjectURL(music.url);music.url=null;music.name='';tc.classList.remove('on');drop.style.display='';songIn.value=''});
+document.getElementById('btnRemove').addEventListener('click',()=>{pv.pause();pvUI(false);if(music.url)URL.revokeObjectURL(music.url);music.url=null;music.file=null;music.name='';tc.classList.remove('on');drop.style.display='';songIn.value=''});
 
 /* ---------- wizard ---------- */
 const bar=document.getElementById('bar'),btnNext=document.getElementById('btnNext'),btnBack=document.getElementById('btnBack'),msg=document.getElementById('msg');
@@ -1199,37 +1233,77 @@ btnNext.addEventListener('click',()=>{
   if(step===1){if(!validate1())return;goStep(2)}
   else if(step===2)goStep(3)
   else if(step===3){if(!slugOK){msg.textContent='اختار رابط متاح أولًا';return}goStep(4)}
-  else if(step===4){document.getElementById('paySummary').innerHTML=summaryHTML();document.getElementById('payBtns').style.display='grid';document.getElementById('payWait').style.display='none';open('payModal')}
+  else if(step===4){document.getElementById('paySummary').innerHTML=summaryHTML();document.getElementById('payBtns').style.display='grid';document.getElementById('payWait').style.display='none';document.getElementById('payMsg').textContent='';
+    document.getElementById('btnPaid').hidden=LIVE;
+    document.getElementById('btnGoPay').textContent=LIVE?'ادفع '+money(PRICE[tier()])+' د.ع عبر Wayl':'الدفع يشتغل على الموقع الرسمي';
+    document.getElementById('btnGoPay').disabled=!LIVE;
+    open('payModal')}
 });
 btnBack.addEventListener('click',()=>goStep(Math.max(1,step-1)));
 form.querySelector('[data-go="3"]').addEventListener('click',()=>goStep(3));
 paintStep();
 
-/* ---------- payment (demo) + success ---------- */
+/* ---------- payment + success ---------- */
 let finalURL='';
+const payMsg=document.getElementById('payMsg');
+function waitUI(on,txt){document.getElementById('payBtns').style.display=on?'none':'grid';document.getElementById('payWait').style.display=on?'block':'none';if(txt)document.getElementById('payWaitTxt').textContent=txt}
+function showSuccess(slug,info){
+  finalURL=(LIVE?location.origin:'https://'+DOMAIN)+'/'+slug;
+  document.getElementById('finalLink').textContent=finalURL.replace(/^https?:\/\//,'');
+  const fam=info&&info.family||state.family,typ=info&&info.type||state.type,gr=info&&info.groom||state.groom;
+  const txt=`${fam} يتشرّفون بدعوتكم لحضور حفل ${typ} ${gr}\nافتح الدعوة: ${finalURL}`;
+  document.getElementById('btnWa').href='https://wa.me/?text='+encodeURIComponent(txt);
+  const q=document.getElementById('qr');q.innerHTML='';q.style.display='';
+  try{new QRCode(q,{text:finalURL,width:240,height:240,colorDark:'#0c0b0f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){q.style.display='none'}
+  document.getElementById('btnOpen2').onclick=()=>{if(LIVE)location.href=finalURL;else openFull(state,state.tpl,{song:music.url,start:music.start})};
+  goStep(5);
+  setTimeout(()=>document.querySelector('.wiz').scrollIntoView({block:'start'}),60);
+  bar.querySelectorAll('li').forEach(li=>{li.classList.remove('on');li.classList.add('done');li.querySelector('b').textContent='✓'});
+}
 document.getElementById('btnPaid').addEventListener('click',()=>{
-  document.getElementById('payBtns').style.display='none';document.getElementById('payWait').style.display='block';
-  setTimeout(()=>{
-    close(document.getElementById('payModal'));
-    finalURL='https://'+DOMAIN+'/'+state.slug;
-    document.getElementById('finalLink').textContent=finalURL.replace('https://','');
-    const txt=`${state.family} يتشرّفون بدعوتكم لحضور حفل ${state.type} ${state.groom}\nافتح الدعوة: ${finalURL}`;
-    document.getElementById('btnWa').href='https://wa.me/?text='+encodeURIComponent(txt);
-    const q=document.getElementById('qr');q.innerHTML='';q.style.display='';
-    try{new QRCode(q,{text:finalURL,width:240,height:240,colorDark:'#0c0b0f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){q.style.display='none'}
-    goStep(5);
-    bar.querySelectorAll('li').forEach(li=>{li.classList.remove('on');li.classList.add('done');li.querySelector('b').textContent='✓'});
-  },1400);
+  waitUI(true,'محاكاة الدفع…');
+  setTimeout(()=>{close(document.getElementById('payModal'));waitUI(false);showSuccess(state.slug)},1200);
 });
+document.getElementById('btnGoPay').addEventListener('click',async()=>{
+  if(!LIVE)return;
+  payMsg.textContent='';waitUI(true,'نجهّز صفحة الدفع…');
+  try{
+    const fd=new FormData();
+    const strong=tier()==='strong';
+    fd.append('data',JSON.stringify({tpl:state.tpl,type:state.type,family:state.family,groom:state.groom,bride:state.bride,hideBride:state.hideBride,date:state.date,time:state.time,venue:state.venue,area:state.area,note:state.note,verse:state.verse,countdown:state.countdown,slug:state.slug,songStart:music.start||0}));
+    if(strong&&music.file){waitUI(true,'نرفع أغنيتك…');fd.append('song',music.file,music.file.name)}
+    const r=await fetch('/api/orders',{method:'POST',body:fd});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok||!j.url)throw new Error(j.message||'ما كدرنا نفتح الدفع، حاول مرة ثانية');
+    try{localStorage.setItem('naqsh-draft',JSON.stringify({state,ref:j.ref}))}catch(e){}
+    waitUI(true,'ننقلك لصفحة الدفع…');
+    location.href=j.url;
+  }catch(e){waitUI(false);payMsg.textContent=e.message||'صار خطأ، حاول مرة ثانية';if(/محجوز/.test(e.message||'')){close(document.getElementById('payModal'));goStep(3);state.slugTouched=true;checkSlug()}}
+});
+async function confirmPayment(ref){
+  try{const d=JSON.parse(localStorage.getItem('naqsh-draft')||'null');if(d&&d.state)Object.assign(state,d.state)}catch(e){}
+  history.replaceState(null,'','/');
+  document.getElementById('paySummary').innerHTML='';open('payModal');waitUI(true,'نتأكد من دفعك مع Wayl…');
+  document.getElementById('payTitle').textContent='تأكيد الدفع';document.getElementById('payInfo').hidden=true;
+  for(let i=0;i<30;i++){
+    try{
+      const r=await fetch('/api/orders/'+encodeURIComponent(ref));const j=await r.json();
+      if(j.ok&&j.status==='paid'){try{localStorage.removeItem('naqsh-draft')}catch(e){}close(document.getElementById('payModal'));document.getElementById('builder').scrollIntoView();showSuccess(j.slug,j);return}
+      if(j.ok&&j.status==='failed'){waitUI(false);payMsg.textContent='الدفع ما اكتمل أو انلغى. ما انسحب منك شي، وتكدر تحاول مرة ثانية.';document.getElementById('btnGoPay').textContent='حاول الدفع مرة ثانية';document.getElementById('btnGoPay').disabled=false;goStep(4);return}
+      if(!j.ok&&r.status===404){waitUI(false);payMsg.textContent='ما لگينا هذا الطلب.';return}
+    }catch(e){}
+    await new Promise(res=>setTimeout(res,i<10?2000:4000));
+  }
+  waitUI(false);payMsg.textContent='ما وصلنا تأكيد الدفع لحد هسه. إذا دفعت، انتظر دقيقة وحدّث الصفحة. رقم طلبك: '+ref;
+}
 document.getElementById('btnCopy').addEventListener('click',async function(){
   try{await navigator.clipboard.writeText(finalURL);this.textContent='تم النسخ ✓'}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById('finalLink'));const s=getSelection();s.removeAllRanges();s.addRange(r);this.textContent='انسخه يدويًا'}
 });
-document.getElementById('btnOpen2').addEventListener('click',()=>openFull(state,state.tpl,true));
-document.getElementById('btnFull').addEventListener('click',()=>openFull(state,state.tpl,true));
+document.getElementById('btnFull').addEventListener('click',()=>openFull(state,state.tpl,{song:music.url,start:music.start}));
 
 /* ---------- overlays ---------- */
 function open(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
-function close(el){el.classList.remove('open');if(el.id==='fullView')stopGuestMusic();if(!document.querySelector('.overlay.open'))document.body.style.overflow=''}
+function close(el){if(el.id==='fullView'&&document.body.classList.contains('guest'))return;el.classList.remove('open');if(el.id==='fullView')stopGuestMusic();if(!document.querySelector('.overlay.open'))document.body.style.overflow=''}
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o||e.target.closest('[data-close]'))close(o)}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(close)});
 
@@ -1240,16 +1314,16 @@ function fadeTo(v,ms,done){clearInterval(fadeT);const from=guest.volume,t0=perfo
 function stopGuestMusic(){clearInterval(fadeT);guest.pause();mBtn.classList.remove('on')}
 function mUI(p){mEq.classList.toggle('off',!p);mTxt.textContent=p?'إيقاف الأغنية':'تشغيل الأغنية'}
 mBtn.addEventListener('click',()=>{if(guest.paused){guest.volume=0;guest.play().then(()=>{fadeTo(.7,1200);mUI(true)}).catch(()=>{})}else{fadeTo(0,500,()=>guest.pause());mUI(false)}});
-function openFull(s,k,withMusic){
+function openFull(s,k,o={}){
   if(!pv.paused){pv.pause();pvUI(false)}
   const t=TPL[k];
   ff.innerHTML=invite(s,k,{cold:true})+intro(s,k,false);
   const op=ff.querySelector('.opener');
-  const useMusic=withMusic&&t.tier==='strong'&&music.url;
+  const useMusic=t.tier==='strong'&&o.song;
   mBtn.classList.remove('on');stopGuestMusic();
-  if(useMusic)guest.src=music.url;
+  if(useMusic){guest.src=o.song;guest.preload='auto';try{guest.load()}catch(e){}}
   let started=false;
-  const startMusic=()=>{if(!useMusic||started)return;started=true;guest.currentTime=music.start;guest.volume=0;mBtn.classList.add('on');guest.play().then(()=>{fadeTo(.7,2500);mUI(true)}).catch(()=>mUI(false))};
+  const startMusic=()=>{if(!useMusic||started)return;started=true;try{guest.currentTime=o.start||0}catch(e){};guest.volume=0;mBtn.classList.add('on');guest.play().then(()=>{fadeTo(.7,2500);mUI(true)}).catch(()=>mUI(false))};
   const reveal=d=>{setTimeout(()=>{op.classList.add('reveal');const c=ff.querySelector('.cover');c&&c.classList.add('in')},d);setTimeout(()=>op.classList.add('gone'),d+1700)};
   const kind=t.intro||'seal';
   if(kind==='door'){
@@ -1269,6 +1343,36 @@ function openFull(s,k,withMusic){
   open('fullView');tick();
   setTimeout(()=>op.focus({preventScroll:true}),50);
 }
+
+/* ---------- pause animations that are off screen (speed) ---------- */
+if('IntersectionObserver' in window){
+  const vis=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('off',!e.isIntersecting)),{rootMargin:'120px'});
+  document.querySelectorAll('.card .inv-frame,#heroStack,#livePreview').forEach(el=>vis.observe(el));
+  const hv=new IntersectionObserver(es=>es.forEach(e=>{document.querySelectorAll('#heroStack>.inv-frame').forEach(f=>{if(!e.isIntersecting)f.classList.add('off');else f.classList.remove('off')})}),{});
+  hv.observe(document.getElementById('heroStack'));
+}
+
+/* ---------- boot: live server, guest page, payment return ---------- */
+const gate=document.getElementById('gate');
+function gateMsg(t,home){document.getElementById('gateTxt').textContent=t;document.getElementById('gateSpin').hidden=!!home;document.getElementById('gateHome').hidden=!home}
+async function guestBoot(slug){
+  document.body.classList.add('guest');gate.hidden=false;
+  try{
+    const r=await fetch('/api/invite/'+slug);const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok)throw new Error(j.message||'الدعوة غير موجودة أو انتهت مدتها');
+    const inv=Object.assign({},DEF,j.invite);
+    document.title='دعوة '+inv.family+' · '+inv.groom;
+    gate.hidden=true;
+    openFull(inv,TPL[inv.tpl]?inv.tpl:'royal',{song:inv.hasSong?'/api/song/'+slug:null,start:inv.songStart||0,guest:true});
+  }catch(e){gateMsg(e.message||'الدعوة غير موجودة',true)}
+}
+(async function boot(){
+  if(GUEST_SLUG){guestBoot(GUEST_SLUG);return}
+  if(location.protocol.startsWith('http')){
+    try{const r=await fetch('/api/health',{cache:'no-store'});const j=await r.json();if(j.ok&&j.payments){LIVE=true;DOMAIN=location.host;document.getElementById('domainLbl').textContent=DOMAIN+'/';checkSlug();paintStep()}}catch(e){}
+  }
+  if(LIVE&&PAID_REF)confirmPayment(PAID_REF);
+})();
 })();
 </script>
 </body>
