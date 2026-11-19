@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>نقش · دعوات رقمية</title>
+<!--OG--><meta property="og:type" content="website"><meta property="og:site_name" content="نقش"><meta property="og:title" content="نقش · دعوات رقمية متحركة لكل مناسبة"><meta property="og:description" content="اختار قالب متحرك، اكتب التفاصيل، وادفع أونلاين. يوصلك رابط دعوة فخم ترسله لكل ضيوفك. من ٥٬٠٠٠ د.ع."><meta property="og:image" content="https://naqsh.mohanedadnan99.workers.dev/og/home.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="description" content="دعوات رقمية متحركة لكل مناسبة: أعراس، أعياد ميلاد، تخرّج، افتتاح ومؤتمرات. من ٥٬٠٠٠ د.ع."><!--/OG-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=El+Messiri:wght@400;600;700&family=Reem+Kufi:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -643,6 +644,38 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
 @media (max-width:640px){.pp-tiles{grid-template-columns:repeat(2,1fr)}.pp-gen{flex-direction:column}}
 #wiz{scroll-margin-top:80px}
 .wiz-preview{display:none}
+/* occasions, song section */
+.subl{font-size:.95em;color:var(--mut);margin-top:-.2em;max-width:18em}
+.inv[dir=ltr] .nm{font-family:'Amiri',serif}
+.ytbox{width:100%;max-width:17em;pointer-events:auto}
+.ytslot{position:relative;width:100%;aspect-ratio:16/9;min-height:200px;border-radius:.8em;overflow:hidden;border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);background:#000;cursor:pointer}
+.ytslot img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.ytslot iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytplay{position:absolute;left:50%;top:50%;width:3.2em;height:3.2em;margin:-1.6em;border-radius:50%;display:grid;place-items:center;background:var(--acc);color:var(--btnInk,#111)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:999px;background:#0d0c11;border:1px solid var(--line)}
+.seg button{border:0;border-radius:999px;padding:10px;font:inherit;font-size:14px;cursor:pointer;background:transparent;color:var(--muted)}
+.seg button.on{background:var(--gold);color:#1a140a;font-weight:600}
+.ytprev{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
+.ytprev iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.occ-chips .chip-group{margin-top:2px}
+.chip.dis span{opacity:.3;pointer-events:none}
+.hdr-actions{display:flex;gap:8px;align-items:center}
+.own-row{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
+.own-row b{display:block;font-size:15px}
+.own-row span{font-size:13px;color:var(--muted)}
+.own-row em{font-style:normal}
+.foot-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.wa-float{position:fixed;left:18px;bottom:18px;z-index:45;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#25d366;color:#fff;box-shadow:0 10px 30px -8px rgba(0,0,0,.6)}
+.mine-list{display:grid;gap:10px}
+.mine-item{border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;background:#0d0c11}
+.mine-item b{font-size:15px}
+.mine-item .ltr{direction:ltr;text-align:right;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--gold);word-break:break-all}
+.terms ol{display:grid;gap:10px;padding-inline-start:20px;font-size:14.5px;color:#d9d3c8}
+.pay-steps{font-size:14px;color:var(--muted);display:grid;gap:8px}
+.pay-steps ol{display:grid;gap:6px;padding-inline-start:20px;color:var(--text)}
+.pay-steps b{color:var(--text)}
+.edit-banner{display:none;padding:12px 16px;background:rgba(94,211,154,.1);border-bottom:1px solid rgba(94,211,154,.3);color:var(--ok);font-size:14px;text-align:center}
+body.edit-mode .edit-banner{display:block}
 @media (max-width:1000px){
   .preview-col{display:none!important}
   .wiz-preview{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border:0;border-bottom:1px solid var(--line);background:rgba(223,195,140,.07);color:var(--gold);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer}
@@ -699,7 +732,7 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
       <a href="#pricing">الأسعار</a>
       <a href="#faq">الأسئلة</a>
     </nav>
-    <a href="#builder" class="btn btn-gold btn-sm">اصنع دعوتك</a>
+    <div class="hdr-actions"><button type="button" class="btn btn-ghost btn-sm" id="btnMine">طلباتي</button><a href="#builder" class="btn btn-gold btn-sm">اصنع دعوتك</a></div>
   </div>
 </header>
 
@@ -708,7 +741,7 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
     <div class="aurora"><i></i><i></i><i></i></div>
     <div class="wrap">
       <div>
-        <span class="eyebrow"><i></i>دعوات زواج وخطوبة رقمية · العراق</span>
+        <span class="eyebrow"><i></i>دعوات رقمية لكل مناسبة · العراق</span>
         <h1><span class="big gold-text" id="bigWord">دعوتك</span><span class="rest">برابط واحد ترسله لكل ضيوفك</span></h1>
         <p class="lead">اختار قالب متحرك، اكتب الأسماء والموعد والمكان، وادفع أونلاين. يوصلك رابط خاص باسمك ترسله على واتساب، والضيف يفتح الدعوة ويشوف العدّاد والموقع.</p>
         <div class="ctas">
@@ -718,7 +751,7 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
         <div class="stats">
           <div><b class="num" data-count="5000">٥٬٠٠٠</b><span>الباقة الفضية</span></div>
           <div><b class="num" data-count="10000">١٠٬٠٠٠</b><span>الذهبية مع أغنيتك</span></div>
-          <div><b class="num" data-count="15000">١٥٬٠٠٠</b><span>الماسية الخرافية</span></div>
+          <div><b class="num" data-count="20000">٢٠٬٠٠٠</b><span>الماسية الخرافية</span></div>
         </div>
       </div>
       <div class="stage" id="stage">
@@ -744,9 +777,9 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
         <div><span class="k">المجموعة</span><h2>كل قالب <em>إله حركته</em></h2></div>
         <p>اضغط على أي قالب وشوفه كامل مثل ما يشوفه الضيف، وبعدها اختاره.</p>
       </div>
-      <div class="tier-head diamond"><h3>الباقة الماسية</h3><span><b class="num">١٥٬٠٠٠</b> د.ع · مشاهد خرافية، أغنيتك، اسم كل ضيف، وتأكيد الحضور</span></div>
+      <div class="tier-head diamond"><h3>الباقة الماسية</h3><span><b class="num">٢٠٬٠٠٠</b> د.ع · مشاهد خرافية، أغنيتك، اسم كل ضيف، وتأكيد الحضور</span></div>
       <div class="gallery" id="galDiamond"></div>
-      <div class="tier-head"><h3>الباقة الذهبية</h3><span><b class="num">١٠٬٠٠٠</b> د.ع · قوالب تفاعلية ومعها أغنيتك</span></div>
+      <div class="tier-head"><h3>الباقة الذهبية</h3><span><b class="num">١٠٬٠٠٠</b> د.ع · قوالب تفاعلية، أغنيتك، وتأكيد الحضور</span></div>
       <div class="gallery" id="galGold"></div>
       <div class="tier-head"><h3>الباقة الفضية</h3><span><b class="num">٥٬٠٠٠</b> د.ع · قوالب متحركة بدون أغنية</span></div>
       <div class="gallery" id="galSilver"></div>
@@ -762,6 +795,7 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
       <div class="b-grid">
         <div class="wiz" id="wiz">
           <button type="button" class="wiz-preview" id="btnFullM"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>شوف دعوتك هسه <span id="wizTpl"></span></button>
+          <div class="edit-banner" id="editBanner">وضع التعديل</div>
           <ol class="bar" id="bar">
             <li data-s="1"><b>١</b>التصميم</li>
             <li data-s="2"><b>٢</b>الأغنية</li>
@@ -771,38 +805,51 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
           <form id="form" autocomplete="off" novalidate>
             <!-- step 1 -->
             <div class="pane" data-pane="1">
-              <div class="fgroup"><span class="lab">القالب</span><div class="chips" id="tplChips"></div></div>
-              <div class="fgroup"><span class="lab">نوع المناسبة</span><div class="chips" id="typeChips"></div></div>
-              <div class="fgroup"><label for="f-family">العائلة الداعية</label><input type="text" id="f-family" name="family" maxlength="40"></div>
+              <div class="fgroup"><span class="lab">المناسبة</span><div class="chips occ-chips" id="typeChips"></div></div>
+              <div class="fgroup"><span class="lab">القالب</span><div class="chips" id="tplChips"></div><p class="muted-s" id="mournNote" hidden>لمجلس الفاتحة تظهر القوالب الهادئة بس، وبدون أغنية أو عدّاد.</p></div>
+              <div class="fgroup"><label for="f-family" id="l-family">العائلة الداعية</label><input type="text" id="f-family" name="family" maxlength="50"></div>
               <div class="row2">
-                <div class="fgroup"><label for="f-groom">اسم العريس</label><input type="text" id="f-groom" name="groom" maxlength="20"></div>
-                <div class="fgroup"><label for="f-bride">اسم العروس</label><input type="text" id="f-bride" name="bride" maxlength="20"></div>
+                <div class="fgroup"><label for="f-groom" id="l-groom">اسم العريس</label><input type="text" id="f-groom" name="groom" maxlength="40"></div>
+                <div class="fgroup"><label for="f-bride" id="l-bride">اسم العروس</label><input type="text" id="f-bride" name="bride" maxlength="40"></div>
               </div>
               <div class="row2">
                 <div class="fgroup"><label for="f-date">التاريخ</label><input type="date" id="f-date" name="date"></div>
                 <div class="fgroup"><label for="f-time">الساعة</label><input type="time" id="f-time" name="time"></div>
               </div>
               <div class="row2">
-                <div class="fgroup"><label for="f-venue">القاعة أو المكان</label><input type="text" id="f-venue" name="venue" maxlength="32"></div>
-                <div class="fgroup"><label for="f-area">المنطقة</label><input type="text" id="f-area" name="area" maxlength="40"></div>
+                <div class="fgroup"><label for="f-venue">القاعة أو المكان</label><input type="text" id="f-venue" name="venue" maxlength="40"></div>
+                <div class="fgroup"><label for="f-area">المنطقة</label><input type="text" id="f-area" name="area" maxlength="50"></div>
               </div>
-              <div class="fgroup"><label for="f-note">كلمة ختامية</label><textarea id="f-note" name="note" maxlength="80"></textarea></div>
+              <div class="fgroup"><label for="f-note">كلمة ختامية</label><textarea id="f-note" name="note" maxlength="100"></textarea></div>
+              <div class="fgroup"><span class="lab">سطر البركة بالدعوة</span><div class="chips">
+                <label class="chip" for="vm-q"><input type="radio" name="verseMode" id="vm-q" value="quran"><span>آية قرآنية</span></label>
+                <label class="chip" for="vm-g"><input type="radio" name="verseMode" id="vm-g" value="general"><span>عبارة عامة</span></label>
+                <label class="chip" for="vm-n"><input type="radio" name="verseMode" id="vm-n" value="none"><span>بدون</span></label></div></div>
+              <div class="fgroup"><span class="lab">لغة الدعوة</span><div class="chips">
+                <label class="chip" for="lg-ar"><input type="radio" name="lang" id="lg-ar" value="ar"><span>العربية</span></label>
+                <label class="chip" for="lg-ku"><input type="radio" name="lang" id="lg-ku" value="ku"><span>کوردی</span></label>
+                <label class="chip" for="lg-en"><input type="radio" name="lang" id="lg-en" value="en"><span>English</span></label></div>
+                <p class="muted-s">الأسماء تنكتب مثل ما تكتبها إنت، واللغة تغيّر كلمات الدعوة نفسها.</p></div>
               <div class="toggles">
-                <label class="tog" for="f-hide"><input type="checkbox" id="f-hide" name="hideBride">إخفاء اسم العروس</label>
-                <label class="tog" for="f-verse"><input type="checkbox" id="f-verse" name="verse">البسملة والآية</label>
-                <label class="tog" for="f-count"><input type="checkbox" id="f-count" name="countdown">العدّاد التنازلي</label>
+                <label class="tog" for="f-hide" id="t-hide"><input type="checkbox" id="f-hide" name="hideBride">إخفاء اسم العروس</label>
+                <label class="tog" for="f-count" id="t-count"><input type="checkbox" id="f-count" name="countdown">العدّاد التنازلي</label>
               </div>
             </div>
             <!-- step 2 -->
             <div class="pane" data-pane="2">
               <div class="lock" id="musicLock">
                 <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-                <h3>الأغنية متوفرة بالباقة الذهبية والماسية</h3>
-                <p>قالبك الحالي من الباقة الفضية. اختار قالب ذهبي (١٠٬٠٠٠ د.ع) أو ماسي (١٥٬٠٠٠ د.ع)، وأغنيتك تشتغل أول ما الضيف يفتح الدعوة.</p>
+                <h3 id="lockTitle">الأغنية متوفرة بالباقة الذهبية والماسية</h3>
+                <p id="lockText">قالبك الحالي من الباقة الفضية. اختار قالب ذهبي (١٠٬٠٠٠ د.ع) أو ماسي (٢٠٬٠٠٠ د.ع)، وأغنيتك تشتغل أول ما الضيف يفتح الدعوة.</p>
                 <div class="chips" id="upChips"></div>
-                <button type="button" class="linkbtn" data-go="3">أكمل بدون أغنية</button>
+                <button type="button" class="linkbtn" data-go="3" id="skipSong">أكمل بدون أغنية</button>
               </div>
               <div id="musicOpen" style="display:grid;gap:18px">
+                <div class="seg" role="tablist" aria-label="مصدر الأغنية">
+                  <button type="button" class="on" data-src="file">ارفع ملف</button>
+                  <button type="button" data-src="yt">رابط يوتيوب</button>
+                </div>
+                <div id="srcFile" style="display:grid;gap:18px">
                 <label class="drop" id="drop" for="f-song">
                   <input type="file" id="f-song" accept="audio/*">
                   <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 16V4m0 0l-5 5m5-5l5 5M4 20h16"/></svg></span>
@@ -818,7 +865,19 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
                   <div class="fgroup"><label for="f-start">تبدأ الأغنية من: <b id="startLbl" class="num">٠:٠٠</b></label><input type="range" id="f-start" min="0" max="60" step="1" value="0"></div>
                   <button type="button" class="linkbtn" id="btnRemove" style="justify-self:start">حذف الأغنية</button>
                 </div>
-                <p class="muted-s">الأغنية تشتغل بهدوء أول ما الضيف يضغط على الختم، ويكدر يطفيها من الزر اللي فوك. اختار الثانية اللي تبدي منها، مثلًا من الكورس.</p>
+                <p class="muted-s">الملف هو الأضمن: يشتغل لوحده أول ما الضيف يفتح الدعوة، على الآيفون والأندرويد.</p>
+                </div>
+                <div id="srcYt" style="display:none;gap:14px">
+                  <div class="fgroup"><label for="f-yt">رابط الأغنية من يوتيوب</label><input type="text" id="f-yt" inputmode="url" placeholder="https://youtu.be/..." dir="ltr" autocomplete="off"></div>
+                  <div class="row2">
+                    <div class="fgroup"><label for="f-yts">تبدي من (دقيقة:ثانية)</label><input type="text" id="f-yts" inputmode="numeric" placeholder="0:45" dir="ltr"></div>
+                    <div class="fgroup"><label for="f-yte">تخلص عند (اختياري)</label><input type="text" id="f-yte" inputmode="numeric" placeholder="2:30" dir="ltr"></div>
+                  </div>
+                  <p class="slug-status" id="ytStatus" aria-live="polite"></p>
+                  <div class="ytprev" id="ytPrev" hidden></div>
+                  <div class="row-btns"><button type="button" class="btn btn-ghost btn-sm" id="btnYtTry">جرّب المقطع</button><button type="button" class="linkbtn" id="btnYtClear">حذف الرابط</button></div>
+                  <p class="muted-s">الأغنية تطلع بقسم «أغنيتنا» داخل الدعوة. يوتيوب يطلب إن المشغّل يبين، وعلى الآيفون ممكن الضيف يضغط تشغيل بنفسه.</p>
+                </div>
               </div>
             </div>
             <!-- step 3 -->
@@ -837,7 +896,7 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
               <div class="summary" id="summary"></div>
               <label class="check" for="c1"><input type="checkbox" id="c1" class="agree"><span>شفت المعاينة كاملة وعاجبتني<small>جرّب «افتح كأنك ضيف» تحت الموبايل قبل الدفع.</small></span></label>
               <label class="check" for="c2"><input type="checkbox" id="c2" class="agree"><span>الأسماء والتاريخ والمكان صحيحة</span></label>
-              <label class="check" for="c3"><input type="checkbox" id="c3" class="agree"><span>أوافق على الشروط<small>الرابط يبقى فعّال لحد ٣٠ يوم بعد الحفل. بعد الدفع ما يتغيّر محتوى الدعوة، فراجع كلشي قبل ما تدفع.</small></span></label>
+              <label class="check" for="c3"><input type="checkbox" id="c3" class="agree"><span>أوافق على <button type="button" class="linkbtn" data-terms>الشروط وسياسة الاسترجاع</button><small>الرابط يبقى فعّال لحد ٣٠ يوم بعد المناسبة، وتكدر تعدّل خلال ٢٤ ساعة من الدفع.</small></span></label>
               <div class="wayl-note"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg><span>الدفع أونلاين فقط عبر <b>Wayl</b>. ينفتح لك بوابة الدفع، وأول ما يتم الدفع يتفعّل رابطك تلقائيًا.</span></div>
             </div>
             <!-- done -->
@@ -855,10 +914,10 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
               </div>
               <p class="muted-s" id="doneNote">احفظ الرابط. يبقى شغّال لحد ٣٠ يوم بعد الحفل.</p>
               <div class="owner" id="ownerBox" hidden>
-                <h4>لوحة الحضور الخاصة بيك</h4>
-                <p class="muted-s">احفظ هذا الرابط ولا تنطيه لأحد. منه تشوف منو جاي وعدد الأشخاص والتهاني، وتسوي رابط باسم كل ضيف.</p>
-                <div class="big-link" id="panelLink"></div>
-                <div class="row-btns"><a class="btn btn-diamond btn-sm" id="btnPanel" href="#">افتح لوحة الحضور</a><button class="btn btn-ghost btn-sm" type="button" id="btnCopyPanel">نسخ رابط اللوحة</button></div>
+                <h4>روابطك الخاصة · احفظها ولا تنطيها لأحد</h4>
+                <div class="own-row"><div><b>رابط التعديل</b><span id="editUntil">تكدر تعدّل الدعوة خلال ٢٤ ساعة</span></div><div class="row-btns"><a class="btn btn-gold btn-sm" id="btnEdit" href="#">عدّل الدعوة</a><button class="btn btn-ghost btn-sm" type="button" data-copy="btnEdit">نسخ</button></div></div>
+                <div class="own-row" id="rowPanel"><div><b>لوحة الحضور</b><span>منو جاي، عدد الأشخاص، والتهاني<em id="panelExtra">، وروابط بأسماء الضيوف</em></span></div><div class="row-btns"><a class="btn btn-diamond btn-sm" id="btnPanel" href="#">افتح اللوحة</a><button class="btn btn-ghost btn-sm" type="button" data-copy="btnPanel">نسخ</button></div></div>
+                <p class="muted-s">انحفظت هم بـ«طلباتي» على هذا الجهاز.</p>
               </div>
             </div>
           </form>
@@ -904,7 +963,8 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
           <ul>
             <li>٧ قوالب تفاعلية: باب تطرقه، ستارة وحمام، ممر النور، علبة المحبس، ملكي، ليل بغداد، زمرّد</li>
             <li class="star">أغنيتك تشتغل أول ما تنفتح الدعوة</li>
-            <li>تختار الثانية اللي تبدي منها الأغنية</li>
+            <li>أغنية من ملف أو من رابط يوتيوب، وتحدد من وين تبدي ووين تخلص</li>
+            <li>تأكيد الحضور ولوحة تشوف بيها منو جاي</li>
             <li>كل مزايا الفضية</li>
           </ul>
           <a href="#builder" class="btn btn-gold" data-pick="door">اختر الذهبية</a>
@@ -912,13 +972,13 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
         <div class="plan diamond">
           <span class="tag dtag">الأفخم</span>
           <h3>الماسية</h3>
-          <div class="amt"><b class="num">١٥٬٠٠٠</b><span>دينار عراقي</span></div>
+          <div class="amt"><b class="num">٢٠٬٠٠٠</b><span>دينار عراقي</span></div>
           <ul>
             <li class="star">٣ مشاهد خرافية: فوانيس فوق النهر، ألعاب نارية تكتب أسماءكم، شموع تنشعل وحدة وحدة</li>
             <li>اسم كل ضيف على دعوته</li>
-            <li>تأكيد الحضور مع العدد والتهاني، ولوحة خاصة إلك تشوف بيها الردود</li>
+            <li>دعوة لكل الناس: أعراس، أعياد ميلاد، تخرّج، افتتاح، مؤتمرات وحفلات رسمية</li>
             <li>زر «أضف الموعد لتقويمك»</li>
-            <li>أغنيتك + كل مزايا الذهبية</li>
+            <li>كل مزايا الذهبية: الأغنية وتأكيد الحضور</li>
           </ul>
           <a href="#builder" class="btn btn-diamond" data-pick="lanterns">اختر الماسية</a>
         </div>
@@ -932,11 +992,13 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
       <div class="sec-head" style="justify-content:center;text-align:center"><div><span class="k">الأسئلة</span><h2>قبل <em>ما تبدي</em></h2></div></div>
       <div class="faq">
         <details><summary>شوكت يتفعّل الرابط؟</summary><p>أول ما يتم الدفع عبر Wayl يتفعّل رابطك مباشرة، بدون انتظار ولا مراجعة.</p></details>
-        <details><summary>أكدر أعدّل بعد الدفع؟</summary><p>محتوى الدعوة يتثبّت لحظة الدفع، لهذا نطلب منك تشوف المعاينة كاملة وتوافق عليها قبل. راجع الأسماء والتاريخ والمكان زين.</p></details>
+        <details><summary>أكدر أعدّل بعد الدفع؟</summary><p>إي، خلال ٢٤ ساعة من الدفع تعدّل الأسماء والتاريخ والمكان والكلمات من «رابط التعديل» اللي يوصلك بصفحة النجاح، ونفس رابط الدعوة يبقى.</p></details>
+        <details><summary>بس للأعراس؟</summary><p>لا. أكو خطوبة، عقد قران، زفاف، حنّة، عيد ميلاد، مولود، تخرّج، عودة من الحج، ذكرى زواج، إفطار رمضاني، معايدة، افتتاح، مؤتمر، حفل رسمي، تكريم، إطلاق منتج، ومجلس فاتحة. والدعوة تطلع بالعربي أو الكوردي أو الإنكليزي.</p></details>
+        <details><summary>أكدر أحط أغنية من يوتيوب؟</summary><p>إي، بالباقة الذهبية والماسية. تحط الرابط وتحدد من أي دقيقة تبدي ووين تخلص. يوتيوب يطلب إن المشغّل يبين، فتطلع بقسم «أغنيتنا» بالدعوة. إذا تريدها تشتغل لوحدها أول ما الضيف يفتح على كل الأجهزة، ارفع ملف MP3.</p></details>
         <details><summary>الضيف يحتاج تطبيق؟</summary><p>لا. الرابط يفتح على أي موبايل من واتساب أو إنستغرام مباشرة.</p></details>
         <details><summary>أكدر أخفي اسم العروس؟</summary><p>إي، بضغطة وحدة بالخطوة الأولى. تطلع الدعوة باسم العريس والعائلة فقط.</p></details>
         <details><summary>شنو طرق الدفع؟</summary><p>الدفع أونلاين فقط عبر بوابة Wayl الآمنة: فيزا، ماستركارد وبطاقة كي. ما نحفظ بيانات بطاقتك عندنا.</p></details>
-        <details><summary>شلون أعرف منو جاي بالباقة الماسية؟</summary><p>بعد الدفع يوصلك رابط لوحة خاصة إلك. بيها كل الردود: منو جاي، عدد الأشخاص، والتهاني. وتكدر تسوي منها رابط باسم كل ضيف.</p></details>
+        <details><summary>شلون أعرف منو جاي؟</summary><p>بالباقة الذهبية والماسية، بعد الدفع يوصلك رابط لوحة خاصة إلك. بيها كل الردود: منو جاي، عدد الأشخاص، والتهاني. وبالماسية تكدر تسوي منها رابط باسم كل ضيف.</p></details>
         <details><summary>شكد يبقى الرابط شغّال؟</summary><p>من لحظة الدفع لحد ٣٠ يوم بعد موعد الحفل.</p></details>
       </div>
     </div>
@@ -946,9 +1008,37 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
 <footer>
   <div class="wrap">
     <a href="#top" class="brand"><b class="gold-text">نقش</b><small>NAQSH</small></a>
-    <span>إحدى خدمات مجموعة J8JI · تطوير مهند العدنان</span>
+    <span class="foot-links"><button type="button" class="linkbtn" id="btnTerms">الشروط والاسترجاع</button><span>إحدى خدمات مجموعة J8JI · تطوير مهند العدنان</span></span>
   </div>
 </footer>
+<a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" hidden aria-label="تواصل معنا على واتساب"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.7 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+
+<!-- my invitations (this device) -->
+<div class="overlay" id="mineModal" role="dialog" aria-modal="true" aria-labelledby="mineTitle">
+  <div class="dialog">
+    <button class="x" type="button" data-close aria-label="إغلاق">✕</button>
+    <h3 id="mineTitle">طلباتي</h3>
+    <p class="muted-s">الدعوات اللي سويتها من هذا الجهاز، مع روابط التعديل ولوحة الحضور.</p>
+    <div id="mineList" class="mine-list"></div>
+  </div>
+</div>
+
+<!-- terms -->
+<div class="overlay" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="dialog terms">
+    <button class="x" type="button" data-close aria-label="إغلاق">✕</button>
+    <h3 id="termsTitle">الشروط وسياسة الاسترجاع</h3>
+    <ol>
+      <li>تدفع مرة وحدة لكل دعوة، عبر بوابة Wayl فقط. ما نحفظ بيانات بطاقتك.</li>
+      <li>رابط الدعوة يتفعّل أول ما يتأكد الدفع، ويبقى شغّال لحد ٣٠ يوم بعد موعد المناسبة.</li>
+      <li>تكدر تعدّل الأسماء والتاريخ والمكان والكلمات خلال ٢٤ ساعة من الدفع من «رابط التعديل».</li>
+      <li>إذا دفعت والرابط ما تفعّل بسبب خلل منّا، نرجّعلك المبلغ كامل أو نفعّله يدويًا.</li>
+      <li>بعد ما يتفعّل الرابط وينرسل للضيوف، ما يرجع المبلغ.</li>
+      <li>الأغنية اللي ترفعها أو رابط يوتيوب اللي تحطه مسؤوليتك، ولازم يكون إلك حق استخدامه.</li>
+      <li>نحذف بيانات الدعوة والأغنية والردود تلقائيًا بعد انتهاء مدة الرابط.</li>
+    </ol>
+  </div>
+</div>
 
 <!-- payment -->
 <div class="overlay" id="payModal" role="dialog" aria-modal="true" aria-labelledby="payTitle">
@@ -956,7 +1046,7 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
     <button class="x" type="button" data-close aria-label="إغلاق">✕</button>
     <h3 id="payTitle">الدفع عبر Wayl</h3>
     <div class="summary" id="paySummary"></div>
-    <p class="muted-s" id="payInfo">راح تنتقل لصفحة الدفع الآمنة من Wayl، تدفع بالفيزا أو الماستركارد أو بطاقة كي. أول ما يكتمل الدفع ترجع هنا ويتفعّل رابطك تلقائيًا.</p>
+    <div class="pay-steps" id="payInfo"><p>راح تنتقل لصفحة الدفع الآمنة من <b>Wayl</b>، وبيها خطوتين:</p><ol><li>اكتب رقم الواتساب مالتك، ويوصلك رمز على الواتساب. اكتبه.</li><li>تطلع خانة البطاقة: فيزا، ماستركارد أو كي. ادفع.</li></ol><p>بعد الدفع ترجع هنا لوحدك ويتفعّل رابطك. رابط الدفع يبقى صالح ساعة.</p></div>
     <p class="msg" id="payMsg" aria-live="polite"></p>
     <div id="payBtns" style="display:grid;gap:10px">
       <button type="button" class="btn btn-gold" id="btnGoPay">انتقل للدفع</button>
@@ -1009,10 +1099,10 @@ let LIVE=false;
 let DOMAIN='naqsh.j8ji.com';
 const PATH=location.pathname.replace(/\/+$/,'');
 const QS=new URLSearchParams(location.search);
-const GUEST_SLUG=(location.protocol.startsWith('http')&&/^\/[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/.test(PATH)&&!/\.html$/.test(PATH)&&PATH!=='/paid'&&PATH!=='/panel')?PATH.slice(1):null;
+const GUEST_SLUG=(location.protocol.startsWith('http')&&/^\/[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/.test(PATH)&&!/\.html$/.test(PATH)&&!['/paid','/panel','/edit','/admin','/mine','/terms'].includes(PATH))?PATH.slice(1):null;
 const PAID_REF=QS.get('referenceId')||(PATH==='/paid'?QS.get('ref'):null);
-const PRICE={silver:5000,gold:10000,diamond:15000};
-const TIERS={diamond:{name:'ماسي',price:15000},gold:{name:'ذهبي',price:10000},silver:{name:'فضّي',price:5000}};
+const PRICE={silver:5000,gold:10000,diamond:20000};
+const TIERS={diamond:{name:'ماسي',price:20000},gold:{name:'ذهبي',price:10000},silver:{name:'فضّي',price:5000}};
 const songOK=t=>t!=='silver';
 const TPL={
   lanterns:{name:'فوانيس',desc:'فوانيس تطير فوق النهر',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#36204d 50%,#ffb25a 50%)'},
@@ -1091,7 +1181,8 @@ function scnLoop(t){
 function mountScene(c){
   if(c._sc)return c._sc;
   const kind=c.dataset.scene,mode=c.dataset.mode||'thumb';
-  const sc={c,ctx:c.getContext('2d'),kind,mode,W:0,H:0,dpr:1,cap:mode==='thumb'?1.25:2,hidden:false,S:{},text:c.dataset.text||''};
+  const LOWEND=(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=3;
+  const sc={c,ctx:c.getContext('2d'),kind,mode,W:0,H:0,dpr:1,cap:mode==='thumb'?1:(LOWEND?1.5:2.5),hidden:false,S:{},text:c.dataset.text||''};
   sc.size=()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return false;const d=Math.min(window.devicePixelRatio||1,sc.cap);if(w!==sc.W||h!==sc.H||d!==sc.dpr){sc.W=w;sc.H=h;sc.dpr=d;c.width=Math.round(w*d);c.height=Math.round(h*d);sc.onResize&&sc.onResize()}return true};
   IMPL[kind](sc);
   sc.frame=t=>{if(!sc.size())return;const dt=Math.min(.05,(t-(sc.last||t))/1000);sc.last=t;sc.ctx.setTransform(sc.dpr,0,0,sc.dpr,0,0);sc.ctx.globalCompositeOperation='source-over';sc.ctx.globalAlpha=1;sc.draw(dt,t/1000)};
@@ -1316,86 +1407,150 @@ const hasIntro=k=>!!TPL[k].intro;
 function thumbHTML(s,k){return invite(s,k)+(hasIntro(k)?intro(s,k,true):'')}
 
 /* ---------- sections ---------- */
+/* ---------- occasions (from a child's birthday to an official ceremony) ---------- */
+const OCC=[
+  {id:'engagement',g:'wedding',name:'خطوبة',kind:'couple',ar:'حفل خطوبة',en:'the engagement of',ku:'ئاهەنگی دەستگیرانی'},
+  {id:'nikah',g:'wedding',name:'عقد قران',kind:'couple',ar:'حفل عقد قران',en:'the Nikah of',ku:'ئاهەنگی مارەبڕینی'},
+  {id:'wedding',g:'wedding',name:'زفاف',kind:'couple',ar:'حفل زفاف',en:'the wedding of',ku:'ئاهەنگی هاوسەرگیری'},
+  {id:'henna',g:'wedding',name:'حنّة',kind:'couple',ar:'ليلة الحنّة',en:'the henna night of',ku:'شەوی خەنەبەندانی'},
+  {id:'birthday',g:'family',name:'عيد ميلاد',kind:'person',ar:'حفل عيد ميلاد',en:'the birthday of',ku:'ئاهەنگی ڕۆژی لەدایکبوونی',gl:'اسم صاحب العيد',bl:'سطر تحت الاسم (اختياري)',bp:'يكمل عامه الخامس'},
+  {id:'newborn',g:'family',name:'مولود جديد',kind:'person',ar:'حفل استقبال المولود',en:'a celebration welcoming',ku:'ئاهەنگی پێشوازی لە',gl:'اسم المولود',bl:'سطر تحت الاسم (اختياري)',bp:'حفظه الله ورعاه'},
+  {id:'graduation',g:'family',name:'تخرّج',kind:'person',ar:'حفل تخرّج',en:'the graduation of',ku:'ئاهەنگی دەرچوونی',gl:'اسم الخريج أو الخريجة',bl:'الشهادة أو الكلية (اختياري)',bp:'بكالوريوس هندسة الحاسوب'},
+  {id:'hajj',g:'family',name:'عودة من الحج',kind:'person',ar:'حفل استقبال الحاج',en:'a homecoming for Hajj pilgrim',ku:'ئاهەنگی پێشوازی لە حاجی',gl:'اسم الحاج أو الحاجة',bl:'سطر تحت الاسم (اختياري)',bp:'حجًّا مبرورًا وسعيًا مشكورًا'},
+  {id:'anniversary',g:'family',name:'ذكرى زواج',kind:'couple',ar:'حفل ذكرى زواج',en:'the wedding anniversary of',ku:'یادی هاوسەرگیری',gl:'اسم الزوج',bl:'اسم الزوجة'},
+  {id:'iftar',g:'community',name:'إفطار رمضاني',kind:'host',ar:'مأدبة إفطار رمضانية',en:'a Ramadan Iftar',ku:'خوانی بەربانگی ڕەمەزان',gl:'عنوان الدعوة',gp:'إفطار آل الحسيني',bl:'سطر تحت العنوان (اختياري)',bp:'رمضان كريم'},
+  {id:'eid',g:'community',name:'معايدة العيد',kind:'host',ar:'معايدة العيد',en:'an Eid gathering',ku:'دیداری جەژن',gl:'عنوان الدعوة',gp:'معايدة عيد الفطر',bl:'سطر تحت العنوان (اختياري)',bp:'كل عام وأنتم بخير'},
+  {id:'opening',g:'business',name:'افتتاح',kind:'org',ar:'حفل افتتاح',en:'the opening of',ku:'ئاهەنگی کردنەوەی',gl:'اسم الفعالية',gp:'افتتاح فرع المنصور',bl:'برعاية أو ضيف الشرف (اختياري)',bp:'برعاية مدير عام الشركة'},
+  {id:'conference',g:'business',name:'مؤتمر',kind:'org',ar:'مؤتمر',en:'the conference',ku:'کۆنفرانسی',gl:'اسم المؤتمر',gp:'مؤتمر التحول الرقمي ٢٠٢٧',bl:'برعاية أو المحور (اختياري)',bp:'تحت شعار: نحو خدمات أذكى'},
+  {id:'official',g:'business',name:'حفل رسمي',kind:'org',ar:'الحفل الرسمي',en:'the official ceremony',ku:'ئاهەنگی فەرمی',gl:'اسم الحفل',gp:'الحفل السنوي للمؤسسة',bl:'برعاية (اختياري)',bp:'برعاية معالي الوزير'},
+  {id:'honor',g:'business',name:'حفل تكريم',kind:'org',ar:'حفل تكريم',en:'the honoring ceremony',ku:'ئاهەنگی ڕێزلێنان',gl:'اسم الحفل أو المكرَّمين',gp:'تكريم الموظفين المتميزين',bl:'برعاية (اختياري)',bp:'برعاية مجلس الإدارة'},
+  {id:'launch',g:'business',name:'إطلاق منتج',kind:'org',ar:'حفل إطلاق',en:'the launch of',ku:'ئاهەنگی ناساندنی',gl:'اسم المنتج أو المشروع',gp:'إطلاق تطبيق نقش',bl:'سطر إضافي (اختياري)',bp:'تجربة جديدة كليًا'},
+  {id:'condolence',g:'mourning',name:'مجلس فاتحة',kind:'mourning',ar:'',en:'',ku:'',gl:'اسم الفقيد أو الفقيدة',bl:'سطر إضافي (اختياري)',bp:'والد الأستاذ علي'}
+];
+const OCC_G=[['wedding','الأعراس'],['family','مناسبات عائلية'],['community','رمضان والأعياد'],['business','رسمي وأعمال'],['mourning','عزاء']];
+const LEGACY_T={'خطوبة':'engagement','عقد قران':'nikah','زفاف':'wedding','حنّة':'henna'};
+const occOf=t=>OCC.find(o=>o.id===t)||OCC.find(o=>o.id===LEGACY_T[t])||OCC[0];
+const MOURNING_TPL=['pearl','marble','emerald','night','candles'];
+const VERSES={
+  couple:'وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً',
+  graduation:'وَقُل رَّبِّ زِدْنِي عِلْمًا',
+  newborn:'الْمَالُ وَالْبَنُونَ زِينَةُ الْحَيَاةِ الدُّنْيَا',
+  hajj:'وَأَذِّن فِي النَّاسِ بِالْحَجِّ يَأْتُوكَ رِجَالًا',
+  iftar:'شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ',
+  org:'وَقُلِ اعْمَلُوا فَسَيَرَى اللَّهُ عَمَلَكُمْ وَرَسُولُهُ وَالْمُؤْمِنُونَ',
+  mourning:'يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ ارْجِعِي إِلَىٰ رَبِّكِ رَاضِيَةً مَّرْضِيَّةً'
+};
+const verseFor=o=>o.kind==='couple'?VERSES.couple:o.kind==='mourning'?VERSES.mourning:o.kind==='org'?VERSES.org:(VERSES[o.id]||'');
+const I18N={
+  ar:{dir:'rtl',invite:'يتشرّفون بدعوتكم لحضور',inviteOrg:'تتشرّف بدعوتكم لحضور',mourn:'تقيم مجلس الفاتحة على روح الفقيد',late:'المرحوم',and:'و',when:'موعدنا',where:'المكان',scroll:'اسحب للأسفل',map:'افتح الموقع على الخريطة',cal:'أضف الموعد لتقويمك',rsvp:'تأكيد الحضور',name:'اسمك',yes:'أكيد جاي',no:'أعتذر',count:'عدد الأشخاص',msg:'اكتب تهنئة (اختياري)',msgM:'اكتب كلمة مواساة (اختياري)',send:'إرسال الرد',to:'دعوة خاصة إلى',song:'أغنيتنا',units:['يوم','ساعة','دقيقة','ثانية'],now:'حان الموعد',am:'صباحًا',noon:'عصرًا',pm:'مساءً',at:'الساعة',general:'بحضوركم تكتمل فرحتنا',generalM:'إنّا لله وإنّا إليه راجعون',generalOrg:'نتشرّف بحضوركم',sent:'وصل ردّك، شكرًا لك',sentNo:'وصل اعتذارك، شكرًا لك',play:'تشغيل الأغنية',pause:'إيقاف الأغنية'},
+  en:{dir:'ltr',invite:'request the pleasure of your company at',inviteOrg:'request the pleasure of your company at',mourn:'hold a Fatiha gathering for the soul of',late:'the late',and:'&',when:'Save the date',where:'Venue',scroll:'Scroll down',map:'Open in Maps',cal:'Add to calendar',rsvp:'RSVP',name:'Your name',yes:'Will attend',no:'Can’t make it',count:'Guests',msg:'Write a message (optional)',msgM:'Write a condolence (optional)',send:'Send reply',to:'A personal invitation for',song:'Our song',units:['days','hours','min','sec'],now:'It’s time',am:'AM',noon:'PM',pm:'PM',at:'',general:'Your presence completes our joy',generalM:'To God we belong and to Him we return',generalOrg:'We look forward to welcoming you',sent:'Reply received, thank you',sentNo:'Thank you for letting us know',play:'Play music',pause:'Pause music'},
+  ku:{dir:'rtl',invite:'بە شانازییەوە بانگهێشتتان دەکەن بۆ',inviteOrg:'بە شانازییەوە بانگهێشتتان دەکات بۆ',mourn:'مەجلیسی فاتیحە ساز دەکەن بۆ گیانی',late:'خوالێخۆشبوو',and:'و',when:'کات',where:'شوێن',scroll:'بۆ خوارەوە ڕابکێشە',map:'شوێنەکە لەسەر نەخشە',cal:'زیادکردن بۆ ساڵنامە',rsvp:'دڵنیاکردنەوەی ئامادەبوون',name:'ناوت',yes:'دێم',no:'ببورە، نایەم',count:'ژمارەی کەسەکان',msg:'پیرۆزبایی بنووسە (ئارەزوومەندانە)',msgM:'سەرەخۆشی بنووسە (ئارەزوومەندانە)',send:'ناردنی وەڵام',to:'بانگهێشتی تایبەت بۆ',song:'گۆرانییەکەمان',units:['ڕۆژ','کاتژمێر','خولەک','چرکە'],now:'کاتی هات',am:'بەیانی',noon:'دوانیوەڕۆ',pm:'ئێوارە',at:'کاتژمێر',general:'ئامادەبوونتان خۆشییەکەمان تەواو دەکات',generalM:'ئێمە هی خوداین و بۆ لای ئەو دەگەڕێینەوە',generalOrg:'بە ئامادەبوونتان شانازی دەکەین',sent:'وەڵامەکەت گەیشت، سوپاس',sentNo:'سوپاس بۆ ئاگادارکردنەوە',play:'لێدانی گۆرانی',pause:'ڕاگرتنی گۆرانی'}
+};
+const KU_WD=['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە','پێنجشەممە','هەینی','شەممە'];
+const KU_MO=['کانوونی دووەم','شوبات','ئازار','نیسان','ئایار','حوزەیران','تەممووز','ئاب','ئەیلوول','تشرینی یەکەم','تشرینی دووەم','کانوونی یەکەم'];
+const T=s=>I18N[s&&s.lang]||I18N.ar;
+const ytId=u=>{u=String(u||'').trim();const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/)||u.match(/^([A-Za-z0-9_-]{11})$/);return m?m[1]:''};
+const mmss=v=>{v=String(v||'').trim().replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));if(!v)return 0;const p=v.split(/[:.٫]/).map(x=>parseInt(x,10)||0);return p.length>1?p[0]*60+p[1]:p[0]};
+const toMMSS=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+
 function when(s){
   const d=new Date((s.date||'')+'T'+(s.time||'19:00'));
   if(isNaN(d)) return {wd:'—',day:'—',my:'—',short:'',time:'',iso:''};
-  const H=d.getHours(),M=d.getMinutes();
-  const per=H<12?'صباحًا':H<17?'عصرًا':'مساءً';
+  const t=T(s),lang=(s&&s.lang)||'ar',H=d.getHours(),M=d.getMinutes();
+  const per=H<12?t.am:H<17?t.noon:t.pm;
+  if(lang==='en'){const loc='en-GB';return{wd:new Intl.DateTimeFormat(loc,{weekday:'long'}).format(d),day:String(d.getDate()),my:new Intl.DateTimeFormat(loc,{month:'long',year:'numeric'}).format(d),short:new Intl.DateTimeFormat(loc,{day:'numeric',month:'long',year:'numeric'}).format(d),time:`${H%12||12}:${String(M).padStart(2,'0')} ${H<12?'AM':'PM'}`,iso:d.toISOString()}}
+  if(lang==='ku'){const n=x=>num(x),mo=KU_MO.at(d.getMonth()),wd=KU_WD.at(d.getDay());return{wd,day:n(d.getDate()),my:mo+' '+n(d.getFullYear()),short:n(d.getDate())+'ی '+mo+' '+n(d.getFullYear()),time:t.at+' '+num(H%12||12)+':'+num(M,2)+' '+per,iso:d.toISOString()}}
   return{
     wd:new Intl.DateTimeFormat(L,{weekday:'long'}).format(d),
     day:new Intl.DateTimeFormat(L,{day:'numeric'}).format(d),
     my:new Intl.DateTimeFormat(L,{month:'long',year:'numeric'}).format(d),
     short:new Intl.DateTimeFormat(L,{day:'numeric',month:'long',year:'numeric'}).format(d),
-    time:'الساعة '+num(H%12||12)+':'+num(M,2)+' '+per,
+    time:t.at+' '+num(H%12||12)+':'+num(M,2)+' '+per,
     iso:d.toISOString()
   };
 }
 const PIN='<svg width="1.3em" height="1.3em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>';
 function sections(s,k,cold){
-  const f=when(s);
-  const g=esc(s.groom.trim()||'العريس');
-  const showB=!s.hideBride&&s.bride.trim();
+  const f=when(s),t=T(s),o=occOf(s.type),lang=s.lang||'ar';
+  const kind=o.kind,couple=kind==='couple',mourning=kind==='mourning';
+  const g=esc(s.groom.trim()||(couple?'العريس':'الاسم'));
+  const showB=couple&&!s.hideBride&&s.bride.trim();
+  const sub=!couple&&s.bride.trim()?esc(s.bride.trim()):'';
   const b=esc(s.bride.trim());
   const mapQ=encodeURIComponent((s.venue+' '+s.area).trim());
   const iv=i=>`style="--i:${i}"`;
-  const dia=TPL[k]&&TPL[k].tier==='diamond';
+  const tier=TPL[k]&&TPL[k].tier;
+  const dia=tier==='diamond',rsvp=tier==='diamond'||tier==='gold';
   const to=dia&&s.to?String(s.to).trim().slice(0,40):'';
+  const vm=s.verseMode||(s.verse===false?'none':'quran');
+  const phrase=o[lang]||o.ar;
+  const kick=mourning?t.mourn:`${kind==='org'?t.inviteOrg:t.invite} ${phrase}`;
+  const nameHTML=mourning?`<h2 class="nm"><span class="rv amp" ${iv(3)}>${esc(t.late)}</span><span class="rv" ${iv(4)}><b>${g}</b></span></h2>`
+    :`<h2 class="nm"><span class="rv" ${iv(3)}><b>${g}</b></span>${showB?`<span class="rv amp" ${iv(5)}>${esc(t.and)}</span><span class="rv" ${iv(6)}><b>${b}</b></span>`:''}</h2>`;
+  const verse=vm==='quran'?verseFor(o):'';
+  const general=mourning?t.generalM:kind==='org'?t.generalOrg:t.general;
   let cal='';
   if(dia&&f.iso){const st=new Date(Date.parse(s.date+'T'+(s.time||'19:00')+':00+03:00'));if(!isNaN(st)){const z=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');const en=new Date(st.getTime()+4*3600e3);
-    cal=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('حفل '+s.type+' '+(s.groom||''))}&dates=${z(st)}/${z(en)}&location=${encodeURIComponent((s.venue+' '+s.area).trim())}&details=${encodeURIComponent('دعوة '+(s.family||''))}`}}
+    cal=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent((o.ar||o.name)+' '+(s.groom||''))}&dates=${z(st)}/${z(en)}&location=${encodeURIComponent((s.venue+' '+s.area).trim())}&details=${encodeURIComponent(s.family||'')}`}}
+  const yt=s.yt&&s.yt.id&&!mourning&&tier!=='silver'?s.yt:null;
   return `<section class="sc cover${cold?'':' in'}">`+
-    (to?`<p class="rv to" ${iv(0)}>دعوة خاصة إلى<b>${esc(to)}</b></p>`:'')+
-    (s.verse?`<p class="rv bism" ${iv(0)}>بسم الله الرحمن الرحيم</p>`:'')+
-    `<p class="rv fam" ${iv(1)}>${esc(s.family.trim()||'العائلة')}</p>`+
-    `<p class="rv kick" ${iv(2)}>يتشرّفون بدعوتكم لحضور حفل ${esc(s.type)}${showB?'':' نجلهم'}</p>`+
-    `<h2 class="nm"><span class="rv" ${iv(3)}><b>${g}</b></span>${showB?`<span class="rv amp" ${iv(5)}>و</span><span class="rv" ${iv(6)}><b>${b}</b></span>`:''}</h2>`+
+    (to?`<p class="rv to" ${iv(0)}>${esc(t.to)}<b>${esc(to)}</b></p>`:'')+
+    (vm==='quran'?`<p class="rv bism" ${iv(0)}>${mourning?'إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ':'بسم الله الرحمن الرحيم'}</p>`:'')+
+    `<p class="rv fam" ${iv(1)}>${esc(s.family.trim()||'—')}</p>`+
+    `<p class="rv kick" ${iv(2)}>${esc(kick)}</p>`+
+    nameHTML+
+    (sub?`<p class="rv subl" ${iv(6)}>${sub}</p>`:'')+
     `<div class="rv ln" ${iv(7)}><span></span><b></b><span></span></div>`+
     `<p class="rv dts" ${iv(8)}>${f.wd} · ${f.short}</p>`+
-    `<div class="rv hint" ${iv(10)}><i></i>اسحب للأسفل</div>`+
+    `<div class="rv hint" ${iv(10)}><i></i>${esc(t.scroll)}</div>`+
   `</section>`+
   `<section class="sc when">`+
-    `<p class="rv lbl" ${iv(0)}>موعدنا</p>`+
+    `<p class="rv lbl" ${iv(0)}>${esc(t.when)}</p>`+
     `<div class="rv dbig" ${iv(1)}><span>${f.wd}</span><strong>${f.day}</strong><span>${f.my}</span></div>`+
     `<p class="rv tm" ${iv(2)}>${f.time}</p>`+
-    (s.countdown&&f.iso?`<div class="rv cd" ${iv(3)} data-at="${f.iso}"></div>`:'')+
-    (cal?`<a class="rv calbtn" ${iv(4)} href="${cal}" target="_blank" rel="noopener"><svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>أضف الموعد لتقويمك</a>`:'')+
+    (s.countdown&&!mourning&&f.iso?`<div class="rv cd" ${iv(3)} data-at="${f.iso}" data-lang="${lang}"></div>`:'')+
+    (cal?`<a class="rv calbtn" ${iv(4)} href="${cal}" target="_blank" rel="noopener"><svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>${esc(t.cal)}</a>`:'')+
   `</section>`+
   `<section class="sc where">`+
-    `<p class="rv lbl" ${iv(0)}>المكان</p>`+
+    `<p class="rv lbl" ${iv(0)}>${esc(t.where)}</p>`+
     `<span class="rv pin" ${iv(1)}>${PIN}</span>`+
-    `<h3 class="rv venue" ${iv(2)}>${esc(s.venue||'القاعة')}</h3>`+
+    `<h3 class="rv venue" ${iv(2)}>${esc(s.venue||'—')}</h3>`+
     `<p class="rv area" ${iv(3)}>${esc(s.area)}</p>`+
-    `<a class="rv mapbtn" ${iv(4)} href="https://www.google.com/maps/search/?api=1&query=${mapQ}" target="_blank" rel="noopener">${PIN}افتح الموقع على الخريطة</a>`+
+    `<a class="rv mapbtn" ${iv(4)} href="https://www.google.com/maps/search/?api=1&query=${mapQ}" target="_blank" rel="noopener">${PIN}${esc(t.map)}</a>`+
   `</section>`+
-  (dia?`<section class="sc rsvp">`+
-    `<p class="rv lbl" ${iv(0)}>تأكيد الحضور</p>`+
-    `<form class="rv rs-form" ${iv(1)} data-slug="${esc(s.slug||'')}" novalidate>`+
-      `<input name="name" maxlength="40" placeholder="اسمك" value="${esc(to)}" aria-label="اسمك">`+
-      `<div class="rs-choice"><button type="button" data-a="1" class="on">أكيد جاي</button><button type="button" data-a="0">أعتذر</button></div>`+
-      `<div class="rs-count">عدد الأشخاص<span><button type="button" data-d="-1" aria-label="أقل">−</button><b>١</b><button type="button" data-d="1" aria-label="أكثر">+</button></span></div>`+
-      `<textarea name="message" maxlength="200" placeholder="اكتب تهنئة للعرسان (اختياري)" aria-label="تهنئة"></textarea>`+
-      `<button type="submit" class="rs-send">إرسال الرد</button><p class="rs-msg" aria-live="polite"></p>`+
+  (yt?`<section class="sc songsec">`+
+    `<p class="rv lbl" ${iv(0)}>${esc(t.song)}</p>`+
+    `<div class="rv ytbox" ${iv(1)}><div class="ytslot" data-yt="${esc(yt.id)}" data-start="${+yt.start||0}" data-end="${+yt.end||0}"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/${esc(yt.id)}/hqdefault.jpg"><span class="ytplay"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg></span></div></div>`+
+  `</section>`:'')+
+  (rsvp?`<section class="sc rsvp">`+
+    `<p class="rv lbl" ${iv(0)}>${esc(t.rsvp)}</p>`+
+    `<form class="rv rs-form" ${iv(1)} data-slug="${esc(s.slug||'')}" data-lang="${lang}" novalidate>`+
+      `<input name="name" maxlength="40" placeholder="${esc(t.name)}" value="${esc(to)}" aria-label="${esc(t.name)}">`+
+      `<div class="rs-choice"><button type="button" data-a="1" class="on">${esc(t.yes)}</button><button type="button" data-a="0">${esc(t.no)}</button></div>`+
+      `<div class="rs-count">${esc(t.count)}<span><button type="button" data-d="-1" aria-label="-">−</button><b>${lang==='en'?'1':'١'}</b><button type="button" data-d="1" aria-label="+">+</button></span></div>`+
+      `<textarea name="message" maxlength="200" placeholder="${esc(mourning?t.msgM:t.msg)}" aria-label="${esc(t.msg)}"></textarea>`+
+      `<button type="submit" class="rs-send">${esc(t.send)}</button><p class="rs-msg" aria-live="polite"></p>`+
     `</form>`+
   `</section>`:'')+
   `<section class="sc end">`+
-    (s.verse?`<p class="rv verse" ${iv(0)}>﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ﴾</p>`:'')+
+    (verse?`<p class="rv verse" ${iv(0)}>﴿ ${verse} ﴾</p>`:(vm==='general'?`<p class="rv verse" ${iv(0)}>${esc(general)}</p>`:''))+
     `<div class="rv ln" ${iv(1)}><span></span><b></b><span></span></div>`+
     (s.note.trim()?`<p class="rv note" ${iv(2)}>${esc(s.note)}</p>`:'')+
-    `<p class="rv mono" ${iv(3)}>${g}${showB?' و '+b:''}</p>`+
+    `<p class="rv mono" ${iv(3)}>${mourning?esc(s.family):g+(showB?' '+esc(t.and)+' '+b:'')}</p>`+
     `<p class="rv credit" ${iv(5)}>نقش · ${DOMAIN}</p>`+
   `</section>`;
 }
 function invite(s,k,o={}){
-  return `<div class="inv t-${k}${o.static?' static':''}"><div class="fx">${fx(k)}</div><div class="scroller">${sections(s,k,o.cold)}</div></div>`;
+  return `<div class="inv t-${k}${o.static?' static':''}" dir="${T(s).dir}" lang="${s.lang==='en'?'en':s.lang==='ku'?'ckb':'ar'}"><div class="fx">${fx(k)}</div><div class="scroller">${sections(s,k,o.cold)}</div></div>`;
 }
 function tick(){
   const now=Date.now();
   document.querySelectorAll('.cd').forEach(el=>{
     const t=Date.parse(el.dataset.at)-now;
     if(isNaN(t))return;
-    if(t<=0){el.classList.add('done');el.textContent='حان موعد الفرح';return}
+    if(t<=0){el.classList.add('done');el.textContent=(I18N[el.dataset.lang]||I18N.ar).now;return}
     const v=[Math.floor(t/864e5),Math.floor(t/36e5)%24,Math.floor(t/6e4)%60,Math.floor(t/1e3)%60];
-    const lab=['يوم','ساعة','دقيقة','ثانية'];
+    const lab=(I18N[el.dataset.lang]||I18N.ar).units;
     if(el.children.length!==4)el.innerHTML=lab.map(l=>`<div><b></b><small>${l}</small></div>`).join('');
     v.forEach((x,i)=>{const b=el.children[i].firstChild;const s=num(x,2);if(b.textContent!==s)b.textContent=s});
   });
@@ -1408,9 +1563,10 @@ function observe(frame){
 }
 
 /* ---------- state ---------- */
-const DEF={tpl:'door',type:'خطوبة',family:'آل الحسيني',groom:'أحمد',bride:'زينب',date:'2027-01-14',time:'19:30',venue:'قاعة الماسة',area:'المنصور، بغداد',note:'بحضوركم تكتمل فرحتنا',hideBride:false,verse:true,countdown:true,slug:'',slugTouched:false};
+const DEF={tpl:'door',type:'engagement',lang:'ar',verseMode:'quran',yt:null,family:'آل الحسيني',groom:'أحمد',bride:'زينب',date:'2027-01-14',time:'19:30',venue:'قاعة الماسة',area:'المنصور، بغداد',note:'بحضوركم تكتمل فرحتنا',hideBride:false,verse:true,countdown:true,slug:'',slugTouched:false};
 const hot=window.claude&&window.claude.hot;
 let state=Object.assign({},DEF,(hot&&hot.data&&hot.data.state)||{});
+if(LEGACY_T[state.type])state.type=LEGACY_T[state.type];
 let step=(hot&&hot.data&&hot.data.step)||1;
 if(step>4)step=4;
 try{hot&&hot.snapshot&&hot.snapshot(()=>({state,step}))}catch(e){}
@@ -1438,11 +1594,11 @@ const big=document.getElementById('bigWord');
 big.classList.remove('gold-text');
 big.innerHTML='<span class="gold-text" style="display:inline-block;animation:letterIn 1.3s cubic-bezier(.2,.8,.2,1) both">دعوتك</span>';
 const hs=document.getElementById('heroStack'),hd=document.getElementById('heroDots'),hn=document.getElementById('heroName');
-hs.innerHTML=KEYS.map((k,i)=>`<div class="inv-frame ${i?'':'on'}">${thumbHTML(sample(k),k)}</div>`).join('');
+hs.innerHTML=`<div class="inv-frame on">${thumbHTML(sample(KEYS[0]),KEYS[0])}</div>`;
 hd.innerHTML=KEYS.map((k,i)=>`<i class="${i?'':'on'}"></i>`).join('');
 hn.textContent=TPL[KEYS[0]].name;
 let hi=0;
-function heroGo(n){hi=n;[...hs.children].forEach((c,i)=>{c.classList.toggle('on',i===hi);if(i===hi&&!hasIntro(KEYS[i])){const cv=c.querySelector('.cover');cv.classList.remove('in');void cv.offsetWidth;cv.classList.add('in')}});[...hd.children].forEach((c,i)=>c.classList.toggle('on',i===hi));hn.textContent=TPL[KEYS[hi]].name}
+function heroGo(n){hi=n;const old=[...hs.children];const f=document.createElement('div');f.className='inv-frame';f.innerHTML=thumbHTML(sample(KEYS[hi]),KEYS[hi]);hs.appendChild(f);requestAnimationFrame(()=>requestAnimationFrame(()=>{f.classList.add('on');old.forEach(o=>o.classList.remove('on'))}));setTimeout(()=>old.forEach(o=>o.remove()),1300);[...hd.children].forEach((c,i)=>c.classList.toggle('on',i===hi));hn.textContent=TPL[KEYS[hi]].name}
 if(!RM)setInterval(()=>heroGo((hi+1)%KEYS.length),4200);
 const stage=document.getElementById('stage'),tilt=document.getElementById('tilt');
 if(!RM&&matchMedia('(pointer:fine)').matches){
@@ -1457,10 +1613,12 @@ document.querySelectorAll('[data-count]').forEach(el=>{
 
 /* ---------- gallery ---------- */
 const cardHTML=k=>{const t=TPL[k];return `<article class="card">
-<button type="button" class="thumb" data-preview="${k}" aria-label="معاينة قالب ${t.name}"><div class="inv-frame">${thumbHTML(sample(k),k)}</div><span class="play-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg>معاينة</span></button>
+<button type="button" class="thumb" data-preview="${k}" aria-label="معاينة قالب ${t.name}"><div class="inv-frame lazy" data-k="${k}"></div><span class="play-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg>معاينة</span></button>
 <div class="meta"><h3>${t.name}</h3><small>${t.desc}</small></div>
 <button class="btn btn-ghost btn-sm" type="button" data-use="${k}">اختر ${t.name}</button></article>`};
 ['diamond','gold','silver'].forEach(t=>{document.getElementById('gal'+t[0].toUpperCase()+t.slice(1)).innerHTML=KEYS.filter(k=>TPL[k].tier===t).map(cardHTML).join('')});
+const lazyIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target;el.innerHTML=thumbHTML(sample(el.dataset.k),el.dataset.k);el.classList.remove('lazy');lazyIO.unobserve(el)}}),{rootMargin:'400px'}):null;
+document.querySelectorAll('.inv-frame.lazy').forEach(el=>{if(lazyIO)lazyIO.observe(el);else{el.innerHTML=thumbHTML(sample(el.dataset.k),el.dataset.k)}});
 document.getElementById('templates').addEventListener('click',e=>{
   const u=e.target.closest('[data-use]');if(u){pickTpl(u.dataset.use);goStep(1);scrollToBuilder();return}
   const p=e.target.closest('[data-preview]');if(p)openFull(sample(p.dataset.preview),p.dataset.preview,{});
@@ -1474,17 +1632,36 @@ function scrollToBuilder(){scrollToWiz()}
 const form=document.getElementById('form');
 const chip=k=>`<label class="chip" for="tpl-${k}"><input type="radio" name="tpl" id="tpl-${k}" value="${k}"><span><i style="background:${TPL[k].sw}"></i>${TPL[k].name}</span></label>`;
 document.getElementById('tplChips').innerHTML=['diamond','gold','silver'].map(t=>`<p class="chip-group">${TIERS[t].name} · ${money(TIERS[t].price)} د.ع${t==='silver'?'':' مع أغنية'}</p>${KEYS.filter(k=>TPL[k].tier===t).map(chip).join('')}`).join('');
-document.getElementById('typeChips').innerHTML=TYPES.map(([t],i)=>`<label class="chip" for="type-${i}"><input type="radio" name="type" id="type-${i}" value="${t}"><span>${t}</span></label>`).join('');
+document.getElementById('typeChips').innerHTML=OCC_G.map(([g,gn])=>`<p class="chip-group">${gn}</p>`+OCC.filter(o=>o.g===g).map(o=>`<label class="chip" for="type-${o.id}"><input type="radio" name="type" id="type-${o.id}" value="${o.id}"><span>${o.name}</span></label>`).join('')).join('');
 document.getElementById('upChips').innerHTML=['lanterns','fireworks','candles','door','curtain','royal'].filter(k=>TPL[k]).map(k=>`<button type="button" class="btn btn-ghost btn-sm" data-up="${k}"><i style="width:14px;height:14px;border-radius:50%;background:${TPL[k].sw}"></i>${TPL[k].name}</button>`).join('');
 document.getElementById('upChips').addEventListener('click',e=>{const b=e.target.closest('[data-up]');if(b){pickTpl(b.dataset.up);paintStep()}});
 const fields={family:'f-family',groom:'f-groom',bride:'f-bride',date:'f-date',time:'f-time',venue:'f-venue',area:'f-area',note:'f-note'};
-const checks={hideBride:'f-hide',verse:'f-verse',countdown:'f-count'};
+const checks={hideBride:'f-hide',countdown:'f-count'};
 Object.entries(fields).forEach(([k,id])=>document.getElementById(id).value=state[k]);
 Object.entries(checks).forEach(([k,id])=>document.getElementById(id).checked=!!state[k]);
 function syncChips(){
   form.querySelectorAll('input[name=tpl]').forEach(r=>r.checked=r.value===state.tpl);
   form.querySelectorAll('input[name=type]').forEach(r=>r.checked=r.value===state.type);
+  form.querySelectorAll('input[name=verseMode]').forEach(r=>r.checked=r.value===(state.verseMode||'quran'));
+  form.querySelectorAll('input[name=lang]').forEach(r=>r.checked=r.value===(state.lang||'ar'));
+  applyOcc();
 }
+function applyOcc(){
+  const o=occOf(state.type),k=o.kind,mourn=k==='mourning';
+  const set=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt};
+  const ph=(id,txt)=>{const el=document.getElementById(id);if(el)el.placeholder=txt||''};
+  if(k==='couple'){set('l-family','العائلة الداعية');set('l-groom',o.gl||'اسم العريس');set('l-bride',o.bl||'اسم العروس');ph('f-groom','');ph('f-bride','')}
+  else if(k==='person'){set('l-family','الداعي (العائلة أو الشخص)');set('l-groom',o.gl);set('l-bride',o.bl);ph('f-groom','');ph('f-bride',o.bp)}
+  else if(k==='host'){set('l-family','العائلة أو الجهة الداعية');set('l-groom',o.gl);set('l-bride',o.bl);ph('f-groom',o.gp);ph('f-bride',o.bp)}
+  else if(k==='org'){set('l-family','اسم الجهة أو المؤسسة');set('l-groom',o.gl);set('l-bride',o.bl);ph('f-groom',o.gp);ph('f-bride',o.bp)}
+  else{set('l-family','أسرة الفقيد');set('l-groom',o.gl);set('l-bride',o.bl);ph('f-groom','');ph('f-bride',o.bp)}
+  document.getElementById('t-hide').style.display=k==='couple'?'':'none';
+  document.getElementById('t-count').style.display=mourn?'none':'';
+  document.getElementById('mournNote').hidden=!mourn;
+  form.querySelectorAll('#tplChips .chip').forEach(c=>{const v=c.querySelector('input').value;const bad=(mourn&&!MOURNING_TPL.includes(v))||(editMode&&TPL[v].tier!==editMode.tier);c.classList.toggle('dis',bad);c.querySelector('input').disabled=bad});
+  if(mourn&&!MOURNING_TPL.includes(state.tpl)){state.tpl='marble';form.querySelectorAll('input[name=tpl]').forEach(r=>r.checked=r.value===state.tpl);renderFull&&renderFull()}
+}
+const OCC_DEFAULTS={couple:{family:'آل الحسيني',groom:'أحمد',bride:'زينب',note:'بحضوركم تكتمل فرحتنا'},person:{family:'آل الحسيني',groom:'علي',bride:'',note:'بحضوركم تكتمل فرحتنا'},host:{family:'آل الحسيني',groom:'',bride:'',note:'تقبّل الله طاعاتكم'},org:{family:'',groom:'',bride:'',note:'نتشرّف بحضوركم'},mourning:{family:'',groom:'',bride:'',note:'تغمّده الله بواسع رحمته'}};
 syncChips();
 
 const live=document.getElementById('livePreview');
@@ -1509,11 +1686,15 @@ function updateTotal(){document.getElementById('totalLbl').textContent=money(PRI
 form.addEventListener('input',e=>{
   const t=e.target;
   if(t.name==='tpl'){state.tpl=t.value;renderFull();return}
-  if(t.name==='type'){state.type=t.value;renderText();autoSlug();return}
+  if(t.name==='type'){const before=occOf(state.type).kind;state.type=t.value;const o=occOf(t.value);
+    if(o.kind!==before){const d=OCC_DEFAULTS[o.kind];const untouched=k=>!state._touched||!state._touched[k];['family','groom','bride','note'].forEach(k=>{if(untouched(k)){state[k]=d[k];document.getElementById('f-'+k).value=d[k]}});if(o.kind==='mourning'){state.countdown=false;document.getElementById('f-count').checked=false;state.verseMode='quran'}}
+    applyOcc();renderText();autoSlug();paintStep();return}
+  if(t.name==='verseMode'||t.name==='lang'){state[t.name]=t.value;renderText();return}
   if(t.id==='f-slug'){state.slug=t.value.toLowerCase();state.slugTouched=true;t.value=state.slug;checkSlug();return}
   if(t.id==='f-start'||t.id==='f-song'||t.classList.contains('agree'))return;
+  if(t.id==='f-yt'||t.id==='f-yts'||t.id==='f-yte'){ytInput();return}
   if(t.type==='checkbox'&&t.name)state[t.name]=t.checked;
-  else if(t.name)state[t.name]=t.value;
+  else if(t.name){state[t.name]=t.value;state._touched=state._touched||{};state._touched[t.name]=true}
   t.classList.remove('err');
   renderText();
   if(t.name==='groom'||t.name==='bride'||t.name==='hideBride')autoSlug();
@@ -1528,7 +1709,7 @@ const MAP={'ا':'a','أ':'a','إ':'i','آ':'a','ب':'b','ت':'t','ث':'th','ج':
 const tr=w=>{w=w.trim();if(!w)return'';if(NAMES[w])return NAMES[w];if(/^[a-z0-9-]+$/i.test(w))return w.toLowerCase();return [...w].map(c=>MAP[c]??'').join('')};
 function autoSlug(){
   if(state.slugTouched)return;
-  const g=tr(state.groom),b=(!state.hideBride&&state.bride.trim())?tr(state.bride):'';
+  const g=tr(state.groom.split(/\s+/).slice(0,3).join(' ')).replace(/\s+/g,'-'),b=(occOf(state.type).kind==='couple'&&!state.hideBride&&state.bride.trim())?tr(state.bride):'';
   state.slug=[g,b].filter(Boolean).join('-')||'invite';
   if(state.slug.length<3)state.slug+='-'+(new Date(state.date).getFullYear()||'2027');
   document.getElementById('f-slug').value=state.slug;checkSlug();
@@ -1595,18 +1776,43 @@ document.getElementById('btnPlay').addEventListener('click',()=>{
 });
 document.getElementById('btnRemove').addEventListener('click',()=>{pv.pause();pvUI(false);if(music.url)URL.revokeObjectURL(music.url);music.url=null;music.file=null;music.name='';tc.classList.remove('on');drop.style.display='';songIn.value=''});
 
+/* ---------- YouTube song ---------- */
+document.querySelectorAll('.seg [data-src]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.seg [data-src]').forEach(x=>x.classList.toggle('on',x===b));
+  const yt=b.dataset.src==='yt';document.getElementById('srcFile').style.display=yt?'none':'grid';document.getElementById('srcYt').style.display=yt?'grid':'none';
+  if(yt&&music.file){document.getElementById('btnRemove').click()}
+  if(!yt){state.yt=null;document.getElementById('f-yt').value='';ytInput()}
+}));
+function ytInput(){
+  const id=ytId(document.getElementById('f-yt').value),st=document.getElementById('ytStatus');
+  const s0=mmss(document.getElementById('f-yts').value),e0=mmss(document.getElementById('f-yte').value);
+  document.getElementById('ytPrev').hidden=true;document.getElementById('ytPrev').innerHTML='';
+  if(!document.getElementById('f-yt').value.trim()){state.yt=null;st.textContent='';st.className='slug-status';renderText();return}
+  if(!id){state.yt=null;st.className='slug-status bad';st.textContent='الرابط مو رابط يوتيوب صحيح. انسخه من زر «مشاركة» بيوتيوب.';return}
+  if(e0&&e0<=s0){state.yt=null;st.className='slug-status bad';st.textContent='وقت النهاية لازم يكون بعد وقت البداية';return}
+  state.yt={id,start:s0,end:e0};st.className='slug-status ok';st.textContent='تمام: تبدي من '+toMMSS(s0)+(e0?' وتخلص عند '+toMMSS(e0):' لحد آخر الأغنية')+'، وترجع تعيد.';
+  renderText();
+}
+document.getElementById('btnYtTry').addEventListener('click',()=>{ytInput();if(!state.yt)return;const p=document.getElementById('ytPrev');p.hidden=false;
+  p.innerHTML=`<iframe src="https://www.youtube.com/embed/${state.yt.id}?start=${state.yt.start}${state.yt.end?'&end='+state.yt.end:''}&autoplay=1&playsinline=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen title="معاينة الأغنية"></iframe>`});
+document.getElementById('btnYtClear').addEventListener('click',()=>{['f-yt','f-yts','f-yte'].forEach(i=>document.getElementById(i).value='');ytInput()});
+
 /* ---------- wizard ---------- */
 const bar=document.getElementById('bar'),btnNext=document.getElementById('btnNext'),btnBack=document.getElementById('btnBack'),msg=document.getElementById('msg');
 function paintStep(){
   form.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',+p.dataset.pane===step));
   bar.querySelectorAll('li').forEach(li=>{const s=+li.dataset.s;li.classList.toggle('on',s===step);li.classList.toggle('done',s<step);li.querySelector('b').textContent=s<step?'✓':num(s)});
-  const strong=songOK(tier());
+  const mourn=occOf(state.type).kind==='mourning';
+  const strong=songOK(tier())&&!mourn;
+  document.getElementById('lockTitle').textContent=mourn?'مجلس الفاتحة يكون بدون أغنية':'الأغنية متوفرة بالباقة الذهبية والماسية';
+  document.getElementById('lockText').hidden=mourn;document.getElementById('upChips').hidden=mourn;
+  document.getElementById('skipSong').textContent=mourn?'التالي':'أكمل بدون أغنية';
   document.getElementById('musicLock').style.display=strong?'none':'grid';
   document.getElementById('musicOpen').style.display=strong?'grid':'none';
   if(!strong&&!pv.paused){pv.pause();pvUI(false)}
   btnBack.style.visibility=step>1&&step<5?'visible':'hidden';
   document.getElementById('wzFoot').style.display=step===5?'none':'flex';
-  if(step===4){btnNext.textContent='ادفع '+money(PRICE[tier()])+' د.ع عبر Wayl';buildSummary();agreeState()}
+  if(step===4){btnNext.textContent=editMode?'احفظ التعديلات':'ادفع '+money(PRICE[tier()])+' د.ع عبر Wayl';buildSummary();agreeState()}
   else{btnNext.textContent='التالي';btnNext.disabled=false}
   msg.textContent='';updateTotal();
 }
@@ -1617,10 +1823,11 @@ function summaryHTML(){
   const t=TPL[state.tpl],f=when(state),strong=songOK(t.tier);
   return `<div><span>الباقة</span><b>${TIERS[t.tier].name}</b></div>
 <div><span>القالب</span><b>${t.name}</b></div>
-<div><span>المناسبة</span><b>${esc(state.type)} · ${esc(state.groom)}${!state.hideBride&&state.bride.trim()?' و '+esc(state.bride):''}</b></div>
+<div><span>المناسبة</span><b>${esc(occOf(state.type).name)} · ${esc(state.groom)}${occOf(state.type).kind==='couple'&&!state.hideBride&&state.bride.trim()?' و '+esc(state.bride):''}</b></div>
+<div><span>اللغة</span><b>${{ar:'العربية',en:'English',ku:'کوردی'}[state.lang||'ar']}</b></div>
 <div><span>الموعد</span><b>${f.wd} ${f.short}</b></div>
 <div><span>المكان</span><b>${esc(state.venue)}</b></div>
-<div><span>الأغنية</span><b>${strong?(music.url?'مضافة':'بدون أغنية'):'غير متوفرة بالفضية'}</b></div>${t.tier==='diamond'?'<div><span>إضافات</span><b>اسم كل ضيف · تأكيد الحضور · التقويم</b></div>':''}
+<div><span>الأغنية</span><b>${occOf(state.type).kind==='mourning'?'بدون':strong?(music.file?'ملف مرفوع':state.yt&&state.yt.id?`يوتيوب · من ${toMMSS(state.yt.start)}${state.yt.end?' إلى '+toMMSS(state.yt.end):''}`:'بدون أغنية'):'غير متوفرة بالفضية'}</b></div>${t.tier==='diamond'?'<div><span>إضافات</span><b>اسم كل ضيف · تأكيد الحضور · التقويم</b></div>':t.tier==='gold'?'<div><span>إضافات</span><b>تأكيد الحضور ولوحة الردود</b></div>':''}
 <div><span>الرابط</span><b class="ltr">${DOMAIN}/${esc(state.slug)}</b></div>
 <div><span>المبلغ</span><b class="num">${money(PRICE[t.tier])} د.ع</b></div>`;
 }
@@ -1629,12 +1836,14 @@ function validate1(){
   let ok=true;const need=[['groom','f-groom'],['date','f-date'],['venue','f-venue'],['family','f-family']];
   need.forEach(([k,id])=>{const el=document.getElementById(id);if(!String(state[k]).trim()){el.classList.add('err');ok=false}});
   if(!ok)msg.textContent='كمّل الحقول المؤشرة بالأحمر';
+  if(ok&&state.date&&Date.parse(state.date+'T'+(state.time||'00:00'))<Date.now()-6*3600e3){document.getElementById('f-date').classList.add('err');msg.textContent='التاريخ لازم يكون بالمستقبل';ok=false}
   return ok;
 }
 btnNext.addEventListener('click',()=>{
   if(step===1){if(!validate1())return;goStep(2)}
   else if(step===2)goStep(3)
   else if(step===3){if(!slugOK){msg.textContent='اختار رابط متاح أولًا';return}goStep(4)}
+  else if(step===4&&editMode){saveEdit()}
   else if(step===4){document.getElementById('paySummary').innerHTML=summaryHTML();document.getElementById('payBtns').style.display='grid';document.getElementById('payWait').style.display='none';document.getElementById('payMsg').textContent='';
     document.getElementById('btnPaid').hidden=LIVE;
     document.getElementById('btnGoPay').textContent=LIVE?'ادفع '+money(PRICE[tier()])+' د.ع عبر Wayl':'الدفع يشتغل على الموقع الرسمي';
@@ -1652,20 +1861,36 @@ function waitUI(on,txt){document.getElementById('payBtns').style.display=on?'non
 function showSuccess(slug,info){
   finalURL=(LIVE?location.origin:'https://'+DOMAIN)+'/'+slug;
   document.getElementById('finalLink').textContent=finalURL.replace(/^https?:\/\//,'');
-  const fam=info&&info.family||state.family,typ=info&&info.type||state.type,gr=info&&info.groom||state.groom;
-  const txt=`${fam} يتشرّفون بدعوتكم لحضور حفل ${typ} ${gr}\nافتح الدعوة: ${finalURL}`;
+  const fam=info&&info.family||state.family,oc=occOf(info&&info.type||state.type),gr=info&&info.groom||state.groom;
+  const txt=oc.kind==='mourning'?`${fam} تقيم مجلس الفاتحة على روح الفقيد ${gr}\nالتفاصيل: ${finalURL}`:`${fam} ${oc.kind==='org'?'تتشرّف':'يتشرّفون'} بدعوتكم لحضور ${oc.ar} ${gr}\nافتح الدعوة: ${finalURL}`;
   document.getElementById('btnWa').href='https://wa.me/?text='+encodeURIComponent(txt);
   const q=document.getElementById('qr');q.innerHTML='';q.style.display='';
   try{new QRCode(q,{text:finalURL,width:240,height:240,colorDark:'#0c0b0f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){q.style.display='none'}
   const ob=document.getElementById('ownerBox');
-  if(info&&info.panelKey&&LIVE){const pl=location.origin+'/panel?s='+encodeURIComponent(slug)+'&k='+encodeURIComponent(info.panelKey);document.getElementById('panelLink').textContent=pl.replace(/^https?:\/\//,'');document.getElementById('btnPanel').href=pl;
-    document.getElementById('btnCopyPanel').onclick=async function(){try{await navigator.clipboard.writeText(pl);this.textContent='تم النسخ ✓'}catch(e){this.textContent='انسخه يدويًا'}};
-    try{localStorage.setItem('naqsh-panel-'+slug,pl)}catch(e){}ob.hidden=false}else ob.hidden=true;
+  if(info&&info.panelKey&&LIVE){
+    const k=encodeURIComponent(info.panelKey),sl=encodeURIComponent(slug);
+    const editURL=location.origin+'/edit?s='+sl+'&k='+k,panelURL=location.origin+'/panel?s='+sl+'&k='+k;
+    document.getElementById('btnEdit').href=editURL;document.getElementById('btnPanel').href=panelURL;
+    document.getElementById('rowPanel').hidden=!info.rsvp;document.getElementById('panelExtra').hidden=info.tier!=='diamond';
+    if(info.editUntil)document.getElementById('editUntil').textContent='صالح لحد '+new Intl.DateTimeFormat(L,{weekday:'long',hour:'numeric',minute:'2-digit'}).format(info.editUntil);
+    saveMine({slug,url:finalURL,edit:editURL,panel:info.rsvp?panelURL:'',editUntil:info.editUntil||0,title:(occOf(info.type).name)+' · '+(info.groom||''),at:Date.now()});
+    ob.hidden=false}else ob.hidden=true;
   document.getElementById('btnOpen2').onclick=()=>{if(LIVE)location.href=finalURL;else openFull(state,state.tpl,{song:music.url,start:music.start})};
   goStep(5);
   setTimeout(()=>document.querySelector('.wiz').scrollIntoView({block:'start'}),60);
   bar.querySelectorAll('li').forEach(li=>{li.classList.remove('on');li.classList.add('done');li.querySelector('b').textContent='✓'});
 }
+document.addEventListener('click',async e=>{const c=e.target.closest('[data-copy]');if(!c)return;const a=document.getElementById(c.dataset.copy);try{await navigator.clipboard.writeText(a.href);c.textContent='تم النسخ ✓'}catch(err){c.textContent='انسخه يدويًا'}});
+function getMine(){try{return JSON.parse(localStorage.getItem('naqsh-mine')||'[]')}catch(e){return[]}}
+function saveMine(it){try{const l=getMine().filter(x=>x.slug!==it.slug);l.unshift(it);localStorage.setItem('naqsh-mine',JSON.stringify(l.slice(0,30)))}catch(e){}}
+document.getElementById('btnMine').addEventListener('click',()=>{
+  const l=getMine(),box=document.getElementById('mineList');
+  box.innerHTML=l.length?l.map(x=>`<div class="mine-item"><b>${esc(x.title||x.slug)}</b><span class="ltr">${esc(x.url.replace(/^https?:\/\//,''))}</span><div class="row-btns"><a class="btn btn-gold btn-sm" href="${esc(x.url)}">افتح الدعوة</a>${x.editUntil>Date.now()?`<a class="btn btn-ghost btn-sm" href="${esc(x.edit)}">عدّل</a>`:''}${x.panel?`<a class="btn btn-ghost btn-sm" href="${esc(x.panel)}">لوحة الحضور</a>`:''}</div></div>`).join(''):'<p class="muted-s">ماكو طلبات على هذا الجهاز بعد. أول ما تدفع دعوة، تنحفظ هنا روابطها.</p>';
+  open('mineModal');
+});
+document.addEventListener('click',e=>{if(e.target.closest('#btnTerms,[data-terms]')){e.preventDefault();open('termsModal')}});
+const SUPPORT_WA='';
+if(SUPPORT_WA){const w=document.getElementById('waFloat');w.href='https://wa.me/'+SUPPORT_WA.replace(/\D/g,'').replace(/^0/,'964');w.hidden=false}
 document.getElementById('btnPaid').addEventListener('click',()=>{
   waitUI(true,'محاكاة الدفع…');
   setTimeout(()=>{close(document.getElementById('payModal'));waitUI(false);showSuccess(state.slug)},1200);
@@ -1676,8 +1901,9 @@ document.getElementById('btnGoPay').addEventListener('click',async()=>{
   try{
     const fd=new FormData();
     const strong=songOK(tier());
-    fd.append('data',JSON.stringify({tpl:state.tpl,type:state.type,family:state.family,groom:state.groom,bride:state.bride,hideBride:state.hideBride,date:state.date,time:state.time,venue:state.venue,area:state.area,note:state.note,verse:state.verse,countdown:state.countdown,slug:state.slug,songStart:music.start||0}));
-    if(strong&&music.file){waitUI(true,'نرفع أغنيتك…');fd.append('song',music.file,music.file.name)}
+    const mournP=occOf(state.type).kind==='mourning';
+    fd.append('data',JSON.stringify({tpl:state.tpl,type:state.type,family:state.family,groom:state.groom,bride:state.bride,hideBride:state.hideBride,date:state.date,time:state.time,venue:state.venue,area:state.area,note:state.note,verseMode:state.verseMode||'quran',lang:state.lang||'ar',countdown:state.countdown,slug:state.slug,songStart:music.start||0,yt:(strong&&!mournP&&!music.file&&state.yt&&state.yt.id)?state.yt:null}));
+    if(strong&&!mournP&&music.file){waitUI(true,'نرفع أغنيتك…');fd.append('song',music.file,music.file.name)}
     const r=await fetch('/api/orders',{method:'POST',body:fd});
     const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.ok||!j.url)throw new Error(j.message||'ما كدرنا نفتح الدفع، حاول مرة ثانية');
@@ -1718,19 +1944,40 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelect
 const ff=document.getElementById('fullFrame'),mBtn=document.getElementById('musicBtn'),mEq=document.getElementById('musicEq'),mTxt=document.getElementById('musicTxt');
 const guest=new Audio();guest.loop=true;let fadeT=null;
 function fadeTo(v,ms,done){clearInterval(fadeT);const from=guest.volume,t0=performance.now();fadeT=setInterval(()=>{const p=Math.min(1,(performance.now()-t0)/ms);guest.volume=from+(v-from)*p;if(p>=1){clearInterval(fadeT);done&&done()}},40)}
-function stopGuestMusic(){clearInterval(fadeT);guest.pause();mBtn.classList.remove('on')}
-function mUI(p){mEq.classList.toggle('off',!p);mTxt.textContent=p?'إيقاف الأغنية':'تشغيل الأغنية'}
-mBtn.addEventListener('click',()=>{if(guest.paused){guest.volume=0;guest.play().then(()=>{fadeTo(.7,1200);mUI(true)}).catch(()=>{})}else{fadeTo(0,500,()=>guest.pause());mUI(false)}});
+let ytP=null,ytReady=false,ytWant=false,ytMode=false,ytLang='ar';
+let ytApi=null;
+function loadYT(){if(ytApi)return ytApi;ytApi=new Promise(res=>{if(window.YT&&YT.Player)return res(YT);const sc=document.createElement('script');sc.src='https://www.youtube.com/iframe_api';const prev=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{prev&&prev();res(window.YT)};sc.onerror=()=>{ytApi=null;res(null)};document.head.appendChild(sc);setTimeout(()=>res(window.YT&&YT.Player?YT:null),12000)});return ytApi}
+function ytSetup(slot){
+  ytP=null;ytReady=false;ytWant=false;
+  const id=slot.dataset.yt,st=+slot.dataset.start||0,en=+slot.dataset.end||0;
+  slot.addEventListener('click',()=>{if(!ytP){window.open('https://youtu.be/'+id+'?t='+st,'_blank')}else ytPlay()});
+  loadYT().then(Y=>{
+    if(!Y||!slot.isConnected)return;
+    const host=document.createElement('div');slot.appendChild(host);
+    const pv={start:st,playsinline:1,rel:0,modestbranding:1};if(en)pv.end=en;
+    ytP=new Y.Player(host,{videoId:id,width:'100%',height:'100%',playerVars:pv,events:{
+      onReady:()=>{ytReady=true;if(ytWant)ytPlay()},
+      onStateChange:e=>{if(e.data===0){try{ytP.seekTo(st,true);ytP.playVideo()}catch(x){}}if(e.data===1)mUI(true);if(e.data===2)mUI(false)}}});
+  });
+}
+function ytPlay(){ytWant=true;if(ytP&&ytReady){try{ytP.unMute();ytP.setVolume(75);ytP.playVideo()}catch(e){}}}
+function ytPause(){ytWant=false;if(ytP&&ytReady){try{ytP.pauseVideo()}catch(e){}}mUI(false)}
+function stopGuestMusic(){clearInterval(fadeT);guest.pause();mBtn.classList.remove('on');if(ytP){try{ytP.destroy()}catch(e){}}ytP=null;ytReady=false;ytWant=false}
+function mUI(p){mEq.classList.toggle('off',!p);const t=I18N[ytLang]||I18N.ar;mTxt.textContent=p?t.pause:t.play}
+mBtn.addEventListener('click',()=>{if(ytMode){if(ytP&&ytReady&&ytP.getPlayerState()===1)ytPause();else ytPlay();return}if(guest.paused){guest.volume=0;guest.play().then(()=>{fadeTo(.7,1200);mUI(true)}).catch(()=>{})}else{fadeTo(0,500,()=>guest.pause());mUI(false)}});
 function openFull(s,k,o={}){
   if(!pv.paused){pv.pause();pvUI(false)}
   const t=TPL[k];
   ff.innerHTML=invite(s,k,{cold:true})+intro(s,k,false);
   const op=ff.querySelector('.opener');
-  const useMusic=songOK(t.tier)&&o.song;
-  mBtn.classList.remove('on');stopGuestMusic();
+  const mournK=occOf(s.type).kind==='mourning';
+  const useMusic=songOK(t.tier)&&o.song&&!mournK;
+  mBtn.classList.remove('on');stopGuestMusic();ytLang=s.lang||'ar';
+  const slot=ff.querySelector('.ytslot');ytMode=!useMusic&&!!slot;
+  if(ytMode)ytSetup(slot);
   if(useMusic){guest.src=o.song;guest.preload='auto';try{guest.load()}catch(e){}}
   let started=false;
-  const startMusic=()=>{if(!useMusic||started)return;started=true;try{guest.currentTime=o.start||0}catch(e){};guest.volume=0;mBtn.classList.add('on');guest.play().then(()=>{fadeTo(.7,2500);mUI(true)}).catch(()=>mUI(false))};
+  const startMusic=()=>{if(started)return;if(ytMode){started=true;mBtn.classList.add('on');mUI(false);ytPlay();return}if(!useMusic)return;started=true;try{guest.currentTime=o.start||0}catch(e){};guest.volume=0;mBtn.classList.add('on');guest.play().then(()=>{fadeTo(.7,2500);mUI(true)}).catch(()=>mUI(false))};
   const reveal=d=>{setTimeout(()=>{op.classList.add('reveal');const c=ff.querySelector('.cover');c&&c.classList.add('in')},d);setTimeout(()=>{op.classList.add('gone');const cv=op.querySelector('canvas');if(cv&&cv._sc)setTimeout(()=>{cv._sc.sound=false},2500)},d+1700)};
   const kind=t.intro||'seal';
   if(kind==='door'){
@@ -1757,7 +2004,7 @@ function openFull(s,k,o={}){
 if('IntersectionObserver' in window){
   const vis=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('off',!e.isIntersecting)),{rootMargin:'120px'});
   document.querySelectorAll('.card .inv-frame,#heroStack,#livePreview').forEach(el=>vis.observe(el));
-  const hv=new IntersectionObserver(es=>es.forEach(e=>{document.querySelectorAll('#heroStack>.inv-frame').forEach(f=>{if(!e.isIntersecting)f.classList.add('off');else f.classList.remove('off')})}),{});
+  const hv=new IntersectionObserver(es=>es.forEach(e=>{hs.classList.toggle('off',!e.isIntersecting)}),{});
   hv.observe(document.getElementById('heroStack'));
 }
 
@@ -1821,8 +2068,68 @@ async function panelBoot(){
   await load();setInterval(load,30000);
 }
 
+/* ---------- edit within 24h ---------- */
+var editMode=null;
+async function editBoot(){
+  const slug=(QS.get('s')||'').toLowerCase(),key=QS.get('k')||'';
+  document.body.classList.add('edit-mode');LIVE=true;DOMAIN=location.host;
+  try{
+    const r=await fetch('/api/manage/'+encodeURIComponent(slug)+'?key='+encodeURIComponent(key),{cache:'no-store'});const j=await r.json();if(!j.ok)throw new Error(j.message);
+    const iv=j.invite;editMode={slug,key,tier:iv.tier,until:j.editUntil,hasSong:!!iv.hasSong};
+    Object.assign(state,DEF,iv);state.slug=slug;state.slugTouched=true;if(LEGACY_T[state.type])state.type=LEGACY_T[state.type];
+    Object.entries(fields).forEach(([k,id])=>document.getElementById(id).value=state[k]||'');
+    Object.entries(checks).forEach(([k,id])=>document.getElementById(id).checked=!!state[k]);
+    if(iv.yt&&iv.yt.id){document.getElementById('f-yt').value='https://youtu.be/'+iv.yt.id;document.getElementById('f-yts').value=toMMSS(iv.yt.start||0);document.getElementById('f-yte').value=iv.yt.end?toMMSS(iv.yt.end):'';document.querySelector('.seg [data-src=yt]').click()}
+    form.querySelectorAll('#tplChips .chip').forEach(c=>{const v=c.querySelector('input').value;if(TPL[v].tier!==iv.tier){c.classList.add('dis');c.querySelector('input').disabled=true}});
+    syncChips();renderFull();
+    const left=j.editUntil-Date.now();
+    document.getElementById('editBanner').textContent=left>0?`وضع التعديل · باقي ${num(Math.max(1,Math.round(left/3600e3)))} ساعة`:'انتهت مدة التعديل (٢٤ ساعة بعد الدفع)';
+    if(left<=0){btnNext.disabled=true}
+    document.getElementById('f-slug').value=slug;checkSlug=()=>{slugOK=true;const st=document.getElementById('slugStatus');st.className='slug-status ok';st.textContent='رابط دعوتك ثابت وما يتغيّر';document.getElementById('slugPreview').textContent=location.origin+'/'+slug};checkSlug();
+    document.getElementById('f-slug').disabled=true;
+    if(editMode.hasSong){document.querySelector('.seg').hidden=true;document.getElementById('srcFile').innerHTML='<p class="muted-s">أغنيتك المرفوعة تبقى مثل ما هي.</p>'}
+    setTimeout(scrollToWiz,300);
+  }catch(e){document.getElementById('editBanner').textContent=e.message||'رابط التعديل غير صحيح';btnNext.disabled=true;setTimeout(scrollToWiz,300)}
+}
+async function saveEdit(){
+  payMsg.textContent='';open('payModal');document.getElementById('payTitle').textContent='حفظ التعديلات';document.getElementById('payInfo').hidden=true;document.getElementById('paySummary').innerHTML=summaryHTML();waitUI(true,'نحفظ التعديلات…');
+  try{
+    const d={tpl:state.tpl,type:state.type,family:state.family,groom:state.groom,bride:state.bride,hideBride:state.hideBride,date:state.date,time:state.time,venue:state.venue,area:state.area,note:state.note,verseMode:state.verseMode,lang:state.lang,countdown:state.countdown};
+    if(!editMode.hasSong)d.yt=state.yt&&state.yt.id?state.yt:null;
+    const r=await fetch('/api/edit/'+encodeURIComponent(editMode.slug),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:editMode.key,data:d})});const j=await r.json();if(!j.ok)throw new Error(j.message);
+    waitUI(false);close(document.getElementById('payModal'));
+    finalURL=location.origin+'/'+editMode.slug;document.getElementById('finalLink').textContent=finalURL.replace(/^https?:\/\//,'');
+    document.querySelector('.pane.success h3').textContent='انحفظت التعديلات';document.getElementById('ownerBox').hidden=true;
+    const q=document.getElementById('qr');q.innerHTML='';try{new QRCode(q,{text:finalURL,width:240,height:240,colorDark:'#0c0b0f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){}
+    document.getElementById('btnWa').href='https://wa.me/?text='+encodeURIComponent(finalURL);document.getElementById('btnOpen2').onclick=()=>location.href=finalURL;
+    goStep(5);
+  }catch(e){waitUI(false);payMsg.textContent=e.message||'ما انحفظ، حاول مرة ثانية'}
+}
+
+/* ---------- admin ---------- */
+async function adminBoot(){
+  let key=QS.get('k')||'';try{if(key)localStorage.setItem('naqsh-admin',key);else key=localStorage.getItem('naqsh-admin')||''}catch(e){}
+  document.body.classList.add('panel-mode');const pp=document.getElementById('panelPage');pp.hidden=false;document.title='إدارة نقش';
+  pp.querySelector('.pp-card h2').textContent='آخر الطلبات';pp.querySelectorAll('.pp-card')[0].hidden=true;
+  const load=async()=>{
+    try{const r=await fetch('/api/admin/orders?key='+encodeURIComponent(key),{cache:'no-store'});const j=await r.json();if(!j.ok)throw new Error(j.message);
+      const paid=j.orders.filter(o=>o.status==='paid');const rev=paid.reduce((a,o)=>a+o.total,0);
+      document.getElementById('ppTitle').textContent='إدارة نقش';document.getElementById('ppSub').textContent=`${num(j.count)} طلب · ${num(paid.length)} مدفوع · نسبة الدفع ${num(j.count?Math.round(paid.length/j.count*100):0)}٪`;
+      const tiles=pp.querySelectorAll('.pp-tiles div');
+      const by=t=>paid.filter(o=>o.tier===t).length;
+      [[money(rev)+' د.ع','الإيراد'],[num(by('diamond')),'ماسي مدفوع'],[num(by('gold')),'ذهبي مدفوع'],[num(by('silver')),'فضّي مدفوع']].forEach(([v,l],i)=>{tiles[i].querySelector('b').textContent=v;tiles[i].querySelector('span').textContent=l});
+      const fmt=new Intl.DateTimeFormat(L,{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
+      document.getElementById('ppList').innerHTML=j.orders.slice(0,200).map(o=>`<div class="pp-row"><span class="st ${o.status==='paid'?'y':'n'}">${o.status==='paid'?'مدفوع':o.status==='failed'?'فشل':'ينتظر'}</span><div><b>${esc(o.groom||'—')} · ${esc((TPL[o.tpl]||{}).name||o.tpl||'')}</b><p>${money(o.total)} د.ع · ${esc(o.slug||'')}</p></div><time>${fmt.format(o.createdAt)}</time></div>`).join('')||'<p class="muted-s">ماكو طلبات بعد.</p>';
+    }catch(e){document.getElementById('ppTitle').textContent='ما كدرنا نفتح الإدارة';document.getElementById('ppSub').textContent=e.message||''}
+  };
+  document.getElementById('ppRefresh').onclick=load;await load();setInterval(load,60000);
+}
+
+if(QS.get('og')==='1')window.__nq={invite,intro,fx,sample,TPL,KEYS,thumbHTML};
 (async function boot(){
   if(PATH==='/panel'){panelBoot();return}
+  if(PATH==='/admin'){adminBoot();return}
+  if(PATH==='/edit'){editBoot();return}
   if(GUEST_SLUG){guestBoot(GUEST_SLUG);return}
   if(location.protocol.startsWith('http')){
     try{const r=await fetch('/api/health',{cache:'no-store'});const j=await r.json();if(j.ok&&j.payments){LIVE=true;DOMAIN=location.host;document.getElementById('domainLbl').textContent=DOMAIN+'/';checkSlug();paintStep()}}catch(e){}
