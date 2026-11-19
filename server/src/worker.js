@@ -2,14 +2,16 @@
 // المفتاح السري لـ Wayl يبقى هنا كـ secret (WAYL_KEY) ولا يصل للمتصفح أبدًا.
 
 const WAYL_API = 'https://api.thewayl.com/api/v1/links';
-const PRICES = { normal: 5000, strong: 10000 };
+const PRICES = { silver: 5000, gold: 10000, diamond: 15000 };
+const TIER_NAME = { silver: 'فضّي', gold: 'ذهبي', diamond: 'ماسي' };
 const TEMPLATES = {
-  door: ['طَرقة', 'strong'], curtain: ['سِتارة', 'strong'], union: ['لقاء', 'strong'], ring: ['مِحبس', 'strong'],
-  royal: ['ملكي', 'strong'], night: ['ليل بغداد', 'strong'], emerald: ['زمرّد', 'strong'],
-  pearl: ['لؤلؤ', 'normal'], garden: ['بُستان', 'normal'], marble: ['مرمر', 'normal'],
+  lanterns: ['فوانيس', 'diamond'], fireworks: ['ألعاب نارية', 'diamond'], candles: ['شموع', 'diamond'],
+  door: ['طَرقة', 'gold'], curtain: ['سِتارة', 'gold'], union: ['لقاء', 'gold'], ring: ['مِحبس', 'gold'],
+  royal: ['ملكي', 'gold'], night: ['ليل بغداد', 'gold'], emerald: ['زمرّد', 'gold'],
+  pearl: ['لؤلؤ', 'silver'], garden: ['بُستان', 'silver'], marble: ['مرمر', 'silver'],
 };
 const TYPES = ['خطوبة', 'عقد قران', 'زفاف', 'حنّة'];
-const RESERVED = new Set(['api', 'paid', 'admin', 'www', 'test', 'invite', 'assets', 'index', 'naqsh', 'static', 'robots', 'favicon', 'sitemap', 'login', 'dashboard']);
+const RESERVED = new Set(['api', 'paid', 'panel', 'admin', 'www', 'test', 'invite', 'assets', 'index', 'naqsh', 'static', 'robots', 'favicon', 'sitemap', 'login', 'dashboard']);
 const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{1,28})[a-z0-9]$/;
 const MAX_SONG = 15 * 1024 * 1024;
 const PAID = new Set(['Complete', 'Delivered']);
@@ -39,6 +41,8 @@ export default {
       if (req.method === 'POST' && p === '/api/wayl/webhook') return await webhook(req, env);
       if (req.method === 'GET' && (m = p.match(/^\/api\/invite\/([a-z0-9-]+)$/))) return await getInvite(env, m[1]);
       if (req.method === 'GET' && (m = p.match(/^\/api\/song\/([a-z0-9-]+)$/))) return await getSong(req, env, m[1]);
+      if (req.method === 'POST' && (m = p.match(/^\/api\/rsvp\/([a-z0-9-]+)$/))) return await rsvpPost(req, env, m[1]);
+      if (req.method === 'GET' && (m = p.match(/^\/api\/rsvp\/([a-z0-9-]+)$/))) return await rsvpList(env, m[1], url.searchParams.get('key') || '');
       if (req.method === 'GET' && p === '/api/health') return json({ ok: true, payments: !!env.WAYL_KEY, env: env.WAYL_ENV });
       return fail('المسار غير موجود', 404);
     } catch (e) {
@@ -112,7 +116,7 @@ async function createOrder(req, env, url) {
   const song = form.get('song');
   let songMeta = null;
   if (song && typeof song === 'object' && song.size) {
-    if (tier !== 'strong') return fail('الأغنية متوفرة بالقالب القوي فقط');
+    if (tier === 'silver') return fail('الأغنية متوفرة بالباقة الذهبية والماسية فقط');
     if (song.size > MAX_SONG) return fail('حجم الأغنية أكبر من ١٥ ميغا');
     const type = song.type || 'audio/mpeg';
     if (!/^audio\//.test(type)) return fail('ملف الأغنية لازم يكون صوت (MP3 أو M4A)');
@@ -137,7 +141,7 @@ async function createOrder(req, env, url) {
     total,
     currency: 'IQD',
     customParameter: d.slug,
-    lineItem: [{ label: `دعوة رقمية · قالب ${tplName}`, amount: total, type: 'increase' }],
+    lineItem: [{ label: `دعوة رقمية · باقة ${TIER_NAME[tier]} · قالب ${tplName}`, amount: total, type: 'increase' }],
     webhookUrl: origin + '/api/wayl/webhook',
     webhookSecret: env.WEBHOOK_SECRET,
     redirectionUrl: origin + '/paid',
@@ -182,7 +186,8 @@ async function activate(env, ref) {
   const st = await slugState(env, slug);
   if (st && st.ref !== ref) slug = slug.slice(0, 25) + '-' + rid(4); // reservation lost meanwhile
   const expiration = Math.floor(Math.max(order.data.when + 30 * 864e5, Date.now() + 7 * 864e5) / 1000);
-  const invite = { ...order.data, slug, tier: order.tier, hasSong: !!order.song, songStart: order.song ? order.song.start : 0, ref };
+  const ownerKey = order.tier === 'diamond' ? rid(16) : null;
+  const invite = { ...order.data, slug, tier: order.tier, hasSong: !!order.song, songStart: order.song ? order.song.start : 0, ref, ownerKey, exp: expiration };
   if (order.song) {
     const s = await env.NAQSH.getWithMetadata('song:' + ref, 'arrayBuffer');
     if (s && s.value) await env.NAQSH.put('songfile:' + slug, s.value, { expiration, metadata: s.metadata });
@@ -190,14 +195,14 @@ async function activate(env, ref) {
   }
   await env.NAQSH.put('inv:' + slug, JSON.stringify(invite), { expiration });
   await env.NAQSH.put('slug:' + slug, JSON.stringify({ ref, status: 'active' }), { expiration });
-  order.status = 'paid'; order.slug = slug; order.paidAt = Date.now(); order.waylStatus = w.status; order.paymentMethod = w.paymentMethod || null;
+  order.status = 'paid'; order.slug = slug; order.ownerKey = ownerKey; order.paidAt = Date.now(); order.waylStatus = w.status; order.paymentMethod = w.paymentMethod || null;
   await env.NAQSH.put('order:' + ref, JSON.stringify(order), { expiration });
   return order;
 }
 async function orderStatus(env, ref) {
   const o = await activate(env, ref);
   if (o.status === 'missing') return fail('الطلب غير موجود', 404);
-  return json({ ok: true, status: o.status, slug: o.slug || o.data.slug, total: o.total, tpl: o.data.tpl, groom: o.data.groom, family: o.data.family, type: o.data.type });
+  return json({ ok: true, status: o.status, slug: o.slug || o.data.slug, total: o.total, tier: o.tier, tpl: o.data.tpl, groom: o.data.groom, family: o.data.family, type: o.data.type, panelKey: o.status === 'paid' ? (o.ownerKey || null) : null });
 }
 
 async function webhook(req, env) {
@@ -216,7 +221,8 @@ function timingSafe(a, b) { let x = 0; for (let i = 0; i < a.length; i++) x |= a
 async function getInvite(env, slug) {
   const raw = await env.NAQSH.get('inv:' + slug);
   if (!raw) return fail('الدعوة غير موجودة أو انتهت مدتها', 404);
-  const { ref, when, ...pub } = JSON.parse(raw);
+  const { ref, when, ownerKey, exp, ...pub } = JSON.parse(raw);
+  pub.rsvp = pub.tier === 'diamond';
   return json({ ok: true, invite: pub }, 200, { 'Cache-Control': 'public, max-age=60' });
 }
 async function getSong(req, env, slug) {
@@ -233,4 +239,30 @@ async function getSong(req, env, slug) {
     return new Response(buf.slice(start, end + 1), { status: 206, headers: { ...base, 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': String(end - start + 1) } });
   }
   return new Response(buf, { headers: { ...base, 'Content-Length': String(size) } });
+}
+
+/* ---------- RSVP (diamond) ---------- */
+async function loadInvite(env, slug) { const raw = await env.NAQSH.get('inv:' + slug); return raw ? JSON.parse(raw) : null; }
+async function rsvpPost(req, env, slug) {
+  const inv = await loadInvite(env, slug);
+  if (!inv || inv.tier !== 'diamond') return fail('تأكيد الحضور غير متوفر لهذه الدعوة', 404);
+  let b; try { b = await req.json(); } catch { return fail('بيانات غير صحيحة'); }
+  const name = str(b.name, 40, 2); if (!name) return fail('اكتب اسمك (حرفين على الأقل)');
+  const attending = !!b.attending;
+  const count = attending ? Math.max(1, Math.min(20, parseInt(b.count, 10) || 1)) : 0;
+  const message = str(b.message, 200, 0); if (message === null) return fail('التهنئة طويلة، اختصرها لـ ٢٠٠ حرف');
+  const cid = String(b.cid || '').replace(/[^a-z0-9]/gi, '').slice(0, 24) || rid(12);
+  const list = JSON.parse((await env.NAQSH.get('rsvp:' + slug)) || '[]');
+  const i = list.findIndex(x => x.cid === cid);
+  const row = { cid, name, attending, count, message, at: Date.now() };
+  if (i >= 0) list[i] = row; else { if (list.length >= 1500) return fail('وصل عدد الردود للحد الأقصى'); list.push(row); }
+  await env.NAQSH.put('rsvp:' + slug, JSON.stringify(list), inv.exp ? { expiration: inv.exp } : {});
+  return json({ ok: true, cid });
+}
+async function rsvpList(env, slug, key) {
+  const inv = await loadInvite(env, slug);
+  if (!inv || !inv.ownerKey || !key || key.length !== inv.ownerKey.length || !timingSafe(key, inv.ownerKey)) return fail('الرابط غير صحيح', 403);
+  const list = JSON.parse((await env.NAQSH.get('rsvp:' + slug)) || '[]').sort((a, b) => b.at - a.at).map(({ cid, ...r }) => r);
+  const yes = list.filter(r => r.attending);
+  return json({ ok: true, invite: { groom: inv.groom, bride: inv.hideBride ? '' : inv.bride, family: inv.family, type: inv.type, date: inv.date, time: inv.time, venue: inv.venue }, totals: { replies: list.length, attending: yes.length, people: yes.reduce((n, r) => n + r.count, 0), declined: list.length - yes.length }, list });
 }

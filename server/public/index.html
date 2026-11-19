@@ -247,7 +247,11 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 @keyframes pulse{50%{opacity:.35}}
 
 /* pricing */
-.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin-inline:auto}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan.diamond{background:linear-gradient(165deg,#141b26,#131118 60%);border-color:rgba(190,220,255,.4)}
+.plan .dtag{background:linear-gradient(135deg,#e8f4ff,#9fc7ee);color:#0b1624}
+.btn-diamond{background:linear-gradient(135deg,#f2f8ff,#a9cdf0);color:#0b1624;box-shadow:0 10px 34px -12px rgba(170,205,240,.6)}
+.btn-diamond:hover{transform:translateY(-2px)}
 .plan{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:34px;display:flex;flex-direction:column;gap:20px;overflow:hidden}
 .plan.hot{background:linear-gradient(165deg,#251f14,#131118 60%);border-color:rgba(223,195,140,.55)}
 .plan.hot::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent 0 80%,rgba(223,195,140,.18) 90%,transparent);animation:spin 8s linear infinite;z-index:0}
@@ -572,15 +576,71 @@ body.guest #fullView>.x{display:none}
 .tier-head h3{font-size:22px;font-weight:600}
 .tier-head span{color:var(--muted);font-size:14.5px}
 .tier-head b{color:var(--gold);font-size:17px}
-#galNormal{margin-bottom:0}
-#galStrong{margin-bottom:44px}
+#galDiamond,#galGold{margin-bottom:44px}
+.tier-head.diamond h3{background:linear-gradient(100deg,#cfe9ff,#fff,#b9d7ff,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tier-head.diamond b{color:#d6ecff}
 .gallery{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;gap:16px!important}
-.card{padding:10px;gap:10px;border-radius:22px}
+.card{padding:10px;gap:10px;border-radius:22px;min-width:0}
+.card .thumb{overflow:hidden;position:relative}
+.inv-frame{contain:layout paint}
 .card .thumb{display:block;width:100%;padding:0;border:0;cursor:pointer;aspect-ratio:9/16;border-radius:15px;background:#000}
 .play-chip{position:absolute;left:10px;bottom:10px;z-index:50;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-size:12.5px;font-weight:500}
 .card .meta{display:block;padding:0 4px}
 .card .meta h3{font-size:18px}
 .card .meta small{display:block;font-size:13px;color:var(--muted);line-height:1.5}
+/* diamond */
+.scn{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scn-veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.62) 0,rgba(0,0,0,.35) 55%,rgba(0,0,0,.15) 100%)}
+.op-scene{--obg:#000;--hintc:#fff;--nf:'Aref Ruqaa',serif}
+.op-lanterns{--acc:#ffd29a}.op-fireworks{--acc:#ffd27a}.op-candles{--acc:#f2c27a}
+.op-scene .op-hint{text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.t-lanterns{--bg:#160d26;--ink:#fff4e8;--acc:#ffc77a;--mut:#e6c9cf;--nf:'Aref Ruqaa',serif;--nameIn:nmGlow;--btnInk:#2a1406}
+.t-fireworks{--bg:#040611;--ink:#f6f3ff;--acc:#ffd27a;--mut:#c2bde0;--nf:'Aref Ruqaa',serif;--nameIn:nmBlur;--btnInk:#1a1206}
+.t-candles{--bg:#0a0604;--ink:#fcf0e0;--acc:#f2c27a;--mut:#d2b497;--nf:'Amiri',serif;--nameIn:nmGlow;--btnInk:#24140a}
+.t-lanterns .nm b,.t-fireworks .nm b,.t-candles .nm b{text-shadow:0 0 .5em rgba(255,200,120,.45)}
+.inv .to{font-size:.8em;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:.1em;padding:.4em 1.2em;border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);border-radius:.8em}
+.inv .to b{font-size:1.35em;color:var(--acc);font-weight:600}
+.calbtn{display:inline-flex;align-items:center;gap:.5em;font-size:.8em;padding:.55em 1.3em;border-radius:999px;border:1px solid var(--acc);color:var(--acc);pointer-events:auto}
+.rs-form{display:grid;gap:.6em;width:100%;max-width:16em;pointer-events:auto}
+.rs-form input,.rs-form textarea{width:100%;font:inherit;font-size:.85em;color:var(--ink);background:color-mix(in srgb,var(--bg) 70%,#000 30%);background:rgba(0,0,0,.25);border:1px solid color-mix(in srgb,var(--acc) 40%,transparent);border-radius:.7em;padding:.7em .9em;text-align:right}
+.t-pearl .rs-form input,.t-pearl .rs-form textarea,.t-garden .rs-form input,.t-garden .rs-form textarea,.t-marble .rs-form input,.t-marble .rs-form textarea,.t-door .rs-form input,.t-door .rs-form textarea,.t-curtain .rs-form input,.t-curtain .rs-form textarea{background:rgba(255,255,255,.6)}
+.rs-form textarea{min-height:4.2em;resize:none}
+.rs-choice{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
+.rs-choice button,.rs-count button,.rs-send{font:inherit;cursor:pointer;border-radius:999px}
+.rs-choice button{font-size:.82em;padding:.6em;border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);background:transparent;color:var(--ink)}
+.rs-choice button.on{background:var(--acc);color:var(--btnInk,#111);border-color:var(--acc);font-weight:600}
+.rs-count{display:flex;align-items:center;justify-content:space-between;font-size:.82em;color:var(--mut)}
+.rs-count span{display:flex;align-items:center;gap:.6em}
+.rs-count button{width:2em;height:2em;border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);background:transparent;color:var(--ink);font-size:1em;line-height:1}
+.rs-count b{min-width:1.5em;text-align:center;color:var(--ink);font-size:1.1em}
+.rs-send{font-size:.88em;padding:.75em;border:0;background:var(--acc);color:var(--btnInk,#111);font-weight:700}
+.rs-msg{font-size:.78em;color:var(--acc);min-height:1.2em}
+.rs-form.sent .rs-send{opacity:.6}
+/* success owner box + panel page */
+.owner{width:100%;display:grid;gap:10px;text-align:right;border:1px solid rgba(190,220,255,.35);border-radius:18px;padding:18px;background:rgba(160,200,255,.04)}
+.owner h4{font-size:17px}
+.row-btns{display:flex;gap:10px;flex-wrap:wrap}
+body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
+.panel-page{min-height:100vh;padding:24px 0 60px}
+.pp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.panel-page h1{font-size:clamp(26px,5vw,38px);font-weight:600}
+.pp-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+.pp-tiles div{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:2px}
+.pp-tiles b{font-size:32px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1.1}
+.pp-tiles span{font-size:13px;color:var(--muted)}
+.pp-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:12px;margin-bottom:16px}
+.pp-card h2{font-size:19px;font-weight:600}
+.pp-gen{display:flex;gap:10px}
+.pp-gen input{flex:1}
+.pp-list{display:grid;gap:10px}
+.pp-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:12px 14px;border-radius:14px;background:#0d0c11;border:1px solid rgba(255,255,255,.06)}
+.pp-row .st{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.pp-row .st.y{background:rgba(94,211,154,.15);color:var(--ok)}
+.pp-row .st.n{background:rgba(239,125,107,.14);color:var(--bad)}
+.pp-row b{font-weight:600}
+.pp-row p{font-size:14px;color:#d9d3c8;margin-top:2px}
+.pp-row time{font-size:12px;color:var(--muted);white-space:nowrap}
+@media (max-width:640px){.pp-tiles{grid-template-columns:repeat(2,1fr)}.pp-gen{flex-direction:column}}
 @media (max-width:1000px){
   .hero .wrap,.b-grid{grid-template-columns:1fr}
   .stage{order:0;margin-top:10px}
@@ -646,9 +706,9 @@ body.guest #fullView>.x{display:none}
           <a href="#templates" class="btn btn-ghost">شوف القوالب</a>
         </div>
         <div class="stats">
-          <div><b class="num" data-count="5000">٥٬٠٠٠</b><span>دينار للقالب العادي</span></div>
-          <div><b class="num" data-count="10000">١٠٬٠٠٠</b><span>دينار للقوي مع أغنيتك</span></div>
-          <div><b class="num">٣</b><span>دقائق وتصير جاهزة</span></div>
+          <div><b class="num" data-count="5000">٥٬٠٠٠</b><span>الباقة الفضية</span></div>
+          <div><b class="num" data-count="10000">١٠٬٠٠٠</b><span>الذهبية مع أغنيتك</span></div>
+          <div><b class="num" data-count="15000">١٥٬٠٠٠</b><span>الماسية الخرافية</span></div>
         </div>
       </div>
       <div class="stage" id="stage">
@@ -661,7 +721,7 @@ body.guest #fullView>.x{display:none}
   <section class="how" aria-label="طريقة العمل">
     <div class="wrap">
       <ol class="how-list">
-        <li><b>١</b><div><h3>اختار القالب</h3><p>عادي بـ ٥٬٠٠٠ أو قوي بـ ١٠٬٠٠٠ مع أغنيتك</p></div></li>
+        <li><b>١</b><div><h3>اختار القالب</h3><p>فضّي، ذهبي أو ماسي، وشوفه كامل قبل ما تختار</p></div></li>
         <li><b>٢</b><div><h3>اكتب التفاصيل</h3><p>الأسماء، التاريخ، الساعة، المكان. وتشوف الدعوة وهي تتكوّن</p></div></li>
         <li><b>٣</b><div><h3>ادفع واستلم رابطك</h3><p>الدفع عبر Wayl، والرابط يتفعّل مباشرة</p></div></li>
       </ol>
@@ -674,10 +734,12 @@ body.guest #fullView>.x{display:none}
         <div><span class="k">المجموعة</span><h2>كل قالب <em>إله حركته</em></h2></div>
         <p>اضغط على أي قالب وشوفه كامل مثل ما يشوفه الضيف، وبعدها اختاره.</p>
       </div>
-      <div class="tier-head"><h3>القوالب القوية</h3><span><b class="num">١٠٬٠٠٠</b> د.ع · تفاعلية ومعها أغنيتك</span></div>
-      <div class="gallery" id="galStrong"></div>
-      <div class="tier-head"><h3>القوالب العادية</h3><span><b class="num">٥٬٠٠٠</b> د.ع · متحركة بدون أغنية</span></div>
-      <div class="gallery" id="galNormal"></div>
+      <div class="tier-head diamond"><h3>الباقة الماسية</h3><span><b class="num">١٥٬٠٠٠</b> د.ع · مشاهد خرافية، أغنيتك، اسم كل ضيف، وتأكيد الحضور</span></div>
+      <div class="gallery" id="galDiamond"></div>
+      <div class="tier-head"><h3>الباقة الذهبية</h3><span><b class="num">١٠٬٠٠٠</b> د.ع · قوالب تفاعلية ومعها أغنيتك</span></div>
+      <div class="gallery" id="galGold"></div>
+      <div class="tier-head"><h3>الباقة الفضية</h3><span><b class="num">٥٬٠٠٠</b> د.ع · قوالب متحركة بدون أغنية</span></div>
+      <div class="gallery" id="galSilver"></div>
     </div>
   </section>
 
@@ -724,8 +786,8 @@ body.guest #fullView>.x{display:none}
             <div class="pane" data-pane="2">
               <div class="lock" id="musicLock">
                 <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-                <h3>الأغنية متوفرة بالقالب القوي</h3>
-                <p>قالبك الحالي عادي. حوّله لواحد من القوالب القوية بـ ١٠٬٠٠٠ د.ع، وضيف الأغنية اللي تحبها تشتغل أول ما الضيف يفتح الختم.</p>
+                <h3>الأغنية متوفرة بالباقة الذهبية والماسية</h3>
+                <p>قالبك الحالي من الباقة الفضية. اختار قالب ذهبي (١٠٬٠٠٠ د.ع) أو ماسي (١٥٬٠٠٠ د.ع)، وأغنيتك تشتغل أول ما الضيف يفتح الدعوة.</p>
                 <div class="chips" id="upChips"></div>
                 <button type="button" class="linkbtn" data-go="3">أكمل بدون أغنية</button>
               </div>
@@ -781,6 +843,12 @@ body.guest #fullView>.x{display:none}
                 </div>
               </div>
               <p class="muted-s" id="doneNote">احفظ الرابط. يبقى شغّال لحد ٣٠ يوم بعد الحفل.</p>
+              <div class="owner" id="ownerBox" hidden>
+                <h4>لوحة الحضور الخاصة بيك</h4>
+                <p class="muted-s">احفظ هذا الرابط ولا تنطيه لأحد. منه تشوف منو جاي وعدد الأشخاص والتهاني، وتسوي رابط باسم كل ضيف.</p>
+                <div class="big-link" id="panelLink"></div>
+                <div class="row-btns"><a class="btn btn-diamond btn-sm" id="btnPanel" href="#">افتح لوحة الحضور</a><button class="btn btn-ghost btn-sm" type="button" id="btnCopyPanel">نسخ رابط اللوحة</button></div>
+              </div>
             </div>
           </form>
           <div class="wz-foot" id="wzFoot">
@@ -806,30 +874,42 @@ body.guest #fullView>.x{display:none}
       </div>
       <div class="plans">
         <div class="plan">
-          <h3>القالب العادي</h3>
+          <h3>الفضية</h3>
           <div class="amt"><b class="num">٥٬٠٠٠</b><span>دينار عراقي</span></div>
           <ul>
-            <li>لؤلؤ، بُستان أو مرمر</li>
-            <li>انميشن دخول وحركة مستمرة</li>
+            <li>٣ قوالب: لؤلؤ، بُستان، مرمر</li>
+            <li>حركة دخول وزخارف متحركة</li>
             <li>فتح الدعوة بالختم</li>
             <li>عدّاد تنازلي وزر موقع القاعة</li>
             <li>رابط باسمك + رمز QR</li>
-            <li class="no">إضافة أغنية</li>
+            <li class="no">أغنية</li>
           </ul>
-          <a href="#builder" class="btn btn-ghost" data-pick="pearl">اختر العادي</a>
+          <a href="#builder" class="btn btn-ghost" data-pick="pearl">اختر الفضية</a>
         </div>
         <div class="plan hot">
           <span class="tag">الأكثر طلبًا</span>
-          <h3>القالب القوي</h3>
+          <h3>الذهبية</h3>
           <div class="amt"><b class="num">١٠٬٠٠٠</b><span>دينار عراقي</span></div>
           <ul>
-            <li>القوالب التفاعلية: باب تطرقه ٣ مرات، ستارة وحمام، ممر النور، علبة المحبس</li>
-            <li>وملكي، ليل بغداد وزمرّد بانميشن متقدم</li>
+            <li>٧ قوالب تفاعلية: باب تطرقه، ستارة وحمام، ممر النور، علبة المحبس، ملكي، ليل بغداد، زمرّد</li>
             <li class="star">أغنيتك تشتغل أول ما تنفتح الدعوة</li>
             <li>تختار الثانية اللي تبدي منها الأغنية</li>
-            <li>كل مزايا العادي</li>
+            <li>كل مزايا الفضية</li>
           </ul>
-          <a href="#builder" class="btn btn-gold" data-pick="door">اختر القوي</a>
+          <a href="#builder" class="btn btn-gold" data-pick="door">اختر الذهبية</a>
+        </div>
+        <div class="plan diamond">
+          <span class="tag dtag">الأفخم</span>
+          <h3>الماسية</h3>
+          <div class="amt"><b class="num">١٥٬٠٠٠</b><span>دينار عراقي</span></div>
+          <ul>
+            <li class="star">٣ مشاهد خرافية: فوانيس فوق النهر، ألعاب نارية تكتب أسماءكم، شموع تنشعل وحدة وحدة</li>
+            <li>اسم كل ضيف على دعوته</li>
+            <li>تأكيد الحضور مع العدد والتهاني، ولوحة خاصة إلك تشوف بيها الردود</li>
+            <li>زر «أضف الموعد لتقويمك»</li>
+            <li>أغنيتك + كل مزايا الذهبية</li>
+          </ul>
+          <a href="#builder" class="btn btn-diamond" data-pick="lanterns">اختر الماسية</a>
         </div>
       </div>
       <div class="pay-strip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/></svg><span>الدفع <b>أونلاين فقط</b> عبر بوابة <b>Wayl</b>. بدون اشتراك، تدفع مرة وحدة لكل دعوة.</span></div>
@@ -845,6 +925,7 @@ body.guest #fullView>.x{display:none}
         <details><summary>الضيف يحتاج تطبيق؟</summary><p>لا. الرابط يفتح على أي موبايل من واتساب أو إنستغرام مباشرة.</p></details>
         <details><summary>أكدر أخفي اسم العروس؟</summary><p>إي، بضغطة وحدة بالخطوة الأولى. تطلع الدعوة باسم العريس والعائلة فقط.</p></details>
         <details><summary>شنو طرق الدفع؟</summary><p>الدفع أونلاين فقط عبر بوابة Wayl الآمنة: فيزا، ماستركارد وبطاقة كي. ما نحفظ بيانات بطاقتك عندنا.</p></details>
+        <details><summary>شلون أعرف منو جاي بالباقة الماسية؟</summary><p>بعد الدفع يوصلك رابط لوحة خاصة إلك. بيها كل الردود: منو جاي، عدد الأشخاص، والتهاني. وتكدر تسوي منها رابط باسم كل ضيف.</p></details>
         <details><summary>شكد يبقى الرابط شغّال؟</summary><p>من لحظة الدفع لحد ٣٠ يوم بعد موعد الحفل.</p></details>
       </div>
     </div>
@@ -875,6 +956,31 @@ body.guest #fullView>.x{display:none}
   </div>
 </div>
 
+<!-- owner panel (diamond) -->
+<div class="panel-page" id="panelPage" hidden>
+  <div class="wrap">
+    <div class="pp-head"><a href="/" class="brand"><b class="gold-text">نقش</b><small>NAQSH</small></a><button type="button" class="btn btn-ghost btn-sm" id="ppRefresh">تحديث</button></div>
+    <h1 id="ppTitle">لوحة الحضور</h1>
+    <p class="muted-s" id="ppSub"></p>
+    <div class="pp-tiles">
+      <div><b id="ppPeople">٠</b><span>شخص جاي</span></div>
+      <div><b id="ppYes">٠</b><span>رد بالحضور</span></div>
+      <div><b id="ppNo">٠</b><span>اعتذار</span></div>
+      <div><b id="ppAll">٠</b><span>كل الردود</span></div>
+    </div>
+    <div class="pp-card">
+      <h2>رابط باسم ضيف</h2>
+      <p class="muted-s">اكتب اسم الضيف، ويطلعلك رابط دعوة مكتوب بيه «دعوة خاصة إلى» واسمه.</p>
+      <div class="pp-gen"><input type="text" id="ppGuest" maxlength="40" placeholder="مثلًا: الحاج أبو علي" aria-label="اسم الضيف"><button type="button" class="btn btn-gold btn-sm" id="ppMake">سوّي الرابط</button></div>
+      <div id="ppOut" hidden><div class="big-link" id="ppLink"></div><div class="row-btns"><button type="button" class="btn btn-ghost btn-sm" id="ppCopy">نسخ</button><a class="btn btn-ghost btn-sm" id="ppWa" href="#" target="_blank" rel="noopener">إرسال على واتساب</a></div></div>
+    </div>
+    <div class="pp-card">
+      <h2>الردود</h2>
+      <div id="ppList" class="pp-list"><p class="muted-s">ماكو ردود بعد.</p></div>
+    </div>
+  </div>
+</div>
+
 <!-- guest loading / not found -->
 <div class="gate" id="gate" hidden><div class="gate-in"><b class="gold-text brand-b">نقش</b><div class="spinner" id="gateSpin"></div><p id="gateTxt">نجهّز دعوتك…</p><a href="/" class="btn btn-gold btn-sm" id="gateHome" hidden>اصنع دعوتك من نقش</a></div></div>
 
@@ -892,20 +998,25 @@ let LIVE=false;
 let DOMAIN='naqsh.j8ji.com';
 const PATH=location.pathname.replace(/\/+$/,'');
 const QS=new URLSearchParams(location.search);
-const GUEST_SLUG=(location.protocol.startsWith('http')&&/^\/[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/.test(PATH)&&!/\.html$/.test(PATH)&&PATH!=='/paid')?PATH.slice(1):null;
+const GUEST_SLUG=(location.protocol.startsWith('http')&&/^\/[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/.test(PATH)&&!/\.html$/.test(PATH)&&PATH!=='/paid'&&PATH!=='/panel')?PATH.slice(1):null;
 const PAID_REF=QS.get('referenceId')||(PATH==='/paid'?QS.get('ref'):null);
-const PRICE={normal:5000,strong:10000};
+const PRICE={silver:5000,gold:10000,diamond:15000};
+const TIERS={diamond:{name:'ماسي',price:15000},gold:{name:'ذهبي',price:10000},silver:{name:'فضّي',price:5000}};
+const songOK=t=>t!=='silver';
 const TPL={
-  door:{name:'طَرقة',desc:'اطرق ٣ مرات وينفتح الباب',tier:'strong',intro:'door',sw:'linear-gradient(135deg,#6b4220 50%,#efe3cb 50%)'},
-  curtain:{name:'سِتارة',desc:'ستارة تنفتح وحمام يطير',tier:'strong',intro:'curtain',sw:'linear-gradient(135deg,#fbf5e8 50%,#9c7633 50%)'},
-  union:{name:'لقاء',desc:'نوران يلتقيان بممر أقواس',tier:'strong',intro:'union',sw:'linear-gradient(135deg,#361a37 50%,#f0c98a 50%)'},
-  ring:{name:'مِحبس',desc:'علبة تنفتح ويطلع المحبس',tier:'strong',intro:'ring',sw:'linear-gradient(135deg,#6e1729 50%,#ecc98d 50%)'},
-  royal:{name:'ملكي',desc:'ذهب يصعد وأشعة تدور',tier:'strong',sw:'linear-gradient(135deg,#0a090b 50%,#d9b66b 50%)',seal:['#d8b05a','#6d4e17']},
-  night:{name:'ليل بغداد',desc:'نجوم وشهب وهلال',tier:'strong',sw:'linear-gradient(135deg,#0f1a44 50%,#edcb81 50%)',seal:['#4a63b8','#121d4a']},
-  emerald:{name:'زمرّد',desc:'نقوش إسلامية تدور',tier:'strong',sw:'linear-gradient(135deg,#14594b 50%,#dcbc6c 50%)',seal:['#2f8a70','#0a3a2f']},
-  pearl:{name:'لؤلؤ',desc:'لآلئ تطفو بهدوء',tier:'normal',sw:'linear-gradient(135deg,#fffdf8 50%,#b38a2e 50%)',seal:['#d6b366','#8a6a24']},
-  garden:{name:'بُستان',desc:'أوراق تتساقط',tier:'normal',sw:'linear-gradient(135deg,#eef0e4 50%,#647a4f 50%)',seal:['#8aa070','#3f4f31']},
-  marble:{name:'مرمر',desc:'رخام وقوس عربي',tier:'normal',sw:'linear-gradient(135deg,#f3e6e2 50%,#9d6670 50%)',seal:['#c4848f','#7d4552']}
+  lanterns:{name:'فوانيس',desc:'فوانيس تطير فوق النهر',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#36204d 50%,#ffb25a 50%)'},
+  fireworks:{name:'ألعاب نارية',desc:'سماء بغداد تكتب أسماءكم',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#0a1236 50%,#ffd27a 50%)'},
+  candles:{name:'شموع',desc:'تشعل الشموع وحدة وحدة',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#1a0f08 50%,#f2c27a 50%)'},
+  door:{name:'طَرقة',desc:'اطرق ٣ مرات وينفتح الباب',tier:'gold',intro:'door',sw:'linear-gradient(135deg,#6b4220 50%,#efe3cb 50%)'},
+  curtain:{name:'سِتارة',desc:'ستارة تنفتح وحمام يطير',tier:'gold',intro:'curtain',sw:'linear-gradient(135deg,#fbf5e8 50%,#9c7633 50%)'},
+  union:{name:'لقاء',desc:'نوران يلتقيان بممر أقواس',tier:'gold',intro:'union',sw:'linear-gradient(135deg,#361a37 50%,#f0c98a 50%)'},
+  ring:{name:'مِحبس',desc:'علبة تنفتح ويطلع المحبس',tier:'gold',intro:'ring',sw:'linear-gradient(135deg,#6e1729 50%,#ecc98d 50%)'},
+  royal:{name:'ملكي',desc:'ذهب يصعد وأشعة تدور',tier:'gold',sw:'linear-gradient(135deg,#0a090b 50%,#d9b66b 50%)',seal:['#d8b05a','#6d4e17']},
+  night:{name:'ليل بغداد',desc:'نجوم وشهب وهلال',tier:'gold',sw:'linear-gradient(135deg,#0f1a44 50%,#edcb81 50%)',seal:['#4a63b8','#121d4a']},
+  emerald:{name:'زمرّد',desc:'نقوش إسلامية تدور',tier:'gold',sw:'linear-gradient(135deg,#14594b 50%,#dcbc6c 50%)',seal:['#2f8a70','#0a3a2f']},
+  pearl:{name:'لؤلؤ',desc:'لآلئ تطفو بهدوء',tier:'silver',sw:'linear-gradient(135deg,#fffdf8 50%,#b38a2e 50%)',seal:['#d6b366','#8a6a24']},
+  garden:{name:'بُستان',desc:'أوراق تتساقط',tier:'silver',sw:'linear-gradient(135deg,#eef0e4 50%,#647a4f 50%)',seal:['#8aa070','#3f4f31']},
+  marble:{name:'مرمر',desc:'رخام وقوس عربي',tier:'silver',sw:'linear-gradient(135deg,#f3e6e2 50%,#9d6670 50%)',seal:['#c4848f','#7d4552']}
 };
 const KEYS=Object.keys(TPL);
 const TYPES=[['خطوبة','engagement'],['عقد قران','nikah'],['زفاف','wedding'],['حنّة','henna']];
@@ -915,6 +1026,196 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const num=(n,d=1,g=false)=>{try{return Number(n).toLocaleString(L,{minimumIntegerDigits:d,useGrouping:g})}catch(e){return String(n)}};
 const money=n=>num(n,1,true);
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ===================== DIAMOND SCENES (canvas) ===================== */
+const SCN=new Set();
+const IMPL={};
+const scnVis=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{const s=e.target._sc;if(s)s.hidden=!e.isIntersecting}),{rootMargin:'80px'}):null;
+let scnRaf=null;
+function scnLoop(t){
+  scnRaf=null;
+  for(const sc of SCN){
+    if(!sc.c.isConnected){SCN.delete(sc);scnVis&&scnVis.unobserve(sc.c);continue}
+    if(sc.hidden||sc.c.closest('.off')||sc.c.closest('.gone'))continue;
+    try{sc.frame(t)}catch(e){console.error(e);SCN.delete(sc)}
+  }
+  if(SCN.size)scnRaf=requestAnimationFrame(scnLoop);
+}
+function mountScene(c){
+  if(c._sc)return c._sc;
+  const kind=c.dataset.scene,mode=c.dataset.mode||'thumb';
+  const sc={c,ctx:c.getContext('2d'),kind,mode,W:0,H:0,dpr:1,cap:mode==='thumb'?1.25:2,hidden:false,S:{},text:c.dataset.text||''};
+  sc.size=()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return false;const d=Math.min(window.devicePixelRatio||1,sc.cap);if(w!==sc.W||h!==sc.H||d!==sc.dpr){sc.W=w;sc.H=h;sc.dpr=d;c.width=Math.round(w*d);c.height=Math.round(h*d);sc.onResize&&sc.onResize()}return true};
+  IMPL[kind](sc);
+  sc.frame=t=>{if(!sc.size())return;const dt=Math.min(.05,(t-(sc.last||t))/1000);sc.last=t;sc.ctx.setTransform(sc.dpr,0,0,sc.dpr,0,0);sc.ctx.globalCompositeOperation='source-over';sc.ctx.globalAlpha=1;sc.draw(dt,t/1000)};
+  c._sc=sc;SCN.add(sc);scnVis&&scnVis.observe(c);
+  if(!scnRaf)scnRaf=requestAnimationFrame(scnLoop);
+  return sc;
+}
+function mountScenes(root){(root||document).querySelectorAll('canvas[data-scene]').forEach(mountScene)}
+new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes){if(n.nodeType!==1)continue;if(n.matches&&n.matches('canvas[data-scene]'))mountScene(n);else if(n.querySelectorAll)mountScenes(n)}}).observe(document.documentElement,{childList:true,subtree:true});
+const rnd=(a,b)=>a+Math.random()*(b-a);
+// mirror the band above the horizon into the water (cheap, realistic reflection)
+function reflect(sc,hz,alpha,wob){
+  const {ctx,c,W,H,dpr}=sc;const band=Math.min(hz,H-hz);if(band<2)return;
+  ctx.save();ctx.globalAlpha=alpha;
+  const strips=24,sh=band/strips;
+  for(let i=0;i<strips;i++){
+    const sy=hz-(i+1)*sh,dy=hz+i*sh;const off=wob?Math.sin(wob+i*.9)*(1+i*.15):0;
+    ctx.setTransform(dpr,0,0,-dpr,off*dpr,(2*dy+sh)*dpr);
+    ctx.drawImage(c,0,sy*dpr,W*dpr,sh*dpr,0,dy,W,sh);
+  }
+  ctx.restore();ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+// sample the pixels of a text to get target points (used by the fireworks finale)
+function textPoints(text,W,H,cy,max){
+  const o=document.createElement('canvas');o.width=Math.ceil(W);o.height=Math.ceil(H);const g=o.getContext('2d');
+  let fs=Math.min(W*.22,H*.13);g.font=`700 ${fs}px "Aref Ruqaa", "Amiri", serif`;
+  const mw=g.measureText(text).width;if(mw>W*.88){fs*=W*.88/mw;g.font=`700 ${fs}px "Aref Ruqaa", "Amiri", serif`}
+  g.direction='rtl';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#fff';g.fillText(text,W/2,cy);
+  const d=g.getImageData(0,0,o.width,o.height).data;const pts=[];const step=Math.max(2,Math.round(fs/22));
+  for(let y=0;y<o.height;y+=step)for(let x=0;x<o.width;x+=step)if(d[(y*o.width+x)*4+3]>140)pts.push([x,y]);
+  for(let i=pts.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[pts[i],pts[j]]=[pts[j],pts[i]]}
+  return pts.slice(0,max);
+}
+
+/* --- 1. Lanterns over a river at dusk --- */
+IMPL.lanterns=sc=>{
+  const S=sc.S;S.L=[];
+  const sp=document.createElement('canvas');sp.width=80;sp.height=110;const g=sp.getContext('2d');
+  let rg=g.createRadialGradient(40,62,4,40,62,44);rg.addColorStop(0,'rgba(255,196,110,.55)');rg.addColorStop(.5,'rgba(255,150,60,.18)');rg.addColorStop(1,'rgba(255,120,40,0)');g.fillStyle=rg;g.fillRect(0,0,80,110);
+  g.beginPath();g.moveTo(27,36);g.lineTo(53,36);g.quadraticCurveTo(60,60,53,84);g.lineTo(27,84);g.quadraticCurveTo(20,60,27,36);g.closePath();
+  let lg=g.createLinearGradient(0,36,0,84);lg.addColorStop(0,'#ffe2b0');lg.addColorStop(.55,'#ffb25a');lg.addColorStop(1,'#ff7f2a');g.fillStyle=lg;g.fill();
+  g.save();g.clip();rg=g.createRadialGradient(40,74,1,40,70,20);rg.addColorStop(0,'rgba(255,255,235,1)');rg.addColorStop(1,'rgba(255,220,150,0)');g.fillStyle=rg;g.fillRect(20,36,40,48);
+  g.strokeStyle='rgba(150,70,20,.25)';g.lineWidth=1;for(let x=31;x<52;x+=5){g.beginPath();g.moveTo(x,36);g.lineTo(x,84);g.stroke()}g.restore();
+  g.fillStyle='rgba(110,55,20,.75)';g.fillRect(27,83,26,2.5);
+  S.sp=sp;
+  const make=(fromBelow)=>{const z=Math.random();return{x:rnd(.04,.96),y:fromBelow?rnd(.7,.95):rnd(.08,.6),z,s:.45+z*.9,vy:rnd(.012,.024)+z*.012,ph:rnd(0,6.3),fl:rnd(0,6.3),born:fromBelow}};
+  sc.onResize=()=>{S.stars=Array.from({length:Math.round(sc.W*sc.H/5000)},()=>({x:Math.random(),y:Math.random()*.55,r:rnd(.4,1.3),p:rnd(0,6)}));
+    S.hills=Array.from({length:30},(_,i)=>.012+.018*Math.abs(Math.sin(i*1.7)+.4*Math.sin(i*.6)));
+    S.palms=Array.from({length:5},()=>({x:rnd(.05,.95),h:rnd(.04,.07)}));};
+  const base=sc.mode==='ambient'?6:(sc.mode==='thumb'?7:9);
+  for(let i=0;i<base;i++)S.L.push(make(false));
+  sc.trigger=()=>{for(let i=0;i<80;i++){const l=make(true);l.y=rnd(.7,1.05)+i*.004;l.vy=rnd(.09,.16)*(.6+l.z*.6);l.extra=true;S.L.push(l)}};
+  const drawL=(l,t,W,H)=>{const w=l.s*Math.min(W,H)*.075,h=w*1.375;const x=l.x*W+Math.sin(t*.7+l.ph)*W*.012,y=l.y*H;const fl=.82+.18*Math.sin(t*11+l.fl)*Math.sin(t*5.3+l.ph);sc.ctx.globalAlpha=fl*(l.y<.04?Math.max(0,l.y/.04):1);sc.ctx.drawImage(S.sp,x-w/2,y-h/2,w,h);sc.ctx.globalAlpha=1};
+  sc.draw=(dt,t)=>{
+    const {ctx,W,H}=sc;const hz=H*.66;
+    let gr=ctx.createLinearGradient(0,0,0,hz);gr.addColorStop(0,'#090c28');gr.addColorStop(.5,'#36204d');gr.addColorStop(.82,'#a24858');gr.addColorStop(1,'#f59a5a');ctx.fillStyle=gr;ctx.fillRect(0,0,W,hz+1);
+    ctx.fillStyle='#fff';for(const s of S.stars){ctx.globalAlpha=Math.max(0,(.2+.5*Math.sin(t*1.2+s.p)**2)*(1-s.y*1.7));ctx.fillRect(s.x*W,s.y*hz,s.r,s.r)}ctx.globalAlpha=1;
+    gr=ctx.createRadialGradient(W*.5,hz,0,W*.5,hz,Math.max(W,H)*.6);gr.addColorStop(0,'rgba(255,190,120,.5)');gr.addColorStop(1,'rgba(255,120,80,0)');ctx.fillStyle=gr;ctx.fillRect(0,0,W,hz);
+    ctx.fillStyle='#1b0f22';ctx.beginPath();ctx.moveTo(0,hz+1);S.hills.forEach((h,i)=>ctx.lineTo(i/(S.hills.length-1)*W,hz-h*H));ctx.lineTo(W,hz+1);ctx.fill();
+    for(const p of S.palms){const x=p.x*W,b=hz-.01*H,top=b-p.h*H;ctx.strokeStyle='#1b0f22';ctx.lineWidth=Math.max(1.2,W*.004);ctx.beginPath();ctx.moveTo(x,b);ctx.quadraticCurveTo(x+W*.006,(b+top)/2,x,top);ctx.stroke();for(let k=0;k<6;k++){const a=-Math.PI/2+(k-2.5)*.55;ctx.beginPath();ctx.moveTo(x,top);ctx.quadraticCurveTo(x+Math.cos(a)*W*.03,top+Math.sin(a)*H*.012-H*.006,x+Math.cos(a)*W*.05,top+H*.012);ctx.stroke()}}
+    for(let i=S.L.length-1;i>=0;i--){const l=S.L[i];l.y-=l.vy*dt*(sc.mode==='ambient'?.55:1);if(l.y<-.1){if(l.extra){S.L.splice(i,1);continue}Object.assign(l,make(true),{y:rnd(.75,.95)})}}
+    S.L.sort((a,b)=>a.z-b.z);
+    for(const l of S.L)if(l.y*H<hz)drawL(l,t,W,H);
+    gr=ctx.createLinearGradient(0,hz,0,H);gr.addColorStop(0,'#4a2540');gr.addColorStop(1,'#07081a');ctx.fillStyle=gr;ctx.fillRect(0,hz,W,H-hz);
+    reflect(sc,hz,.42,t*2.2);
+    ctx.globalCompositeOperation='lighter';for(let i=0;i<40;i++){const y=hz+((i*37)%100)/100*(H-hz);const x=((i*61+t*12*(1+i%3))%110-5)/100*W;ctx.fillStyle=`rgba(255,190,130,${.05+.06*Math.sin(t*2+i)})`;ctx.fillRect(x,y,W*(.03+.02*(i%4)),1)}ctx.globalCompositeOperation='source-over';
+    for(const l of S.L)if(l.y*H>=hz)drawL(l,t,W,H);
+    gr=ctx.createRadialGradient(W/2,H*.45,Math.min(W,H)*.3,W/2,H*.45,Math.max(W,H)*.8);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.55)');ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);
+  };
+};
+
+/* --- 2. Fireworks over the Baghdad skyline --- */
+IMPL.fireworks=sc=>{
+  const S=sc.S;S.R=[];S.P=[];S.next=.4;
+  const COLS=[[255,214,130],[255,122,168],[255,244,220],[127,227,255],[255,177,94],[201,162,255]];
+  sc.onResize=()=>{
+    const {W,H}=sc;const hz=H*.72;S.hz=hz;
+    S.stars=Array.from({length:Math.round(W*H/4500)},()=>({x:Math.random(),y:Math.random()*.6,r:rnd(.4,1.2),p:rnd(0,6)}));
+    const o=document.createElement('canvas');o.width=Math.ceil(W*sc.dpr);o.height=Math.ceil(H*.2*sc.dpr);const g=o.getContext('2d');g.scale(sc.dpr,sc.dpr);const bh=H*.2;
+    g.fillStyle='#04060f';let x=0;
+    while(x<W){const kind=Math.random();const w=rnd(W*.04,W*.11);
+      if(kind<.18){const r=w*.45;g.fillRect(x,bh-H*.05,w,H*.05);g.beginPath();g.arc(x+w/2,bh-H*.05,r,Math.PI,0);g.fill();g.fillRect(x+w/2-1,bh-H*.05-r-H*.015,2,H*.015)}
+      else if(kind<.3){const mw=Math.max(3,w*.18);g.fillRect(x+w/2-mw/2,bh-H*.15,mw,H*.15);g.fillRect(x+w/2-mw*.9,bh-H*.115,mw*1.8,H*.008);g.beginPath();g.moveTo(x+w/2-mw/2,bh-H*.15);g.lineTo(x+w/2,bh-H*.175);g.lineTo(x+w/2+mw/2,bh-H*.15);g.fill()}
+      else{const h=rnd(H*.03,H*.09);g.fillRect(x,bh-h,w,h);g.fillStyle='rgba(255,200,120,.55)';for(let wy=bh-h+4;wy<bh-3;wy+=6)for(let wx=x+3;wx<x+w-3;wx+=6)if(Math.random()<.22)g.fillRect(wx,wy,1.5,2);g.fillStyle='#04060f'}
+      x+=w*rnd(.85,1.05)}
+    S.city=o;S.cityH=bh;
+  };
+  const launch=(x,ty,big,col)=>{S.R.push({x,y:S.hz,ty,vy:-(S.hz-ty)*1.9,col:col||COLS[Math.random()*COLS.length|0],big,trail:[]})};
+  const burst=(r)=>{const n=r.big?150:70,sp=r.big?Math.min(sc.W,sc.H)*.42:Math.min(sc.W,sc.H)*.24;for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=sp*(.35+.65*Math.sqrt(Math.random()));S.P.push({x:r.x,y:r.y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:rnd(1.1,1.9),max:1.9,col:Math.random()<.15?[255,255,255]:r.col,tw:Math.random()<.3})}};
+  sc.trigger=(text)=>{
+    const {W,H}=sc;[.2,.8,.5,.32,.68].forEach((x,i)=>setTimeout(()=>launch(W*x,H*rnd(.15,.32),true),i*230));
+    setTimeout(()=>{const t=text||sc.text||'';if(!t)return;const pts=textPoints(t,W,H,H*.3,1100);const cx=W/2,cy=H*.3;
+      pts.forEach(([x,y],i)=>{const c=COLS[i%3===0?2:0];S.P.push({x:cx,y:cy,tx:x,ty:y,vx:0,vy:0,life:6,max:6,col:c,txt:true,d:Math.random()*.35})});
+      for(let i=0;i<90;i++){const a=Math.random()*Math.PI*2,v=Math.min(W,H)*rnd(.2,.5);S.P.push({x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:rnd(1,1.6),max:1.6,col:COLS[Math.random()*6|0]})}
+    },1500);
+  };
+  sc.draw=(dt,t)=>{
+    const {ctx,W,H}=sc;const hz=S.hz;
+    let gr=ctx.createLinearGradient(0,0,0,hz);gr.addColorStop(0,'#02030b');gr.addColorStop(.7,'#0a1236');gr.addColorStop(1,'#1c2556');ctx.fillStyle=gr;ctx.fillRect(0,0,W,hz+1);
+    ctx.fillStyle='#fff';for(const s of S.stars){ctx.globalAlpha=.15+.45*Math.sin(t*1.1+s.p)**2;ctx.fillRect(s.x*W,s.y*H,s.r,s.r)}ctx.globalAlpha=1;
+    S.next-=dt;if(S.next<=0){launch(W*rnd(.12,.88),H*rnd(.12,.42),false);S.next=sc.mode==='ambient'?rnd(1.6,3):rnd(.9,1.8)}
+    ctx.globalCompositeOperation='lighter';
+    for(let i=S.R.length-1;i>=0;i--){const r=S.R[i];r.trail.push([r.x,r.y]);if(r.trail.length>8)r.trail.shift();r.y+=r.vy*dt;r.vy*=.985;r.x+=Math.sin(t*9+i)*.3;
+      ctx.strokeStyle=`rgba(255,220,170,.7)`;ctx.lineWidth=1.4;ctx.beginPath();r.trail.forEach(([x,y],k)=>k?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();
+      if(r.y<=r.ty){burst(r);S.R.splice(i,1)}}
+    const g=Math.min(W,H)*.22;
+    for(let i=S.P.length-1;i>=0;i--){const p=S.P[i];p.life-=dt;if(p.life<=0){S.P.splice(i,1);continue}
+      const px=p.x,py=p.y;
+      if(p.txt){if(p.d>0){p.d-=dt}else{p.x+=(p.tx-p.x)*Math.min(1,dt*3.2);p.y+=(p.ty-p.y)*Math.min(1,dt*3.2)}}
+      else{p.vx*=Math.pow(.18,dt);p.vy=p.vy*Math.pow(.18,dt)+g*dt;p.x+=p.vx*dt;p.y+=p.vy*dt}
+      let a=Math.min(1,p.life/p.max*1.4);if(p.txt)a=Math.min(1,p.life);if(p.tw)a*=.5+.5*Math.sin(t*30+i);
+      const [cr,cg,cb]=p.col;if(p.txt){if(p.d<=0){ctx.fillStyle=`rgba(${cr},${cg},${cb},${a*.95})`;ctx.fillRect(p.x-1.1,p.y-1.1,2.2,2.2)}}else{ctx.strokeStyle=`rgba(${cr},${cg},${cb},${a})`;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(p.x+.01,p.y+.01);ctx.stroke()}}
+    ctx.globalCompositeOperation='source-over';
+    if(S.city)ctx.drawImage(S.city,0,hz-S.cityH,W,S.cityH);
+    gr=ctx.createLinearGradient(0,hz,0,H);gr.addColorStop(0,'#0a1030');gr.addColorStop(1,'#02030a');ctx.fillStyle=gr;ctx.fillRect(0,hz,W,H-hz);
+    reflect(sc,hz,.38,t*2);
+    ctx.globalCompositeOperation='lighter';for(let i=0;i<26;i++){const y=hz+3+((i*29)%100)/100*(H-hz);const x=((i*53+t*9*(1+i%3))%110-5)/100*W;ctx.fillStyle=`rgba(150,170,255,${.04+.05*Math.sin(t*2+i)})`;ctx.fillRect(x,y,W*.05,1)}ctx.globalCompositeOperation='source-over';
+  };
+};
+
+/* --- 3. Candles in a dark room --- */
+IMPL.candles=sc=>{
+  const S=sc.S;S.C=[];S.light=0;S.spark=null;
+  sc.onResize=()=>{
+    const {W,H}=sc;const m=Math.min(W,H);const old=S.C;S.C=[];
+    const rows=[{y:.66,n:5,s:.75},{y:.8,n:4,s:1}];
+    rows.forEach((r,ri)=>{for(let i=0;i<r.n;i++){const x=W*(.5+(i-(r.n-1)/2)*(ri?.2:.17)+rnd(-.015,.015));const w=m*.075*r.s;const h=m*rnd(.14,.3)*r.s;S.C.push({x,y:H*r.y,w,h,ph:rnd(0,6.3),lit:false,litT:0})}});
+    S.C.sort((a,b)=>b.x-a.x);
+    const lit=sc.mode==='ambient'?S.C.length:(old.filter(c=>c.lit).length||1);
+    if(sc.mode==='ambient')S.C.forEach(c=>{c.lit=true;c.litT=1});else{const mid=S.C.reduce((b,c,i)=>Math.abs(c.x-W/2)<Math.abs(S.C[b].x-W/2)?i:b,0);for(let i=0;i<lit;i++){const c=S.C[(mid+i)%S.C.length];c.lit=true;c.litT=1}}
+    S.pet=Array.from({length:14},()=>({x:rnd(.08,.92)*W,y:rnd(.7,.97)*H,r:m*rnd(.012,.022),a:rnd(0,3.14),c:Math.random()<.5?'#8c1c2e':'#b0303f'}));
+    S.motes=Array.from({length:40},()=>({x:Math.random()*W,y:Math.random()*H*.7,v:rnd(4,12),p:rnd(0,6)}));
+  };
+  sc.trigger=()=>{const order=S.C.map((c,i)=>i).filter(i=>!S.C[i].lit);let k=0;const go=()=>{if(k>=order.length)return;const c=S.C[order[k++]];const from=S.C.find(x=>x.lit)||c;S.spark={x:from.x,y:from.y-from.h-from.w,tx:c.x,ty:c.y-c.h-c.w*.2,p:0,c,next:go}};go()};
+  const flame=(c,t,s)=>{
+    const {ctx}=sc;const f=1+.09*Math.sin(t*13+c.ph)+.05*Math.sin(t*7.3+c.ph*2);const fw=c.w*.34*s,fh=c.w*1.15*f*s;const sway=Math.sin(t*3.1+c.ph)*c.w*.06;const bx=c.x,by=c.y-c.h-c.w*.05;
+    ctx.globalCompositeOperation='lighter';
+    let g=ctx.createRadialGradient(bx,by-fh*.5,0,bx,by-fh*.5,fh*1.6);g.addColorStop(0,`rgba(255,190,90,${(sc.mode==='ambient'?.18:.35)*s})`);g.addColorStop(1,'rgba(255,140,40,0)');ctx.fillStyle=g;ctx.fillRect(bx-fh*1.6,by-fh*2.1,fh*3.2,fh*3.2);
+    ctx.globalCompositeOperation='source-over';ctx.beginPath();ctx.moveTo(bx+sway,by-fh);ctx.bezierCurveTo(bx+fw*1.1,by-fh*.45,bx+fw,by,bx,by);ctx.bezierCurveTo(bx-fw,by,bx-fw*1.1,by-fh*.45,bx+sway,by-fh);
+    g=ctx.createRadialGradient(bx,by-fh*.25,0,bx,by-fh*.35,fh*.8);g.addColorStop(0,'rgba(255,255,240,1)');g.addColorStop(.35,'rgba(255,225,140,.95)');g.addColorStop(.75,'rgba(255,140,40,.7)');g.addColorStop(1,'rgba(255,90,20,0)');ctx.fillStyle=g;ctx.fill();
+    ctx.globalCompositeOperation='source-over';
+    ctx.fillStyle='rgba(90,140,255,.45)';ctx.beginPath();ctx.ellipse(bx,by-fh*.08,fw*.35,fh*.1,0,0,Math.PI*2);ctx.fill();
+  };
+  sc.draw=(dt,t)=>{
+    const {ctx,W,H}=sc;const n=S.C.length||1;const litN=S.C.filter(c=>c.lit).length;
+    S.light+=((litN/n)*(sc.mode==='ambient'?.55:1)-S.light)*Math.min(1,dt*1.6);const L=S.light;const GA=sc.mode==='ambient'?.45:1;
+    const tz=H*.6;
+    let gr=ctx.createLinearGradient(0,0,0,tz);gr.addColorStop(0,'#050302');gr.addColorStop(1,`rgb(${30+50*L|0},${16+26*L|0},${10+12*L|0})`);ctx.fillStyle=gr;ctx.fillRect(0,0,W,tz+1);
+    gr=ctx.createLinearGradient(0,tz,0,H);gr.addColorStop(0,`rgb(${40+60*L|0},${22+30*L|0},${12+14*L|0})`);gr.addColorStop(1,'#060302');ctx.fillStyle=gr;ctx.fillRect(0,tz,W,H-tz);
+    ctx.fillStyle=`rgba(255,200,140,${.05+.08*L})`;ctx.fillRect(0,tz,W,1);
+    for(const p of S.pet){ctx.fillStyle=p.c;ctx.globalAlpha=.35+.55*L;ctx.beginPath();ctx.ellipse(p.x,p.y,p.r*1.4,p.r*.7,p.a,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;
+    ctx.globalCompositeOperation='lighter';
+    for(const c of S.C)if(c.lit){c.litT=Math.min(1,c.litT+dt*2);const r=c.h*2.6+c.w*4;const fl=.85+.15*Math.sin(t*9+c.ph);let g=ctx.createRadialGradient(c.x,c.y-c.h,0,c.x,c.y-c.h,r);g.addColorStop(0,`rgba(255,170,80,${.22*c.litT*fl*GA})`);g.addColorStop(1,'rgba(255,120,40,0)');ctx.fillStyle=g;ctx.fillRect(c.x-r,c.y-c.h-r,r*2,r*2);
+      g=ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,c.w*3);g.addColorStop(0,`rgba(255,180,100,${.25*c.litT*GA})`);g.addColorStop(1,'rgba(255,150,80,0)');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(c.x,c.y+c.w*.1,c.w*3,c.w*.9,0,0,Math.PI*2);ctx.fill()}
+    ctx.globalCompositeOperation='source-over';
+    for(const c of S.C){
+      const x=c.x-c.w/2,top=c.y-c.h;const sh=.35+.65*L;
+      let g=ctx.createLinearGradient(x,0,x+c.w,0);g.addColorStop(0,`rgb(${140*sh+40|0},${120*sh+30|0},${95*sh+25|0})`);g.addColorStop(.45,`rgb(${215*sh+40|0},${200*sh+35|0},${175*sh+30|0})`);g.addColorStop(1,`rgb(${120*sh+30|0},${100*sh+25|0},${80*sh+20|0})`);
+      ctx.fillStyle=g;ctx.fillRect(x,top,c.w,c.h);
+      ctx.fillStyle=`rgba(255,240,215,${.25+.5*L})`;ctx.beginPath();ctx.ellipse(c.x,top,c.w/2,c.w*.13,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.moveTo(x+c.w*.15,top);ctx.quadraticCurveTo(x+c.w*.12,top+c.h*.18,x+c.w*.2,top+c.h*.22);ctx.quadraticCurveTo(x+c.w*.28,top+c.h*.1,x+c.w*.3,top);ctx.fill();
+      ctx.strokeStyle='#2a1a10';ctx.lineWidth=Math.max(1,c.w*.05);ctx.beginPath();ctx.moveTo(c.x,top);ctx.lineTo(c.x+c.w*.02,top-c.w*.18);ctx.stroke();
+      if(c.lit)flame(c,t,c.litT);
+    }
+    if(S.spark){const s=S.spark;s.p=Math.min(1,s.p+dt*3.2);const e=s.p<.5?2*s.p*s.p:1-Math.pow(-2*s.p+2,2)/2;const x=s.x+(s.tx-s.x)*e,y=s.y+(s.ty-s.y)*e-Math.sin(e*Math.PI)*H*.06;
+      ctx.globalCompositeOperation='lighter';let g=ctx.createRadialGradient(x,y,0,x,y,H*.03);g.addColorStop(0,'rgba(255,240,200,1)');g.addColorStop(1,'rgba(255,170,80,0)');ctx.fillStyle=g;ctx.fillRect(x-H*.03,y-H*.03,H*.06,H*.06);ctx.globalCompositeOperation='source-over';
+      if(s.p>=1){s.c.lit=true;s.c.litT=0;const nx=s.next;S.spark=null;setTimeout(nx,90)}}
+    if(L>.05){ctx.globalCompositeOperation='lighter';for(const m of S.motes){m.y-=m.v*dt*.3;m.x+=Math.sin(t+m.p)*.15;if(m.y<0)m.y=H*.7;ctx.fillStyle=`rgba(255,220,170,${.18*L*(.5+.5*Math.sin(t*2+m.p))})`;ctx.fillRect(m.x,m.y,1.2,1.2)}ctx.globalCompositeOperation='source-over'}
+    gr=ctx.createRadialGradient(W/2,H*.55,Math.min(W,H)*.2,W/2,H*.55,Math.max(W,H)*.75);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,`rgba(0,0,0,${.75-.3*L})`);ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);
+  };
+};
 
 /* ---------- fx layers ---------- */
 function many(n,cls,fn){let h='';for(let i=0;i<n;i++)h+=`<i class="${cls}" style="${fn(i)}"></i>`;return h}
@@ -935,6 +1236,7 @@ function fx(k){
     case 'curtain':return `<div class="garland">${garland()}</div><div class="birds">${many(4,'bd',()=>`--y:${R(12,70)}%;--s:${R(1.6,2.4).toFixed(2)}em;--d:${R(14,22).toFixed(1)}s;--dl:-${R(0,22).toFixed(1)}s`).replace(/<\/i>/g,DOVE+'</i>')}</div><div class="sweep" style="--sweep:rgba(255,255,255,.5)"></div>`;
     case 'union':return `<div class="corr">${corridor()}</div><div class="dust">${many(14,'p',()=>`--x:${R(5,95)}%;--s:${R(.15,.4).toFixed(2)}em;--d:${R(9,16).toFixed(1)}s;--dl:-${R(0,16).toFixed(1)}s`)}</div>`;
     case 'ring':return `<div class="stars">${many(26,'st gold',()=>`--x:${R(0,100)}%;--y:${R(0,100)}%;--s:${R(1,2.4).toFixed(1)}px;--d:${R(2,5).toFixed(1)}s;--dl:-${R(0,5).toFixed(1)}s`)}</div><div class="sweep"></div><div class="frameA"></div><div class="frameB"></div>`;
+    case 'lanterns':case 'fireworks':case 'candles':return `<canvas class="scn" data-scene="${k}" data-mode="ambient" aria-hidden="true"></canvas><div class="scn-veil"></div>`;
     case 'marble':return `<div class="sweep" style="--sweep:rgba(255,255,255,.55)"></div><div class="arch"></div><div class="arch a2"></div>`;
   }
   return '';
@@ -950,6 +1252,7 @@ function intro(s,k,idle){
   const hint=(txt,top,extra='')=>`<div class="op-hint${top?' op-top':''}"><p class="who">${fam}</p><p>${txt}</p>${extra}</div>`;
   const cls=`opener${idle?' idle':''}`;
   switch(t.intro){
+    case 'scene':{const txt=esc((s.groom.trim()||'')+(!s.hideBride&&s.bride.trim()?' و '+s.bride.trim():''));const hintTxt={lanterns:'اضغط لإطلاق الفوانيس',fireworks:'اضغط لتبدأ الألعاب النارية',candles:'اضغط لإشعال الشموع'}[k];return `<div class="${cls} op-scene op-${k}" ${attrs}><div class="scene"><canvas class="scn" data-scene="${k}" data-mode="${idle?'thumb':'intro'}" data-text="${txt}" aria-hidden="true"></canvas></div>${hint(hintTxt,false,'<span class="tap"></span>')}<div class="flash"></div></div>`}
     case 'door':return `<div class="${cls} op-door" ${attrs}><div class="scene"><div class="wall"></div><div class="d-step"></div><div class="d-wrap"><div class="d-arch"></div><div class="d-door"><div class="leaf r"><i class="pn a"></i><i class="pn b"></i><i class="knocker"></i><i class="kn"></i></div><div class="leaf l"><i class="pn a"></i><i class="pn b"></i><i class="kn"></i></div></div><div class="jas">${jasmine()}</div></div></div>${hint('اطرق على الباب ٣ مرات',true,'<div class="knocks"><i></i><i></i><i></i></div>')}<div class="flash"></div></div>`;
     case 'curtain':return `<div class="${cls} op-curtain" ${attrs}><div class="scene"><div class="glowdoor"></div><div class="chand"><i></i></div><div class="doves">${[[-40,-60],[38,-62],[-20,-75],[22,-78],[-48,-35],[46,-38]].map(([x,y],i)=>`<i class="dv" style="--tx:${x}cqw;--ty:${y}cqh;--dl:${(.25+i*.08).toFixed(2)}s">${DOVE}</i>`).join('')}</div><div class="cur r"></div><div class="cur l"></div><div class="garland">${garland()}</div></div>${hint('اضغط لفتح الستارة',false,'<span class="tap"></span>')}<div class="flash"></div></div>`;
     case 'union':return `<div class="${cls} op-union" ${attrs}><div class="scene"><div class="floor"></div><div class="corr">${corridor()}</div><div class="endlight"></div><div class="orb a"></div><div class="orb b"></div><div class="rb"></div><div class="rb b2"></div></div>${hint('اضغط ليلتقي النوران',false,'<span class="tap"></span>')}<div class="flash"></div></div>`;
@@ -987,7 +1290,13 @@ function sections(s,k,cold){
   const b=esc(s.bride.trim());
   const mapQ=encodeURIComponent((s.venue+' '+s.area).trim());
   const iv=i=>`style="--i:${i}"`;
+  const dia=TPL[k]&&TPL[k].tier==='diamond';
+  const to=dia&&s.to?String(s.to).trim().slice(0,40):'';
+  let cal='';
+  if(dia&&f.iso){const st=new Date(Date.parse(s.date+'T'+(s.time||'19:00')+':00+03:00'));if(!isNaN(st)){const z=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');const en=new Date(st.getTime()+4*3600e3);
+    cal=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('حفل '+s.type+' '+(s.groom||''))}&dates=${z(st)}/${z(en)}&location=${encodeURIComponent((s.venue+' '+s.area).trim())}&details=${encodeURIComponent('دعوة '+(s.family||''))}`}}
   return `<section class="sc cover${cold?'':' in'}">`+
+    (to?`<p class="rv to" ${iv(0)}>دعوة خاصة إلى<b>${esc(to)}</b></p>`:'')+
     (s.verse?`<p class="rv bism" ${iv(0)}>بسم الله الرحمن الرحيم</p>`:'')+
     `<p class="rv fam" ${iv(1)}>${esc(s.family.trim()||'العائلة')}</p>`+
     `<p class="rv kick" ${iv(2)}>يتشرّفون بدعوتكم لحضور حفل ${esc(s.type)}${showB?'':' نجلهم'}</p>`+
@@ -1001,6 +1310,7 @@ function sections(s,k,cold){
     `<div class="rv dbig" ${iv(1)}><span>${f.wd}</span><strong>${f.day}</strong><span>${f.my}</span></div>`+
     `<p class="rv tm" ${iv(2)}>${f.time}</p>`+
     (s.countdown&&f.iso?`<div class="rv cd" ${iv(3)} data-at="${f.iso}"></div>`:'')+
+    (cal?`<a class="rv calbtn" ${iv(4)} href="${cal}" target="_blank" rel="noopener"><svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>أضف الموعد لتقويمك</a>`:'')+
   `</section>`+
   `<section class="sc where">`+
     `<p class="rv lbl" ${iv(0)}>المكان</p>`+
@@ -1009,6 +1319,16 @@ function sections(s,k,cold){
     `<p class="rv area" ${iv(3)}>${esc(s.area)}</p>`+
     `<a class="rv mapbtn" ${iv(4)} href="https://www.google.com/maps/search/?api=1&query=${mapQ}" target="_blank" rel="noopener">${PIN}افتح الموقع على الخريطة</a>`+
   `</section>`+
+  (dia?`<section class="sc rsvp">`+
+    `<p class="rv lbl" ${iv(0)}>تأكيد الحضور</p>`+
+    `<form class="rv rs-form" ${iv(1)} data-slug="${esc(s.slug||'')}" novalidate>`+
+      `<input name="name" maxlength="40" placeholder="اسمك" value="${esc(to)}" aria-label="اسمك">`+
+      `<div class="rs-choice"><button type="button" data-a="1" class="on">أكيد جاي</button><button type="button" data-a="0">أعتذر</button></div>`+
+      `<div class="rs-count">عدد الأشخاص<span><button type="button" data-d="-1" aria-label="أقل">−</button><b>١</b><button type="button" data-d="1" aria-label="أكثر">+</button></span></div>`+
+      `<textarea name="message" maxlength="200" placeholder="اكتب تهنئة للعرسان (اختياري)" aria-label="تهنئة"></textarea>`+
+      `<button type="submit" class="rs-send">إرسال الرد</button><p class="rs-msg" aria-live="polite"></p>`+
+    `</form>`+
+  `</section>`:'')+
   `<section class="sc end">`+
     (s.verse?`<p class="rv verse" ${iv(0)}>﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ﴾</p>`:'')+
     `<div class="rv ln" ${iv(1)}><span></span><b></b><span></span></div>`+
@@ -1049,6 +1369,9 @@ try{hot&&hot.snapshot&&hot.snapshot(()=>({state,step}))}catch(e){}
 const music={url:null,name:'',size:0,dur:0,start:0};
 
 const SAMPLES={
+  lanterns:{groom:'علي',bride:'نور الهدى',family:'آل الربيعي',type:'زفاف',date:'2027-04-22',time:'19:30',venue:'منتجع ضفاف دجلة',area:'الجادرية، بغداد',note:'ليلتنا تضوي بيكم'},
+  fireworks:{groom:'مصطفى',bride:'سارة',family:'آل البياتي',type:'زفاف',date:'2027-05-13',time:'21:00',venue:'قصر الزهور',area:'المنصور، بغداد',note:'السماء تحتفل وياكم'},
+  candles:{groom:'حسن',bride:'زينب',family:'آل الموسوي',type:'عقد قران',date:'2027-03-11',time:'18:30',venue:'بيت العائلة',area:'الكاظمية، بغداد',note:'بنور حضوركم'},
   door:{groom:'محمد',bride:'زينب',family:'آل الكعبي',type:'زفاف',date:'2027-03-18',time:'20:00',venue:'قاعة القصر الأبيض',area:'اليرموك، بغداد',note:'دقّوا الباب، فالفرح بانتظاركم'},
   curtain:{groom:'آدم',bride:'ميرا',family:'آل السعدي',type:'زفاف',date:'2027-04-01',time:'19:30',venue:'فندق الرشيد',area:'بغداد',note:'بحضوركم يكتمل الفرح'},
   union:{groom:'عباس',bride:'حوراء',family:'آل الخفاجي',type:'عقد قران',date:'2027-02-04',time:'18:00',venue:'قاعة النور',area:'كربلاء',note:'قلبان التقيا على خير'},
@@ -1089,8 +1412,7 @@ const cardHTML=k=>{const t=TPL[k];return `<article class="card">
 <button type="button" class="thumb" data-preview="${k}" aria-label="معاينة قالب ${t.name}"><div class="inv-frame">${thumbHTML(sample(k),k)}</div><span class="play-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg>معاينة</span></button>
 <div class="meta"><h3>${t.name}</h3><small>${t.desc}</small></div>
 <button class="btn btn-ghost btn-sm" type="button" data-use="${k}">اختر ${t.name}</button></article>`};
-document.getElementById('galStrong').innerHTML=KEYS.filter(k=>TPL[k].tier==='strong').map(cardHTML).join('');
-document.getElementById('galNormal').innerHTML=KEYS.filter(k=>TPL[k].tier==='normal').map(cardHTML).join('');
+['diamond','gold','silver'].forEach(t=>{document.getElementById('gal'+t[0].toUpperCase()+t.slice(1)).innerHTML=KEYS.filter(k=>TPL[k].tier===t).map(cardHTML).join('')});
 document.getElementById('templates').addEventListener('click',e=>{
   const u=e.target.closest('[data-use]');if(u){pickTpl(u.dataset.use);goStep(1);scrollToBuilder();return}
   const p=e.target.closest('[data-preview]');if(p)openFull(sample(p.dataset.preview),p.dataset.preview,{});
@@ -1101,9 +1423,9 @@ function scrollToBuilder(){document.getElementById('builder').scrollIntoView({be
 /* ---------- form ---------- */
 const form=document.getElementById('form');
 const chip=k=>`<label class="chip" for="tpl-${k}"><input type="radio" name="tpl" id="tpl-${k}" value="${k}"><span><i style="background:${TPL[k].sw}"></i>${TPL[k].name}</span></label>`;
-document.getElementById('tplChips').innerHTML=`<p class="chip-group">قوية · ١٠٬٠٠٠ د.ع مع أغنية</p>${KEYS.filter(k=>TPL[k].tier==='strong').map(chip).join('')}<p class="chip-group">عادية · ٥٬٠٠٠ د.ع</p>${KEYS.filter(k=>TPL[k].tier==='normal').map(chip).join('')}`;
+document.getElementById('tplChips').innerHTML=['diamond','gold','silver'].map(t=>`<p class="chip-group">${TIERS[t].name} · ${money(TIERS[t].price)} د.ع${t==='silver'?'':' مع أغنية'}</p>${KEYS.filter(k=>TPL[k].tier===t).map(chip).join('')}`).join('');
 document.getElementById('typeChips').innerHTML=TYPES.map(([t],i)=>`<label class="chip" for="type-${i}"><input type="radio" name="type" id="type-${i}" value="${t}"><span>${t}</span></label>`).join('');
-document.getElementById('upChips').innerHTML=KEYS.filter(k=>TPL[k].tier==='strong').map(k=>`<button type="button" class="btn btn-ghost btn-sm" data-up="${k}"><i style="width:14px;height:14px;border-radius:50%;background:${TPL[k].sw}"></i>${TPL[k].name}</button>`).join('');
+document.getElementById('upChips').innerHTML=['lanterns','fireworks','candles','door','curtain','royal'].filter(k=>TPL[k]).map(k=>`<button type="button" class="btn btn-ghost btn-sm" data-up="${k}"><i style="width:14px;height:14px;border-radius:50%;background:${TPL[k].sw}"></i>${TPL[k].name}</button>`).join('');
 document.getElementById('upChips').addEventListener('click',e=>{const b=e.target.closest('[data-up]');if(b){pickTpl(b.dataset.up);paintStep()}});
 const fields={family:'f-family',groom:'f-groom',bride:'f-bride',date:'f-date',time:'f-time',venue:'f-venue',area:'f-area',note:'f-note'};
 const checks={hideBride:'f-hide',verse:'f-verse',countdown:'f-count'};
@@ -1228,7 +1550,7 @@ const bar=document.getElementById('bar'),btnNext=document.getElementById('btnNex
 function paintStep(){
   form.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',+p.dataset.pane===step));
   bar.querySelectorAll('li').forEach(li=>{const s=+li.dataset.s;li.classList.toggle('on',s===step);li.classList.toggle('done',s<step);li.querySelector('b').textContent=s<step?'✓':num(s)});
-  const strong=tier()==='strong';
+  const strong=songOK(tier());
   document.getElementById('musicLock').style.display=strong?'none':'grid';
   document.getElementById('musicOpen').style.display=strong?'grid':'none';
   if(!strong&&!pv.paused){pv.pause();pvUI(false)}
@@ -1242,12 +1564,13 @@ function goStep(n){step=n;paintStep()}
 function agreeState(){btnNext.disabled=![...form.querySelectorAll('.agree')].every(c=>c.checked)}
 form.querySelectorAll('.agree').forEach(c=>c.addEventListener('change',agreeState));
 function summaryHTML(){
-  const t=TPL[state.tpl],f=when(state),strong=t.tier==='strong';
-  return `<div><span>القالب</span><b>${t.name} · ${strong?'قوي':'عادي'}</b></div>
+  const t=TPL[state.tpl],f=when(state),strong=songOK(t.tier);
+  return `<div><span>الباقة</span><b>${TIERS[t.tier].name}</b></div>
+<div><span>القالب</span><b>${t.name}</b></div>
 <div><span>المناسبة</span><b>${esc(state.type)} · ${esc(state.groom)}${!state.hideBride&&state.bride.trim()?' و '+esc(state.bride):''}</b></div>
 <div><span>الموعد</span><b>${f.wd} ${f.short}</b></div>
 <div><span>المكان</span><b>${esc(state.venue)}</b></div>
-<div><span>الأغنية</span><b>${strong?(music.url?'مضافة':'بدون أغنية'):'غير متوفرة بالعادي'}</b></div>
+<div><span>الأغنية</span><b>${strong?(music.url?'مضافة':'بدون أغنية'):'غير متوفرة بالفضية'}</b></div>${t.tier==='diamond'?'<div><span>إضافات</span><b>اسم كل ضيف · تأكيد الحضور · التقويم</b></div>':''}
 <div><span>الرابط</span><b class="ltr">${DOMAIN}/${esc(state.slug)}</b></div>
 <div><span>المبلغ</span><b class="num">${money(PRICE[t.tier])} د.ع</b></div>`;
 }
@@ -1284,6 +1607,10 @@ function showSuccess(slug,info){
   document.getElementById('btnWa').href='https://wa.me/?text='+encodeURIComponent(txt);
   const q=document.getElementById('qr');q.innerHTML='';q.style.display='';
   try{new QRCode(q,{text:finalURL,width:240,height:240,colorDark:'#0c0b0f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){q.style.display='none'}
+  const ob=document.getElementById('ownerBox');
+  if(info&&info.panelKey&&LIVE){const pl=location.origin+'/panel?s='+encodeURIComponent(slug)+'&k='+encodeURIComponent(info.panelKey);document.getElementById('panelLink').textContent=pl.replace(/^https?:\/\//,'');document.getElementById('btnPanel').href=pl;
+    document.getElementById('btnCopyPanel').onclick=async function(){try{await navigator.clipboard.writeText(pl);this.textContent='تم النسخ ✓'}catch(e){this.textContent='انسخه يدويًا'}};
+    try{localStorage.setItem('naqsh-panel-'+slug,pl)}catch(e){}ob.hidden=false}else ob.hidden=true;
   document.getElementById('btnOpen2').onclick=()=>{if(LIVE)location.href=finalURL;else openFull(state,state.tpl,{song:music.url,start:music.start})};
   goStep(5);
   setTimeout(()=>document.querySelector('.wiz').scrollIntoView({block:'start'}),60);
@@ -1298,7 +1625,7 @@ document.getElementById('btnGoPay').addEventListener('click',async()=>{
   payMsg.textContent='';waitUI(true,'نجهّز صفحة الدفع…');
   try{
     const fd=new FormData();
-    const strong=tier()==='strong';
+    const strong=songOK(tier());
     fd.append('data',JSON.stringify({tpl:state.tpl,type:state.type,family:state.family,groom:state.groom,bride:state.bride,hideBride:state.hideBride,date:state.date,time:state.time,venue:state.venue,area:state.area,note:state.note,verse:state.verse,countdown:state.countdown,slug:state.slug,songStart:music.start||0}));
     if(strong&&music.file){waitUI(true,'نرفع أغنيتك…');fd.append('song',music.file,music.file.name)}
     const r=await fetch('/api/orders',{method:'POST',body:fd});
@@ -1348,7 +1675,7 @@ function openFull(s,k,o={}){
   const t=TPL[k];
   ff.innerHTML=invite(s,k,{cold:true})+intro(s,k,false);
   const op=ff.querySelector('.opener');
-  const useMusic=t.tier==='strong'&&o.song;
+  const useMusic=songOK(t.tier)&&o.song;
   mBtn.classList.remove('on');stopGuestMusic();
   if(useMusic){guest.src=o.song;guest.preload='auto';try{guest.load()}catch(e){}}
   let started=false;
@@ -1364,8 +1691,10 @@ function openFull(s,k,o={}){
       if(n===3){startMusic();setTimeout(()=>{op.classList.add('go');door.classList.remove('shake');door.classList.add('open')},450);reveal(2000)}
     });
   }else{
-    const delay={seal:450,curtain:1500,union:2400,ring:2500}[kind];
-    op.addEventListener('click',()=>{if(op.classList.contains('go'))return;op.classList.add('go');startMusic();reveal(delay)});
+    const delay={seal:450,curtain:1500,union:2400,ring:2500,scene:{lanterns:4300,fireworks:5600,candles:4200}[k]}[kind];
+    op.addEventListener('click',()=>{if(op.classList.contains('go'))return;op.classList.add('go');startMusic();
+      if(kind==='scene'){const cv=op.querySelector('canvas');const sc=cv&&(cv._sc||mountScene(cv));sc&&sc.trigger&&sc.trigger(cv.dataset.text)}
+      reveal(delay)});
   }
   op.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();op.click()}});
   observe(ff);
@@ -1389,13 +1718,60 @@ async function guestBoot(slug){
   try{
     const r=await fetch('/api/invite/'+slug);const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.ok)throw new Error(j.message||'الدعوة غير موجودة أو انتهت مدتها');
+    LIVE=true;DOMAIN=location.host;
     const inv=Object.assign({},DEF,j.invite);
+    if(inv.tier==='diamond'){const to=(QS.get('to')||'').trim();if(to)inv.to=to.slice(0,40)}
     document.title='دعوة '+inv.family+' · '+inv.groom;
     gate.hidden=true;
     openFull(inv,TPL[inv.tpl]?inv.tpl:'royal',{song:inv.hasSong?'/api/song/'+slug:null,start:inv.songStart||0,guest:true});
   }catch(e){gateMsg(e.message||'الدعوة غير موجودة',true)}
 }
+/* ---------- RSVP form (diamond invites) ---------- */
+document.addEventListener('click',e=>{
+  const f=e.target.closest('.rs-form');if(!f)return;
+  const a=e.target.closest('[data-a]');if(a){f.querySelectorAll('[data-a]').forEach(x=>x.classList.toggle('on',x===a));f.querySelector('.rs-count').style.visibility=a.dataset.a==='1'?'visible':'hidden';return}
+  const d=e.target.closest('[data-d]');if(d){const b=f.querySelector('.rs-count b');let n=(+b.dataset.n||1)+(+d.dataset.d);n=Math.max(1,Math.min(20,n));b.dataset.n=n;b.textContent=num(n)}
+});
+document.addEventListener('submit',async e=>{
+  const f=e.target.closest('.rs-form');if(!f)return;e.preventDefault();
+  const msg=f.querySelector('.rs-msg'),slug=f.dataset.slug,btn=f.querySelector('.rs-send');
+  const name=f.querySelector('[name=name]').value.trim();if(name.length<2){msg.textContent='اكتب اسمك أول';return}
+  if(!LIVE||!slug){msg.textContent='هذا مثال. بالدعوة الحقيقية يوصل ردّك للعرسان مباشرة.';return}
+  const attending=f.querySelector('[data-a="1"]').classList.contains('on'),count=+(f.querySelector('.rs-count b').dataset.n||1);
+  let cid='';try{cid=localStorage.getItem('naqsh-cid-'+slug)||''}catch(err){}
+  btn.disabled=true;msg.textContent='نرسل ردّك…';
+  try{const r=await fetch('/api/rsvp/'+encodeURIComponent(slug),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,attending,count,message:f.querySelector('[name=message]').value,cid})});const j=await r.json();if(!j.ok)throw new Error(j.message);
+    try{localStorage.setItem('naqsh-cid-'+slug,j.cid)}catch(err){}
+    f.classList.add('sent');msg.textContent=attending?'وصل ردّك، ننتظركم بفرحة':'وصل اعتذارك، شكرًا لك';btn.textContent='تعديل الرد'}
+  catch(err){msg.textContent=err.message||'ما وصل الرد، حاول مرة ثانية'}
+  btn.disabled=false;
+});
+
+/* ---------- owner panel ---------- */
+async function panelBoot(){
+  const slug=(QS.get('s')||'').toLowerCase(),key=QS.get('k')||'';
+  document.body.classList.add('panel-mode');document.getElementById('panelPage').hidden=false;document.title='لوحة الحضور · نقش';
+  const base=location.origin+'/'+slug;
+  const load=async()=>{
+    try{const r=await fetch('/api/rsvp/'+encodeURIComponent(slug)+'?key='+encodeURIComponent(key),{cache:'no-store'});const j=await r.json();if(!j.ok)throw new Error(j.message);
+      const iv=j.invite;document.getElementById('ppTitle').textContent='لوحة الحضور · '+iv.groom+(iv.bride?' و '+iv.bride:'');
+      const w=when(Object.assign({},DEF,iv));document.getElementById('ppSub').textContent=`حفل ${iv.type} · ${w.wd} ${w.short} · ${iv.venue}`;
+      document.getElementById('ppPeople').textContent=num(j.totals.people);document.getElementById('ppYes').textContent=num(j.totals.attending);document.getElementById('ppNo').textContent=num(j.totals.declined);document.getElementById('ppAll').textContent=num(j.totals.replies);
+      const fmt=new Intl.DateTimeFormat(L,{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
+      document.getElementById('ppList').innerHTML=j.list.length?j.list.map(r=>`<div class="pp-row"><span class="st ${r.attending?'y':'n'}">${r.attending?'جاي · '+num(r.count):'معتذر'}</span><div><b>${esc(r.name)}</b>${r.message?`<p>${esc(r.message)}</p>`:''}</div><time>${fmt.format(r.at)}</time></div>`).join(''):'<p class="muted-s">ماكو ردود بعد. أول ما يرد ضيف يطلع هنا.</p>';
+    }catch(e){document.getElementById('ppTitle').textContent='ما كدرنا نفتح اللوحة';document.getElementById('ppSub').textContent=e.message||'تأكد من الرابط';document.getElementById('ppList').innerHTML=''}
+  };
+  document.getElementById('ppRefresh').onclick=load;
+  let ppURL='';
+  document.getElementById('ppMake').onclick=()=>{const n=document.getElementById('ppGuest').value.trim();if(n.length<2){document.getElementById('ppGuest').focus();return}
+    ppURL=base+'?to='+encodeURIComponent(n);document.getElementById('ppLink').textContent=decodeURIComponent(ppURL.replace(/^https?:\/\//,''));document.getElementById('ppOut').hidden=false;
+    document.getElementById('ppWa').href='https://wa.me/?text='+encodeURIComponent('دعوة خاصة إلى '+n+'\n'+ppURL);document.getElementById('ppCopy').textContent='نسخ'};
+  document.getElementById('ppCopy').onclick=async function(){try{await navigator.clipboard.writeText(ppURL);this.textContent='تم النسخ ✓'}catch(e){this.textContent='انسخه يدويًا'}};
+  await load();setInterval(load,30000);
+}
+
 (async function boot(){
+  if(PATH==='/panel'){panelBoot();return}
   if(GUEST_SLUG){guestBoot(GUEST_SLUG);return}
   if(location.protocol.startsWith('http')){
     try{const r=await fetch('/api/health',{cache:'no-store'});const j=await r.json();if(j.ok&&j.payments){LIVE=true;DOMAIN=location.host;document.getElementById('domainLbl').textContent=DOMAIN+'/';checkSlug();paintStep()}}catch(e){}
