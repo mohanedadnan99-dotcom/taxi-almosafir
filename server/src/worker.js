@@ -43,6 +43,7 @@ export default {
       if (req.method === 'GET' && (m = p.match(/^\/api\/song\/([a-z0-9-]+)$/))) return await getSong(req, env, m[1]);
       if (req.method === 'POST' && (m = p.match(/^\/api\/rsvp\/([a-z0-9-]+)$/))) return await rsvpPost(req, env, m[1]);
       if (req.method === 'GET' && (m = p.match(/^\/api\/rsvp\/([a-z0-9-]+)$/))) return await rsvpList(env, m[1], url.searchParams.get('key') || '');
+      if (req.method === 'GET' && p === '/api/admin/orders') return await adminOrders(env, url.searchParams.get('key') || '');
       if (req.method === 'GET' && p === '/api/health') return json({ ok: true, payments: !!env.WAYL_KEY, env: env.WAYL_ENV });
       return fail('المسار غير موجود', 404);
     } catch (e) {
@@ -265,4 +266,14 @@ async function rsvpList(env, slug, key) {
   const list = JSON.parse((await env.NAQSH.get('rsvp:' + slug)) || '[]').sort((a, b) => b.at - a.at).map(({ cid, ...r }) => r);
   const yes = list.filter(r => r.attending);
   return json({ ok: true, invite: { groom: inv.groom, bride: inv.hideBride ? '' : inv.bride, family: inv.family, type: inv.type, date: inv.date, time: inv.time, venue: inv.venue }, totals: { replies: list.length, attending: yes.length, people: yes.reduce((n, r) => n + r.count, 0), declined: list.length - yes.length }, list });
+}
+
+/* ---------- owner admin: list recent orders (protected by ADMIN_KEY) ---------- */
+async function adminOrders(env, key) {
+  if (!env.ADMIN_KEY || key.length !== env.ADMIN_KEY.length || !timingSafe(key, env.ADMIN_KEY)) return fail('غير مسموح', 403);
+  const out = [];
+  let cursor;
+  do { const l = await env.NAQSH.list({ prefix: 'order:', cursor }); for (const k of l.keys) { const o = JSON.parse((await env.NAQSH.get(k.name)) || 'null'); if (o) out.push({ ref: o.ref, status: o.status, waylStatus: o.waylStatus || null, tier: o.tier, total: o.total, tpl: o.data && o.data.tpl, slug: o.slug || (o.data && o.data.slug), groom: o.data && o.data.groom, song: !!o.song, createdAt: o.createdAt, paidAt: o.paidAt || null }) } cursor = l.list_complete ? null : l.cursor; } while (cursor);
+  out.sort((a, b) => b.createdAt - a.createdAt);
+  return json({ ok: true, count: out.length, orders: out });
 }
