@@ -641,6 +641,16 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
 .pp-row p{font-size:14px;color:#d9d3c8;margin-top:2px}
 .pp-row time{font-size:12px;color:var(--muted);white-space:nowrap}
 @media (max-width:640px){.pp-tiles{grid-template-columns:repeat(2,1fr)}.pp-gen{flex-direction:column}}
+#wiz{scroll-margin-top:80px}
+.wiz-preview{display:none}
+@media (max-width:1000px){
+  .preview-col{display:none!important}
+  .wiz-preview{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border:0;border-bottom:1px solid var(--line);background:rgba(223,195,140,.07);color:var(--gold);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer}
+  .wiz-preview span{color:var(--text);font-weight:500}
+  .wiz{overflow:visible}
+  .wz-foot{position:sticky;bottom:0;z-index:30;background:#100f15;border-radius:0 0 28px 28px;padding-bottom:calc(14px + env(safe-area-inset-bottom))!important;box-shadow:0 -12px 24px -12px rgba(0,0,0,.8)}
+  .pane{min-height:calc(100svh - 330px)}
+}
 @media (max-width:1000px){
   .hero .wrap,.b-grid{grid-template-columns:1fr}
   .stage{order:0;margin-top:10px}
@@ -750,7 +760,8 @@ body.panel-mode>header,body.panel-mode>main,body.panel-mode>footer{display:none}
         <p>كل شي تكتبه يظهر بالموبايل فورًا. ما تدفع إلا بعد ما تشوف دعوتك كاملة وتوافق عليها.</p>
       </div>
       <div class="b-grid">
-        <div class="wiz">
+        <div class="wiz" id="wiz">
+          <button type="button" class="wiz-preview" id="btnFullM"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>شوف دعوتك هسه <span id="wizTpl"></span></button>
           <ol class="bar" id="bar">
             <li data-s="1"><b>١</b>التصميم</li>
             <li data-s="2"><b>٢</b>الأغنية</li>
@@ -1454,8 +1465,10 @@ document.getElementById('templates').addEventListener('click',e=>{
   const u=e.target.closest('[data-use]');if(u){pickTpl(u.dataset.use);goStep(1);scrollToBuilder();return}
   const p=e.target.closest('[data-preview]');if(p)openFull(sample(p.dataset.preview),p.dataset.preview,{});
 });
-document.querySelectorAll('[data-pick]').forEach(a=>a.addEventListener('click',()=>{pickTpl(a.dataset.pick);goStep(1)}));
-function scrollToBuilder(){document.getElementById('builder').scrollIntoView({behavior:RM?'auto':'smooth'})}
+document.querySelectorAll('a[href="#builder"]:not([data-pick])').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();scrollToWiz()}));
+document.querySelectorAll('[data-pick]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();pickTpl(a.dataset.pick);goStep(1,true);scrollToWiz()}));
+function scrollToWiz(){const w=document.getElementById('wiz');const top=w.getBoundingClientRect().top+scrollY-80;window.scrollTo({top:Math.max(0,top),behavior:RM?'auto':'smooth'})}
+function scrollToBuilder(){scrollToWiz()}
 
 /* ---------- form ---------- */
 const form=document.getElementById('form');
@@ -1478,7 +1491,7 @@ const live=document.getElementById('livePreview');
 function renderFull(){
   live.innerHTML=`<div class="inv-frame" style="position:absolute;inset:0">${invite(state,state.tpl)}</div>`;
   observe(live.firstChild);
-  document.getElementById('liveName').textContent=TPL[state.tpl].name;
+  document.getElementById('liveName').textContent=TPL[state.tpl].name;document.getElementById('wizTpl').textContent='· '+TPL[state.tpl].name;
   updateTotal();tick();
 }
 function renderText(){
@@ -1597,7 +1610,7 @@ function paintStep(){
   else{btnNext.textContent='التالي';btnNext.disabled=false}
   msg.textContent='';updateTotal();
 }
-function goStep(n){step=n;paintStep()}
+function goStep(n,noScroll){const changed=n!==step;step=n;paintStep();if(changed&&!noScroll){const t=document.getElementById('wiz').getBoundingClientRect().top;if(t<70||t>innerHeight*.35)scrollToWiz()}}
 function agreeState(){btnNext.disabled=![...form.querySelectorAll('.agree')].every(c=>c.checked)}
 form.querySelectorAll('.agree').forEach(c=>c.addEventListener('change',agreeState));
 function summaryHTML(){
@@ -1692,6 +1705,7 @@ async function confirmPayment(ref){
 document.getElementById('btnCopy').addEventListener('click',async function(){
   try{await navigator.clipboard.writeText(finalURL);this.textContent='تم النسخ ✓'}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById('finalLink'));const s=getSelection();s.removeAllRanges();s.addRange(r);this.textContent='انسخه يدويًا'}
 });
+document.getElementById('btnFullM').addEventListener('click',()=>openFull(state,state.tpl,{song:music.url,start:music.start}));
 document.getElementById('btnFull').addEventListener('click',()=>openFull(state,state.tpl,{song:music.url,start:music.start}));
 
 /* ---------- overlays ---------- */
