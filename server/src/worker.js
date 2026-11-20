@@ -2,11 +2,13 @@
 // المفتاح السري لـ Wayl يبقى هنا كـ secret (WAYL_KEY) ولا يصل للمتصفح أبدًا.
 
 const WAYL_API = 'https://api.thewayl.com/api/v1/links';
-const PRICES = { silver: 5000, gold: 10000, diamond: 15000 };
-const RSVP_TIERS = new Set(['gold', 'diamond']);
+const PRICES = { silver: 5000, gold: 10000, diamond: 15000, crown: 20000 };
+const RSVP_TIERS = new Set(['gold', 'diamond', 'crown']);
 const EDIT_WINDOW = 24 * 3600e3;
-const TIER_NAME = { silver: 'فضّي', gold: 'ذهبي', diamond: 'ماسي' };
+const TIER_NAME = { silver: 'فضّي', gold: 'ذهبي', diamond: 'ماسي', crown: 'التاج' };
 const TEMPLATES = {
+  letter: ['رسالة', 'crown'],
+  anab: ['عنّاب', 'crown'], lulu: ['لؤلؤة', 'crown'], farah: ['باب الفرح', 'crown'], ring3d: ['الخاتم', 'crown'], caps: ['تتويج', 'crown'],
   lanterns: ['فوانيس', 'diamond'], fireworks: ['ألعاب نارية', 'diamond'], candles: ['شموع', 'diamond'],
   door: ['طَرقة', 'gold'], curtain: ['سِتارة', 'gold'], union: ['لقاء', 'gold'], ring: ['مِحبس', 'gold'],
   royal: ['ملكي', 'gold'], night: ['ليل بغداد', 'gold'], emerald: ['زمرّد', 'gold'],
@@ -46,6 +48,7 @@ export default {
     if (!p.startsWith('/api/')) {
       const sm = req.method === 'GET' && p.match(/^\/([a-z0-9][a-z0-9-]{1,28}[a-z0-9])\/?$/);
       if (sm && !RESERVED.has(sm[1])) { try { const r = await ogPage(req, env, url, sm[1]); if (r) return r; } catch (e) { console.error(e); } }
+      if (/\.(mp4|m4a|mp3|webm)$/.test(p)) return await mediaAsset(req, env);
       return env.ASSETS.fetch(req);
     }
     try {
@@ -61,6 +64,13 @@ export default {
       if (req.method === 'GET' && (m = p.match(/^\/api\/manage\/([a-z0-9-]+)$/))) return await manageGet(env, m[1], url.searchParams.get('key') || '');
       if (req.method === 'POST' && (m = p.match(/^\/api\/edit\/([a-z0-9-]+)$/))) return await editInvite(req, env, m[1]);
       if (req.method === 'GET' && p === '/api/admin/orders') return await adminOrders(env, url.searchParams.get('key') || '');
+      if (req.method === 'POST' && (m = p.match(/^\/api\/ref\/([a-z0-9-]{3,30})$/))) {
+        const s = m[1];
+        if (!(await env.NAQSH.get('inv:' + s))) return json({ ok: false });
+        const k = 'refhit:' + s, n = parseInt((await env.NAQSH.get(k)) || '0', 10) || 0;
+        await env.NAQSH.put(k, String(n + 1), { expirationTtl: 60 * 60 * 24 * 365 });
+        return json({ ok: true });
+      }
       if (req.method === 'GET' && p === '/api/health') return json({ ok: true, payments: !!env.WAYL_KEY, env: env.WAYL_ENV });
       return fail('المسار غير موجود', 404);
     } catch (e) {
@@ -175,7 +185,8 @@ async function createOrder(req, env, url) {
   if (songMeta) {
     await env.NAQSH.put('song:' + ref, await song.arrayBuffer(), { expirationTtl: 2 * 86400, metadata: songMeta });
   }
-  const order = { ref, status: 'pending', tier, total, tplName, data: d, song: songMeta, yt, createdAt: Date.now() };
+  const from = typeof raw.from === 'string' && /^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/.test(raw.from) ? raw.from : null;
+  const order = { ref, status: 'pending', tier, total, tplName, data: d, song: songMeta, yt, from, createdAt: Date.now() };
   await env.NAQSH.put('order:' + ref, JSON.stringify(order), { expirationTtl: 3 * 86400 });
 
   const origin = url.origin;
@@ -316,9 +327,14 @@ async function adminOrders(env, key) {
   if (!env.ADMIN_KEY || key.length !== env.ADMIN_KEY.length || !timingSafe(key, env.ADMIN_KEY)) return fail('غير مسموح', 403);
   const out = [];
   let cursor;
-  do { const l = await env.NAQSH.list({ prefix: 'order:', cursor }); for (const k of l.keys) { const o = JSON.parse((await env.NAQSH.get(k.name)) || 'null'); if (o) out.push({ ref: o.ref, status: o.status, waylStatus: o.waylStatus || null, tier: o.tier, total: o.total, tpl: o.data && o.data.tpl, slug: o.slug || (o.data && o.data.slug), groom: o.data && o.data.groom, song: !!o.song, createdAt: o.createdAt, paidAt: o.paidAt || null }) } cursor = l.list_complete ? null : l.cursor; } while (cursor);
+  do { const l = await env.NAQSH.list({ prefix: 'order:', cursor }); for (const k of l.keys) { const o = JSON.parse((await env.NAQSH.get(k.name)) || 'null'); if (o) out.push({ ref: o.ref, status: o.status, waylStatus: o.waylStatus || null, tier: o.tier, total: o.total, tpl: o.data && o.data.tpl, slug: o.slug || (o.data && o.data.slug), groom: o.data && o.data.groom, song: !!o.song, createdAt: o.createdAt, paidAt: o.paidAt || null, from: o.from || null }) } cursor = l.list_complete ? null : l.cursor; } while (cursor);
   out.sort((a, b) => b.createdAt - a.createdAt);
-  return json({ ok: true, count: out.length, orders: out });
+  // which invitations bring new customers: visits from the signature + orders
+  const refs = {};
+  let c2;
+  do { const l = await env.NAQSH.list({ prefix: 'refhit:', cursor: c2 }); for (const k of l.keys) { const s = k.name.slice(7); refs[s] = refs[s] || { slug: s, visits: 0, orders: 0, paid: 0 }; refs[s].visits = parseInt((await env.NAQSH.get(k.name)) || '0', 10) || 0; } c2 = l.list_complete ? null : l.cursor; } while (c2);
+  for (const o of out) if (o.from) { const r = refs[o.from] = refs[o.from] || { slug: o.from, visits: 0, orders: 0, paid: 0 }; r.orders++; if (o.status === 'paid') r.paid++; }
+  return json({ ok: true, count: out.length, orders: out, refs: Object.values(refs).sort((a, b) => b.paid - a.paid || b.orders - a.orders || b.visits - a.visits) });
 }
 
 /* ---------- owner: manage + edit within 24h ---------- */
@@ -375,4 +391,22 @@ async function ogPage(req, env, url, slug) {
   const meta = `<meta property="og:type" content="website"><meta property="og:site_name" content="نقش · دعوات رقمية"><meta property="og:title" content="${escH(title)}"><meta property="og:description" content="${escH(desc)}"><meta property="og:url" content="${escH(url.origin + '/' + slug)}"><meta property="og:image" content="${escH(img)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="description" content="${escH(desc)}">`;
   html = html.replace(/<!--OG-->[\s\S]*?<!--\/OG-->/, '').replace('<title>نقش · دعوات رقمية</title>', `<title>${escH(title)}</title>${meta}`);
   return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=120' } });
+}
+
+
+/* Static assets ignore Range requests, but iPhones only play video that answers them with 206. */
+async function mediaAsset(req, env) {
+  const full = await env.ASSETS.fetch(new Request(req.url, { method: 'GET' }));
+  if (!full.ok) return full;
+  const buf = await full.arrayBuffer(), size = buf.byteLength;
+  const type = full.headers.get('Content-Type') || 'video/mp4';
+  const base = { 'Content-Type': type, 'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=604800' };
+  const range = req.headers.get('Range');
+  if (!range) return new Response(req.method === 'HEAD' ? null : buf, { status: 200, headers: { ...base, 'Content-Length': String(size) } });
+  const m = /bytes=(\d*)-(\d*)/.exec(range);
+  let start = m && m[1] ? +m[1] : NaN, end = m && m[2] ? +m[2] : size - 1;
+  if (m && !m[1] && m[2]) { start = size - +m[2]; end = size - 1; }
+  end = Math.min(end, size - 1);
+  if (isNaN(start) || start < 0 || start > end) return new Response(null, { status: 416, headers: { ...base, 'Content-Range': `bytes */${size}` } });
+  return new Response(buf.slice(start, end + 1), { status: 206, headers: { ...base, 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': String(end - start + 1) } });
 }
