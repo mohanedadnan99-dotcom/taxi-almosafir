@@ -7,7 +7,7 @@
 <!--OG--><meta property="og:type" content="website"><meta property="og:site_name" content="نقش"><meta property="og:title" content="نقش · دعوات رقمية متحركة لكل مناسبة"><meta property="og:description" content="اختار قالب متحرك، اكتب التفاصيل، وادفع أونلاين. يوصلك رابط دعوة فخم ترسله لكل ضيوفك. من ٥٬٠٠٠ د.ع."><meta property="og:image" content="https://naqsh.mohanedadnan99.workers.dev/og/home.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="description" content="دعوات رقمية متحركة لكل مناسبة: أعراس، أعياد ميلاد، تخرّج، افتتاح ومؤتمرات. من ٥٬٠٠٠ د.ع."><!--/OG-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=El+Messiri:wght@400;600;700&family=Reem+Kufi:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Alexandria:wght@300;500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   /* Layout idea: a dark evening stage; the invitations are the only colour and the only big motion. */
@@ -719,13 +719,238 @@ body.edit-mode .edit-banner{display:block}
   *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important}
   html{scroll-behavior:auto}
 }
+
+/* =====================================================================
+   v2 — ivory & gold, Apple-like scroll story (site chrome only;
+   the invitation engine keeps its own palettes)
+   ===================================================================== */
+:root{
+  --night:#f6f2e9;--panel:#fffdf8;--panel2:#f1ebdd;
+  --line:rgba(96,74,32,.14);--line2:rgba(96,74,32,.24);
+  --gold:#9b7432;--gold-deep:#b98f47;--gold-lt:#d8b877;
+  --text:#191510;--muted:#6f6656;--ok:#1f8a5a;--bad:#c4472f;
+  --ui:'Alexandria','IBM Plex Sans Arabic',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:light;
+}
+html{scroll-behavior:auto}
+body{background:var(--night);color:var(--text)}
+h1,h2,h3,.sec-head h2,.plan h3,.card h3,.tier-head h3{font-family:var(--ui);letter-spacing:-.01em}
+::selection{background:#e9d7ae;color:#191510}
+
+/* header */
+.top{background:rgba(246,242,233,.96);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:1px solid transparent;transition:border-color .4s,background .4s}
+.top.scrolled{border-bottom-color:var(--line)}
+.top .wrap{height:64px}
+.top nav a{color:var(--muted)}.top nav a:hover{color:var(--text)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text)}
+.brand b{font-family:var(--ui);font-size:25px;font-weight:700;letter-spacing:-.02em}
+.mark{width:30px;height:30px;flex:none;overflow:visible}
+.mark path,.mark circle{fill:none;stroke:var(--gold);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mark .m-dot{fill:var(--gold);stroke:none}
+.mark .m-arch,.mark .m-n,.mark .m-base{stroke-dasharray:120;stroke-dashoffset:120;animation:mdraw 1.8s var(--ease) forwards}
+.mark .m-n{animation-delay:.45s}.mark .m-base{animation-delay:.8s}
+.mark .m-dot{transform-origin:20px 13.4px;transform:scale(0);animation:mdot .6s 1.2s var(--ease) forwards}
+@keyframes mdraw{to{stroke-dashoffset:0}}@keyframes mdot{to{transform:scale(1)}}
+.prog{position:absolute;bottom:-1px;right:0;height:1.5px;width:100%;background:linear-gradient(90deg,var(--gold-lt),var(--gold));transform-origin:right;transform:scaleX(var(--sp,0))}
+
+/* buttons */
+.btn{font-family:var(--ui);font-weight:500;letter-spacing:0;transition:transform .5s var(--ease),box-shadow .5s var(--ease),background .4s,color .4s,border-color .4s}
+.btn-gold{background:#191510;color:#f6eedb;box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 14px 30px -16px rgba(25,21,16,.55)}
+.btn-gold:hover{background:#2a2218;box-shadow:0 0 0 1px var(--gold-lt) inset,0 20px 40px -18px rgba(155,116,50,.6);transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.5);border:1px solid var(--line2);color:var(--text)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);background:#fff}
+.btn-diamond{background:linear-gradient(135deg,#eef6ff,#c8def3);color:#0d2136;box-shadow:0 12px 28px -16px rgba(60,110,160,.55)}
+
+/* ---------- scroll story ---------- */
+.story{position:relative;height:430vh;padding:0;margin-top:-64px}
+.st-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.st-arch{position:absolute;left:50%;bottom:0;width:min(78vw,780px);height:92%;transform:translateX(-50%);opacity:.55;pointer-events:none}
+.st-arch path{fill:none;stroke:var(--gold-lt);stroke-width:1.2;stroke-dasharray:1}
+.st-arch path+path{stroke-width:.7;opacity:.7}
+.ch{position:absolute;z-index:3;will-change:opacity,transform;backface-visibility:hidden}
+.ch0{inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 20px 40px}
+.st-kick{font-family:var(--ui);font-size:13px;font-weight:400;color:var(--gold);letter-spacing:.02em;padding:7px 16px;border:1px solid var(--line2);border-radius:999px;background:rgba(255,255,255,.55);opacity:0;animation:nIn 1s .2s var(--ease) forwards}
+.mega{font-family:var(--ui);font-weight:800;font-size:clamp(58px,11vw,168px);line-height:1.02;letter-spacing:-.035em;margin-top:22px;color:var(--text)}
+.mega .w{display:inline-block;opacity:0;transform:translateY(.45em);animation:wIn 1.4s var(--ease) forwards}
+.mega .w:nth-child(1){animation-delay:.35s}.mega .w:nth-child(2){animation-delay:.55s}.mega .w:nth-child(3){animation-delay:.75s}
+.mega .g{background:linear-gradient(100deg,#7a5820 0%,#c9a25a 35%,#8e6a2c 60%,#d9bb7e 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .04em .2em;margin-bottom:-.12em}
+@keyframes nIn{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes wIn{to{opacity:1;transform:none}}
+.ch0 .sub{margin-top:22px;font-family:var(--ui);font-weight:300;font-size:clamp(17px,1.8vw,23px);color:var(--muted);max-width:30ch;opacity:0;animation:nIn 1.2s 1s var(--ease) forwards}
+.ch0 .ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:30px;opacity:0;animation:nIn 1.2s 1.2s var(--ease) forwards}
+.cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;color:var(--muted);opacity:0;animation:nIn 1s 1.8s forwards}
+.cue i{width:1px;height:38px;background:linear-gradient(var(--gold),transparent);animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.ch1,.ch2,.ch3{top:50%;right:max(6vw,calc(50% - 560px));width:min(420px,38vw);opacity:0}
+.ch .n{font-family:var(--ui);font-size:15px;letter-spacing:.06em;color:var(--gold);font-weight:600}
+.ch h2{font-family:var(--ui);font-weight:700;font-size:clamp(44px,5.6vw,84px);line-height:1.05;letter-spacing:-.03em;margin-top:8px}
+.ch p{margin-top:16px;font-size:clamp(16px,1.35vw,19px);color:var(--muted);font-weight:300;font-family:var(--ui);max-width:30ch}
+.tplname{display:inline-flex;margin-top:20px;font-family:var(--ui);font-weight:500;font-size:14px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid var(--line2);color:var(--text)}
+.dev{position:absolute;z-index:2;left:max(8vw,calc(50% - 520px));top:50%;width:300px;height:620px;margin-top:-310px;will-change:transform}
+.dev .phone{width:300px;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 60px 120px -40px rgba(60,44,16,.55),0 30px 60px -30px rgba(0,0,0,.35)}
+.fcard{position:absolute;z-index:4;background:#fffdf8;border:1px solid rgba(255,255,255,.9);border-radius:22px;box-shadow:0 30px 60px -28px rgba(60,44,16,.45),0 0 0 1px var(--line);opacity:0}
+.form-card{right:-150px;top:34%;width:250px;padding:14px 16px;display:grid;gap:4px}
+.fr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px solid var(--line);font-size:13px}
+.fr:last-child{border:0}
+.fr span{color:var(--muted)}
+.fr b{font-weight:600;font-family:var(--ui);clip-path:inset(0 0 0 calc(100% - var(--t,0%)));white-space:nowrap}
+.chat-card{left:-170px;bottom:16%;width:270px;padding:10px;background:#e8f3df;border-color:#fff}
+.bub{display:grid;gap:4px;background:#d9fdd3;border-radius:14px 14px 4px 14px;padding:10px 12px;font-size:13px;color:#111b21;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.bub .lk{font-style:normal;direction:ltr;text-align:left;color:#027eb5;font-size:12.5px}
+.bub em{font-style:normal;font-size:11px;color:#53bdeb;justify-self:start;direction:ltr}
+
+/* statement */
+.statement{padding:140px 0 60px;overflow:hidden}
+.fill{font-family:var(--ui);font-weight:700;font-size:clamp(30px,4.6vw,66px);line-height:1.25;letter-spacing:-.025em;max-width:22ch}
+.fill .fw{color:rgba(25,21,16,.13);transition:color .5s}
+.fill .fw.on{color:var(--text)}
+.fill .fw.on.gw{color:var(--gold)}
+.occ-run{margin-top:70px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.occ-track{display:flex;gap:12px;width:max-content;animation:mq 50s linear infinite}
+.occ-track span{font-family:var(--ui);font-size:15px;padding:10px 20px;border-radius:999px;background:#fff;border:1px solid var(--line);white-space:nowrap}
+
+/* sections */
+section{padding:120px 0}
+.sec-head{margin-bottom:52px}
+.sec-head .k{font-family:var(--ui);font-weight:500;font-size:13px;color:var(--gold);letter-spacing:.04em}
+.sec-head h2{font-weight:700;font-size:clamp(36px,5.2vw,68px);line-height:1.08;letter-spacing:-.03em}
+.sec-head h2 em{font-family:var(--ui);color:var(--gold);font-weight:700}
+.sec-head p{color:var(--muted);font-size:17px;font-weight:300;font-family:var(--ui)}
+.wm{display:inline-block;overflow:hidden;vertical-align:top;padding:.14em 0 .18em;margin:-.14em 0 -.18em}
+.wm>span{display:inline-block;will-change:transform;transform:translateY(105%);transition:transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+.in .wm>span,.wm.in>span{transform:none}
+
+/* reveal */
+.nrv{opacity:0;transform:translate3d(0,40px,0);transition:opacity 1s var(--ease),transform 1.2s var(--ease);transition-delay:var(--d,0s)}
+.nrv.in{opacity:1;transform:none}
+
+/* gallery / cards */
+.tier-head{border-bottom:1px solid var(--line);margin-top:30px}
+.tier-head h3{font-weight:600}
+.tier-head b{color:var(--gold)}
+.tier-head.diamond h3{background:linear-gradient(100deg,#2c5a86,#6e9ccc,#2c5a86);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tier-head.diamond b{color:#3b6c9c}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:28px;box-shadow:0 1px 0 #fff inset;transform-style:preserve-3d;transition:transform .7s var(--ease),box-shadow .5s,border-color .5s,opacity 1s var(--ease)}
+.card:hover{transform:translateY(-10px);border-color:var(--line2);box-shadow:0 40px 70px -40px rgba(60,44,16,.45)}
+.card .thumb{border-radius:20px;box-shadow:0 18px 40px -26px rgba(0,0,0,.6)}
+.card h3{font-weight:600}
+.badge.normal{background:rgba(255,255,255,.85);color:#191510;border:0}
+
+/* builder */
+.builder{background:linear-gradient(180deg,transparent,rgba(216,184,119,.10) 40%,transparent);border-block:1px solid var(--line)}
+.wiz{background:var(--panel);border:1px solid var(--line);box-shadow:0 40px 90px -60px rgba(60,44,16,.5)}
+input[type=text],input[type=date],input[type=time],textarea{background:#fbf8f1;border:1px solid var(--line2);color:var(--text)}
+input:focus,textarea:focus{background:#fff;border-color:var(--gold);box-shadow:0 0 0 4px rgba(185,143,71,.14)}
+input[type=date],input[type=time]{color-scheme:light}
+.chip span{background:#fbf8f1;border-color:var(--line2)}
+.chip input:checked+span{background:#191510;color:#f6eedb;border-color:#191510}
+.chip input:checked+span em{color:var(--gold-lt)}
+.chip.dis span,.chip input:disabled+span{opacity:.4}
+.chip span i{box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.bar li.on b{background:#191510;color:#f6eedb;border-color:#191510;box-shadow:none}
+.bar li.done b{background:rgba(31,138,90,.1)}
+.tog input{background:#ddd5c4}.tog input::after{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tog input:checked{background:var(--gold)}
+.check{background:#fbf8f1;border-color:var(--line2)}
+.check input{border-color:rgba(0,0,0,.25)}
+.check input:checked::after{border-color:#fff}
+.wz-foot{background:#faf6ee}
+.track-card,.slug,.sugs button,.seg,.mine-item{background:#fbf8f1;border-color:var(--line2)}
+.seg button.on,.play{background:#191510;color:#f6eedb}
+.drop .ic,.badge.strong,.plan .tag{background:#191510;color:#f6eedb}
+.wayl-note{background:rgba(155,116,50,.07)}
+.lock{background:rgba(155,116,50,.05);border-color:rgba(155,116,50,.35)}
+.lock .ic{background:rgba(155,116,50,.12)}
+.big-link{background:#fbf8f1}
+.spinner{border-color:rgba(0,0,0,.08);border-top-color:var(--gold)}
+.terms ol{color:var(--text)}
+.preview-col .phone{box-shadow:0 0 0 1px rgba(0,0,0,.06),0 50px 90px -40px rgba(60,44,16,.55)}
+.edit-banner{background:rgba(31,138,90,.08)}
+
+/* pricing */
+.plan{background:var(--panel);border:1px solid var(--line);box-shadow:0 30px 70px -50px rgba(60,44,16,.45)}
+.plan h3{font-weight:600}
+.plan .amt b{font-family:var(--ui);font-weight:700;letter-spacing:-.03em}
+.plan ul{color:var(--text)}
+.plan li::before{background:var(--gold-lt)}
+.plan li.no{text-decoration-color:rgba(0,0,0,.25)}
+.plan li.no::before{background:#d8d0c0}
+.plan.hot{background:#191510;color:#f6eedb;border-color:#191510}
+.plan.hot::after{background:#191510}
+.plan.hot::before{animation:none;background:none}
+.plan.hot ul{color:#eae2cf}.plan.hot .amt span{color:#b3a993}
+.plan.hot li.star{color:var(--gold-lt)}
+.plan.hot .tag{background:var(--gold-lt);color:#191510}
+.plan.hot .btn-gold{background:#f6eedb;color:#191510}
+.plan.diamond{background:linear-gradient(170deg,#f4f9ff,#fffdf8 60%);border-color:#c7dbef}
+.plan.diamond li.star{color:#2c5a86}
+.plan .dtag{background:#2c5a86;color:#fff}
+
+.cmp{margin-top:56px;overflow-x:auto;border:1px solid var(--line);border-radius:26px;background:var(--panel)}
+.cmp table{width:100%;min-width:520px;border-collapse:collapse;font-size:15px}
+.cmp th,.cmp td{padding:16px 18px;text-align:center;border-bottom:1px solid var(--line)}
+.cmp tbody tr:last-child>*{border-bottom:0}
+.cmp thead th{font-family:var(--ui);font-weight:600;font-size:16px;vertical-align:bottom}
+.cmp thead small{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.cmp thead .hot{color:var(--gold)}.cmp thead .dia{color:#2c5a86}
+.cmp tbody th{text-align:right;font-weight:400;color:var(--text)}
+.cmp td.y{color:var(--gold);font-weight:700}
+.cmp td.n{color:#c9c0ae}
+.cmp tbody tr{transition:background .3s}.cmp tbody tr:hover{background:rgba(216,184,119,.08)}
+
+/* faq / footer / overlays */
+.faq details{background:var(--panel);transition:box-shadow .4s,border-color .4s}
+.faq details[open]{border-color:var(--line2);box-shadow:0 24px 50px -40px rgba(60,44,16,.5)}
+.faq summary{font-family:var(--ui);font-weight:500}
+footer{background:#191510;color:#b3a993;border:0;padding:64px 0 70px}
+footer .brand{color:#f6eedb}footer .mark path{stroke:var(--gold-lt)}footer .mark .m-dot{fill:var(--gold-lt)}
+footer .linkbtn{color:#d6ccb6}
+.overlay{background:rgba(32,26,16,.42)}
+#fullView{background:rgba(5,4,7,.88)}
+.dialog{background:var(--panel);border-color:var(--line2);box-shadow:0 50px 100px -40px rgba(0,0,0,.45)}
+.dialog .x{background:#f1ebdd;border-color:var(--line2);color:var(--text)}
+.gate{background:#0e0c10;color:#f2ede4}
+.wa-float{box-shadow:0 12px 30px -10px rgba(0,0,0,.35)}
+
+@media (max-width:1000px){
+  .wz-foot{background:#faf6ee;box-shadow:0 -14px 24px -16px rgba(60,44,16,.35)}
+  .wiz-preview{background:rgba(155,116,50,.07)}
+  .story{height:400vh}
+  .ch1,.ch2,.ch3{top:calc(70px + 3svh);right:0;left:0;width:auto;text-align:center;padding:0 24px;display:flex;flex-direction:column;align-items:center}
+  .ch h2{font-size:clamp(36px,10vw,56px)}
+  .ch p{margin-top:8px;font-size:15px}
+  .ch .tplname{margin-top:10px}
+  .dev{left:50%;margin-left:-150px}
+  .form-card{right:auto;left:50%;margin-left:-125px;top:auto;bottom:6%}
+  .chat-card{left:50%;margin-left:-135px;bottom:8%}
+  .statement{padding:90px 0 30px}
+}
+@media (max-width:640px){
+  section{padding:84px 0}
+  .mega{font-size:clamp(54px,17vw,92px)}
+  .cmp th,.cmp td{padding:13px 10px;font-size:13.5px}
+  .top .hdr-actions .btn-gold{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .nrv{opacity:1;transform:none;filter:none}.wm>span{transform:none}
+  .mega .w,.st-kick,.ch0 .sub,.ch0 .ctas,.cue{opacity:1;animation:none;transform:none;filter:none}
+}
+.card .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease)}
+.card:hover .thumb img{transform:scale(1.04)}
+.st-arch path{stroke-dashoffset:1;animation:archDraw 2.6s .3s var(--ease) forwards}
+@keyframes archDraw{to{stroke-dashoffset:0}}
+.occ-run:not(.in) .occ-track{animation-play-state:paused}
+.scrolling #heroStack *{animation-play-state:paused!important}
+.inv-frame.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 9s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.07)}}
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <a href="#top" class="brand" aria-label="نقش"><b class="gold-text">نقش</b><small>NAQSH</small></a>
+    <a href="#top" class="brand" aria-label="نقش"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path class="m-arch" d="M8 37V17C8 9.5 13.5 5 20 2.5 26.5 5 32 9.5 32 17v20"/><path class="m-n" d="M13.2 19.5c0 6.8 2.9 10 6.8 10s6.8-3.2 6.8-10"/><circle class="m-dot" cx="20" cy="13.4" r="1.9"/><path class="m-base" d="M3.5 37h33"/></svg><b>نقش</b></a>
     <nav aria-label="أقسام الموقع">
       <a href="#templates">القوالب</a>
       <a href="#builder">صمّم دعوتك</a>
@@ -734,50 +959,51 @@ body.edit-mode .edit-banner{display:block}
     </nav>
     <div class="hdr-actions"><button type="button" class="btn btn-ghost btn-sm" id="btnMine">طلباتي</button><a href="#builder" class="btn btn-gold btn-sm">اصنع دعوتك</a></div>
   </div>
+  <i class="prog" id="prog"></i>
 </header>
 
 <main id="top">
-  <section class="hero">
-    <div class="aurora"><i></i><i></i><i></i></div>
-    <div class="wrap">
-      <div>
-        <span class="eyebrow"><i></i>دعوات رقمية لكل مناسبة · العراق</span>
-        <h1><span class="big gold-text" id="bigWord">دعوتك</span><span class="rest">برابط واحد ترسله لكل ضيوفك</span></h1>
-        <p class="lead">اختار قالب متحرك، اكتب الأسماء والموعد والمكان، وادفع أونلاين. يوصلك رابط خاص باسمك ترسله على واتساب، والضيف يفتح الدعوة ويشوف العدّاد والموقع.</p>
-        <div class="ctas">
-          <a href="#builder" class="btn btn-gold">ابدأ دعوتك الآن</a>
-          <a href="#templates" class="btn btn-ghost">شوف القوالب</a>
-        </div>
-        <div class="stats">
-          <div><b class="num" data-count="5000">٥٬٠٠٠</b><span>الباقة الفضية</span></div>
-          <div><b class="num" data-count="10000">١٠٬٠٠٠</b><span>الذهبية مع أغنيتك</span></div>
-          <div><b class="num" data-count="20000">٢٠٬٠٠٠</b><span>الماسية الخرافية</span></div>
-        </div>
+  <section class="story" id="story" aria-label="نقش">
+    <div class="st-pin">
+      <svg class="st-arch" viewBox="0 0 600 900" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path pathLength="1" d="M40 900V360C40 170 190 75 300 30 410 75 560 170 560 360v540"/><path pathLength="1" d="M95 900V372C95 205 215 125 300 88 385 125 505 205 505 372v528"/></svg>
+      <div class="ch ch0">
+        <span class="st-kick">دعوات رقمية متحركة لكل مناسبة</span>
+        <h1 class="mega"><span class="w">دعوتك،</span> <span class="w">كما</span> <span class="w g">تستحق.</span></h1>
+        <p class="sub">قالبٌ متحرّك، وأغنيتك، ورابطٌ واحد يصل إلى جميع ضيوفك.</p>
+        <div class="ctas"><a href="#builder" class="btn btn-gold">ابدأ دعوتك</a><a href="#templates" class="btn btn-ghost">تصفّح القوالب</a></div>
+        <span class="cue"><i></i>مرّر للأسفل</span>
       </div>
-      <div class="stage" id="stage">
+      <div class="ch ch1"><span class="n">٠١</span><h2>اختر قالبك.</h2><p>من زفافٍ ملكي إلى عيد ميلاد طفل، لكل قالبٍ افتتاحيته وحركته.</p><b class="tplname" id="heroName"></b></div>
+      <div class="ch ch2"><span class="n">٠٢</span><h2>اكتب التفاصيل.</h2><p>الأسماء والموعد والمكان، تظهر داخل الدعوة لحظة كتابتها.</p></div>
+      <div class="ch ch3"><span class="n">٠٣</span><h2>أرسل الرابط.</h2><p>ادفع عبر Wayl واستلم رابطك فورًا. يفتحه ضيفك من واتساب دون أي تطبيق.</p></div>
+      <div class="dev" id="stage">
         <div class="tilt" id="tilt"><div class="phone"><div class="screen stack" id="heroStack"></div></div></div>
-        <div class="stage-label"><b id="heroName">ملكي</b><div class="dots" id="heroDots"></div></div>
+        <div class="fcard form-card" aria-hidden="true">
+          <div class="fr"><span>العريس</span><b>أحمد</b></div>
+          <div class="fr"><span>العروس</span><b>سارة</b></div>
+          <div class="fr"><span>الموعد</span><b>الخميس · ٨:٠٠ مساءً</b></div>
+          <div class="fr"><span>المكان</span><b>قاعة الزوراء · بغداد</b></div>
+        </div>
+        <div class="fcard chat-card" aria-hidden="true">
+          <div class="bub"><i class="lk">naqsh.j8ji.com/ahmed-sara</i><span>تشرّفنا دعوتكم لحضور حفل زفافنا 🤍</span><em>٩:٤١ ✓✓</em></div>
+        </div>
       </div>
+      <div class="st-dots" id="heroDots" hidden></div>
     </div>
-      </section>
+  </section>
 
-  <section class="how" aria-label="طريقة العمل">
-    <div class="wrap">
-      <ol class="how-list">
-        <li><b>١</b><div><h3>اختار القالب</h3><p>فضّي، ذهبي أو ماسي، وشوفه كامل قبل ما تختار</p></div></li>
-        <li><b>٢</b><div><h3>اكتب التفاصيل</h3><p>الأسماء، التاريخ، الساعة، المكان. وتشوف الدعوة وهي تتكوّن</p></div></li>
-        <li><b>٣</b><div><h3>ادفع واستلم رابطك</h3><p>الدفع عبر Wayl، والرابط يتفعّل مباشرة</p></div></li>
-      </ol>
-    </div>
+  <section class="statement" aria-label="لكل مناسبة">
+    <div class="wrap"><p class="fill" id="fillText">من عيد ميلاد طفل، إلى تخرّجٍ وزفاف، إلى افتتاحٍ وحفلٍ رسمي. نقش يصمّم لكل مناسبةٍ دعوةً تليق بها.</p></div>
+    <div class="occ-run" aria-hidden="true"><div class="occ-track"><span>خطوبة</span><span>عقد قران</span><span>زفاف</span><span>حنّة</span><span>عيد ميلاد</span><span>مولود جديد</span><span>تخرّج</span><span>عودة من الحج</span><span>ذكرى زواج</span><span>إفطار رمضاني</span><span>معايدة</span><span>افتتاح</span><span>مؤتمر</span><span>حفل رسمي</span><span>تكريم</span><span>إطلاق منتج</span><span>مجلس فاتحة</span><span>خطوبة</span><span>عقد قران</span><span>زفاف</span><span>حنّة</span><span>عيد ميلاد</span><span>مولود جديد</span><span>تخرّج</span><span>عودة من الحج</span><span>ذكرى زواج</span><span>إفطار رمضاني</span><span>معايدة</span><span>افتتاح</span><span>مؤتمر</span><span>حفل رسمي</span><span>تكريم</span><span>إطلاق منتج</span><span>مجلس فاتحة</span></div></div>
   </section>
 
   <section id="templates">
     <div class="wrap">
       <div class="sec-head">
-        <div><span class="k">المجموعة</span><h2>كل قالب <em>إله حركته</em></h2></div>
-        <p>اضغط على أي قالب وشوفه كامل مثل ما يشوفه الضيف، وبعدها اختاره.</p>
+        <div><span class="k">المجموعة</span><h2>لكل قالبٍ <em>حركته</em></h2></div>
+        <p>اضغط أي قالب لتشاهده كاملًا كما يراه ضيفك، ثم اختره.</p>
       </div>
-      <div class="tier-head diamond"><h3>الباقة الماسية</h3><span><b class="num">٢٠٬٠٠٠</b> د.ع · مشاهد خرافية، أغنيتك، اسم كل ضيف، وتأكيد الحضور</span></div>
+      <div class="tier-head diamond"><h3>الباقة الماسية</h3><span><b class="num">٢٠٬٠٠٠</b> د.ع · مشاهد سينمائية، أغنيتك، اسم كل ضيف، وتأكيد الحضور</span></div>
       <div class="gallery" id="galDiamond"></div>
       <div class="tier-head"><h3>الباقة الذهبية</h3><span><b class="num">١٠٬٠٠٠</b> د.ع · قوالب تفاعلية، أغنيتك، وتأكيد الحضور</span></div>
       <div class="gallery" id="galGold"></div>
@@ -789,12 +1015,12 @@ body.edit-mode .edit-banner{display:block}
   <section id="builder" class="builder">
     <div class="wrap">
       <div class="sec-head">
-        <div><span class="k">صمّم دعوتك</span><h2>أربع خطوات <em>ورابطك جاهز</em></h2></div>
-        <p>كل شي تكتبه يظهر بالموبايل فورًا. ما تدفع إلا بعد ما تشوف دعوتك كاملة وتوافق عليها.</p>
+        <div><span class="k">صمّم دعوتك</span><h2>أربع خطوات، <em>ورابطك جاهز</em></h2></div>
+        <p>كل ما تكتبه يظهر في المعاينة فورًا، ولا تدفع إلا بعد أن ترى دعوتك كاملة وتوافق عليها.</p>
       </div>
       <div class="b-grid">
         <div class="wiz" id="wiz">
-          <button type="button" class="wiz-preview" id="btnFullM"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>شوف دعوتك هسه <span id="wizTpl"></span></button>
+          <button type="button" class="wiz-preview" id="btnFullM"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>شاهد دعوتك الآن <span id="wizTpl"></span></button>
           <div class="edit-banner" id="editBanner">وضع التعديل</div>
           <ol class="bar" id="bar">
             <li data-s="1"><b>١</b>التصميم</li>
@@ -806,7 +1032,7 @@ body.edit-mode .edit-banner{display:block}
             <!-- step 1 -->
             <div class="pane" data-pane="1">
               <div class="fgroup"><span class="lab">المناسبة</span><div class="chips occ-chips" id="typeChips"></div></div>
-              <div class="fgroup"><span class="lab">القالب</span><div class="chips" id="tplChips"></div><p class="muted-s" id="mournNote" hidden>لمجلس الفاتحة تظهر القوالب الهادئة بس، وبدون أغنية أو عدّاد.</p></div>
+              <div class="fgroup"><span class="lab">القالب</span><div class="chips" id="tplChips"></div><p class="muted-s" id="mournNote" hidden>لمجلس الفاتحة تظهر القوالب الهادئة فقط، دون أغنية أو عدّاد.</p></div>
               <div class="fgroup"><label for="f-family" id="l-family">العائلة الداعية</label><input type="text" id="f-family" name="family" maxlength="50"></div>
               <div class="row2">
                 <div class="fgroup"><label for="f-groom" id="l-groom">اسم العريس</label><input type="text" id="f-groom" name="groom" maxlength="40"></div>
@@ -821,7 +1047,7 @@ body.edit-mode .edit-banner{display:block}
                 <div class="fgroup"><label for="f-area">المنطقة</label><input type="text" id="f-area" name="area" maxlength="50"></div>
               </div>
               <div class="fgroup"><label for="f-note">كلمة ختامية</label><textarea id="f-note" name="note" maxlength="100"></textarea></div>
-              <div class="fgroup"><span class="lab">سطر البركة بالدعوة</span><div class="chips">
+              <div class="fgroup"><span class="lab">سطر البركة في الدعوة</span><div class="chips">
                 <label class="chip" for="vm-q"><input type="radio" name="verseMode" id="vm-q" value="quran"><span>آية قرآنية</span></label>
                 <label class="chip" for="vm-g"><input type="radio" name="verseMode" id="vm-g" value="general"><span>عبارة عامة</span></label>
                 <label class="chip" for="vm-n"><input type="radio" name="verseMode" id="vm-n" value="none"><span>بدون</span></label></div></div>
@@ -829,7 +1055,7 @@ body.edit-mode .edit-banner{display:block}
                 <label class="chip" for="lg-ar"><input type="radio" name="lang" id="lg-ar" value="ar"><span>العربية</span></label>
                 <label class="chip" for="lg-ku"><input type="radio" name="lang" id="lg-ku" value="ku"><span>کوردی</span></label>
                 <label class="chip" for="lg-en"><input type="radio" name="lang" id="lg-en" value="en"><span>English</span></label></div>
-                <p class="muted-s">الأسماء تنكتب مثل ما تكتبها إنت، واللغة تغيّر كلمات الدعوة نفسها.</p></div>
+                <p class="muted-s">تظهر الأسماء كما تكتبها، وتغيّر اللغة نصوص الدعوة نفسها.</p></div>
               <div class="toggles">
                 <label class="tog" for="f-hide" id="t-hide"><input type="checkbox" id="f-hide" name="hideBride">إخفاء اسم العروس</label>
                 <label class="tog" for="f-count" id="t-count"><input type="checkbox" id="f-count" name="countdown">العدّاد التنازلي</label>
@@ -839,14 +1065,14 @@ body.edit-mode .edit-banner{display:block}
             <div class="pane" data-pane="2">
               <div class="lock" id="musicLock">
                 <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-                <h3 id="lockTitle">الأغنية متوفرة بالباقة الذهبية والماسية</h3>
-                <p id="lockText">قالبك الحالي من الباقة الفضية. اختار قالب ذهبي (١٠٬٠٠٠ د.ع) أو ماسي (٢٠٬٠٠٠ د.ع)، وأغنيتك تشتغل أول ما الضيف يفتح الدعوة.</p>
+                <h3 id="lockTitle">الأغنية متاحة في الباقتين الذهبية والماسية</h3>
+                <p id="lockText">قالبك الحالي من الباقة الفضية. اختر قالبًا ذهبيًا (١٠٬٠٠٠ د.ع) أو ماسيًا (٢٠٬٠٠٠ د.ع)، لتعمل أغنيتك لحظة فتح الضيف للدعوة.</p>
                 <div class="chips" id="upChips"></div>
-                <button type="button" class="linkbtn" data-go="3" id="skipSong">أكمل بدون أغنية</button>
+                <button type="button" class="linkbtn" data-go="3" id="skipSong">المتابعة دون أغنية</button>
               </div>
               <div id="musicOpen" style="display:grid;gap:18px">
                 <div class="seg" role="tablist" aria-label="مصدر الأغنية">
-                  <button type="button" class="on" data-src="file">ارفع ملف</button>
+                  <button type="button" class="on" data-src="file">رفع ملف</button>
                   <button type="button" data-src="yt">رابط يوتيوب</button>
                 </div>
                 <div id="srcFile" style="display:grid;gap:18px">
@@ -854,7 +1080,7 @@ body.edit-mode .edit-banner{display:block}
                   <input type="file" id="f-song" accept="audio/*">
                   <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 16V4m0 0l-5 5m5-5l5 5M4 20h16"/></svg></span>
                   <b>ارفع أغنيتك</b>
-                  <span>MP3 أو M4A · لحد ١٥ ميغا · تكدر تسحبها هنا</span>
+                  <span>MP3 أو M4A · حتى ١٥ ميغابايت · أو اسحبها إلى هنا</span>
                 </label>
                 <div class="track-card" id="trackCard">
                   <div class="track-row">
@@ -865,44 +1091,44 @@ body.edit-mode .edit-banner{display:block}
                   <div class="fgroup"><label for="f-start">تبدأ الأغنية من: <b id="startLbl" class="num">٠:٠٠</b></label><input type="range" id="f-start" min="0" max="60" step="1" value="0"></div>
                   <button type="button" class="linkbtn" id="btnRemove" style="justify-self:start">حذف الأغنية</button>
                 </div>
-                <p class="muted-s">الملف هو الأضمن: يشتغل لوحده أول ما الضيف يفتح الدعوة، على الآيفون والأندرويد.</p>
+                <p class="muted-s">الملف هو الخيار الأضمن: يعمل تلقائيًا لحظة فتح الدعوة، على آيفون وأندرويد.</p>
                 </div>
                 <div id="srcYt" style="display:none;gap:14px">
                   <div class="fgroup"><label for="f-yt">رابط الأغنية من يوتيوب</label><input type="text" id="f-yt" inputmode="url" placeholder="https://youtu.be/..." dir="ltr" autocomplete="off"></div>
                   <div class="row2">
-                    <div class="fgroup"><label for="f-yts">تبدي من (دقيقة:ثانية)</label><input type="text" id="f-yts" inputmode="numeric" placeholder="0:45" dir="ltr"></div>
-                    <div class="fgroup"><label for="f-yte">تخلص عند (اختياري)</label><input type="text" id="f-yte" inputmode="numeric" placeholder="2:30" dir="ltr"></div>
+                    <div class="fgroup"><label for="f-yts">البداية (دقيقة:ثانية)</label><input type="text" id="f-yts" inputmode="numeric" placeholder="0:45" dir="ltr"></div>
+                    <div class="fgroup"><label for="f-yte">النهاية (اختياري)</label><input type="text" id="f-yte" inputmode="numeric" placeholder="2:30" dir="ltr"></div>
                   </div>
                   <p class="slug-status" id="ytStatus" aria-live="polite"></p>
                   <div class="ytprev" id="ytPrev" hidden></div>
                   <div class="row-btns"><button type="button" class="btn btn-ghost btn-sm" id="btnYtTry">جرّب المقطع</button><button type="button" class="linkbtn" id="btnYtClear">حذف الرابط</button></div>
-                  <p class="muted-s">الأغنية تطلع بقسم «أغنيتنا» داخل الدعوة. يوتيوب يطلب إن المشغّل يبين، وعلى الآيفون ممكن الضيف يضغط تشغيل بنفسه.</p>
+                  <p class="muted-s">تظهر الأغنية في قسم «أغنيتنا» داخل الدعوة. يشترط يوتيوب ظهور المشغّل، وقد يحتاج الضيف على آيفون إلى الضغط على التشغيل.</p>
                 </div>
               </div>
             </div>
             <!-- step 3 -->
             <div class="pane" data-pane="3">
               <div class="fgroup">
-                <label for="f-slug">اختار رابط دعوتك</label>
+                <label for="f-slug">اختر رابط دعوتك</label>
                 <div class="slug"><span id="domainLbl">naqsh.j8ji.com/</span><input type="text" id="f-slug" name="slug" maxlength="30" spellcheck="false" autocapitalize="off"></div>
                 <div class="slug-status" id="slugStatus" aria-live="polite"></div>
                 <div class="sugs" id="sugs"></div>
               </div>
-              <p class="muted-s">حروف إنكليزية صغيرة وأرقام وشَرطة فقط. هذا الرابط يصير إلك وحدك لحد ما يخلص الحفل.</p>
+              <p class="muted-s">حروف إنكليزية صغيرة وأرقام وشَرطة فقط. يبقى هذا الرابط لك وحدك حتى انتهاء المناسبة.</p>
               <div class="big-link" id="slugPreview"></div>
             </div>
             <!-- step 4 -->
             <div class="pane" data-pane="4">
               <div class="summary" id="summary"></div>
-              <label class="check" for="c1"><input type="checkbox" id="c1" class="agree"><span>شفت المعاينة كاملة وعاجبتني<small>جرّب «افتح كأنك ضيف» تحت الموبايل قبل الدفع.</small></span></label>
+              <label class="check" for="c1"><input type="checkbox" id="c1" class="agree"><span>شاهدتُ المعاينة كاملة وأعجبتني<small>جرّب «افتح كأنك ضيف» أسفل الهاتف قبل الدفع.</small></span></label>
               <label class="check" for="c2"><input type="checkbox" id="c2" class="agree"><span>الأسماء والتاريخ والمكان صحيحة</span></label>
-              <label class="check" for="c3"><input type="checkbox" id="c3" class="agree"><span>أوافق على <button type="button" class="linkbtn" data-terms>الشروط وسياسة الاسترجاع</button><small>الرابط يبقى فعّال لحد ٣٠ يوم بعد المناسبة، وتكدر تعدّل خلال ٢٤ ساعة من الدفع.</small></span></label>
-              <div class="wayl-note"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg><span>الدفع أونلاين فقط عبر <b>Wayl</b>. ينفتح لك بوابة الدفع، وأول ما يتم الدفع يتفعّل رابطك تلقائيًا.</span></div>
+              <label class="check" for="c3"><input type="checkbox" id="c3" class="agree"><span>أوافق على <button type="button" class="linkbtn" data-terms>الشروط وسياسة الاسترجاع</button><small>يبقى الرابط فعّالًا حتى ٣٠ يومًا بعد المناسبة، ويمكنك التعديل خلال ٢٤ ساعة من الدفع.</small></span></label>
+              <div class="wayl-note"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg><span>الدفع إلكتروني فقط عبر <b>Wayl</b>. تنتقل إلى بوابة الدفع، وفور إتمامه يتفعّل رابطك تلقائيًا.</span></div>
             </div>
             <!-- done -->
             <div class="pane success" data-pane="5">
               <span class="tick"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-              <h3>مبروك، دعوتك صارت جاهزة</h3>
+              <h3>مبارك، دعوتك جاهزة</h3>
               <div class="big-link" id="finalLink"></div>
               <div class="share">
                 <div class="qr" id="qr"></div>
@@ -912,12 +1138,12 @@ body.edit-mode .edit-banner{display:block}
                   <button type="button" class="btn btn-ghost" id="btnOpen2">افتح الدعوة</button>
                 </div>
               </div>
-              <p class="muted-s" id="doneNote">احفظ الرابط. يبقى شغّال لحد ٣٠ يوم بعد الحفل.</p>
+              <p class="muted-s" id="doneNote">احفظ الرابط، فهو يعمل حتى ٣٠ يومًا بعد المناسبة.</p>
               <div class="owner" id="ownerBox" hidden>
-                <h4>روابطك الخاصة · احفظها ولا تنطيها لأحد</h4>
-                <div class="own-row"><div><b>رابط التعديل</b><span id="editUntil">تكدر تعدّل الدعوة خلال ٢٤ ساعة</span></div><div class="row-btns"><a class="btn btn-gold btn-sm" id="btnEdit" href="#">عدّل الدعوة</a><button class="btn btn-ghost btn-sm" type="button" data-copy="btnEdit">نسخ</button></div></div>
-                <div class="own-row" id="rowPanel"><div><b>لوحة الحضور</b><span>منو جاي، عدد الأشخاص، والتهاني<em id="panelExtra">، وروابط بأسماء الضيوف</em></span></div><div class="row-btns"><a class="btn btn-diamond btn-sm" id="btnPanel" href="#">افتح اللوحة</a><button class="btn btn-ghost btn-sm" type="button" data-copy="btnPanel">نسخ</button></div></div>
-                <p class="muted-s">انحفظت هم بـ«طلباتي» على هذا الجهاز.</p>
+                <h4>روابطك الخاصة · احفظها ولا تشاركها مع أحد</h4>
+                <div class="own-row"><div><b>رابط التعديل</b><span id="editUntil">يمكنك تعديل الدعوة خلال ٢٤ ساعة</span></div><div class="row-btns"><a class="btn btn-gold btn-sm" id="btnEdit" href="#">عدّل الدعوة</a><button class="btn btn-ghost btn-sm" type="button" data-copy="btnEdit">نسخ</button></div></div>
+                <div class="own-row" id="rowPanel"><div><b>لوحة الحضور</b><span>الحاضرون وعددهم والتهاني<em id="panelExtra">، وروابط بأسماء الضيوف</em></span></div><div class="row-btns"><a class="btn btn-diamond btn-sm" id="btnPanel" href="#">افتح اللوحة</a><button class="btn btn-ghost btn-sm" type="button" data-copy="btnPanel">نسخ</button></div></div>
+                <p class="muted-s">حُفظت أيضًا في «طلباتي» على هذا الجهاز.</p>
               </div>
             </div>
           </form>
@@ -940,7 +1166,7 @@ body.edit-mode .edit-banner{display:block}
   <section id="pricing">
     <div class="wrap">
       <div class="sec-head" style="justify-content:center;text-align:center">
-        <div><span class="k">الأسعار</span><h2>سعر رمزي، <em>وشغل فخم</em></h2></div>
+        <div><span class="k">الأسعار</span><h2>سعرٌ رمزي، <em>وصنعةٌ فاخرة</em></h2></div>
       </div>
       <div class="plans">
         <div class="plan">
@@ -948,10 +1174,10 @@ body.edit-mode .edit-banner{display:block}
           <div class="amt"><b class="num">٥٬٠٠٠</b><span>دينار عراقي</span></div>
           <ul>
             <li>٣ قوالب: لؤلؤ، بُستان، مرمر</li>
-            <li>حركة دخول وزخارف متحركة</li>
-            <li>فتح الدعوة بالختم</li>
+            <li>افتتاحية وزخارف متحركة</li>
+            <li>يفتح الضيف دعوته بكسر الختم</li>
             <li>عدّاد تنازلي وزر موقع القاعة</li>
-            <li>رابط باسمك + رمز QR</li>
+            <li>رابط باسمك ورمز QR</li>
             <li class="no">أغنية</li>
           </ul>
           <a href="#builder" class="btn btn-ghost" data-pick="pearl">اختر الفضية</a>
@@ -961,11 +1187,11 @@ body.edit-mode .edit-banner{display:block}
           <h3>الذهبية</h3>
           <div class="amt"><b class="num">١٠٬٠٠٠</b><span>دينار عراقي</span></div>
           <ul>
-            <li>٧ قوالب تفاعلية: باب تطرقه، ستارة وحمام، ممر النور، علبة المحبس، ملكي، ليل بغداد، زمرّد</li>
-            <li class="star">أغنيتك تشتغل أول ما تنفتح الدعوة</li>
-            <li>أغنية من ملف أو من رابط يوتيوب، وتحدد من وين تبدي ووين تخلص</li>
-            <li>تأكيد الحضور ولوحة تشوف بيها منو جاي</li>
-            <li>كل مزايا الفضية</li>
+            <li>٧ قوالب تفاعلية: بابٌ يُطرَق، ستارة وحمام، ممر النور، علبة المحبس، ملكي، ليل بغداد، زمرّد</li>
+            <li class="star">أغنيتك تعمل لحظة فتح الدعوة</li>
+            <li>من ملف أو من يوتيوب، مع تحديد بداية المقطع ونهايته</li>
+            <li>تأكيد الحضور، ولوحة تعرض لك الحاضرين</li>
+            <li>جميع مزايا الفضية</li>
           </ul>
           <a href="#builder" class="btn btn-gold" data-pick="door">اختر الذهبية</a>
         </div>
@@ -974,32 +1200,35 @@ body.edit-mode .edit-banner{display:block}
           <h3>الماسية</h3>
           <div class="amt"><b class="num">٢٠٬٠٠٠</b><span>دينار عراقي</span></div>
           <ul>
-            <li class="star">٣ مشاهد خرافية: فوانيس فوق النهر، ألعاب نارية تكتب أسماءكم، شموع تنشعل وحدة وحدة</li>
-            <li>اسم كل ضيف على دعوته</li>
-            <li>دعوة لكل الناس: أعراس، أعياد ميلاد، تخرّج، افتتاح، مؤتمرات وحفلات رسمية</li>
+            <li class="star">مشاهد سينمائية: فوانيس فوق النهر، ألعاب نارية تكتب أسماءكم بصوتٍ حقيقي، وشموع تُضاء واحدةً تلو الأخرى</li>
+            <li>اسم كل ضيف على دعوته الخاصة</li>
+            <li>تليق بكل مناسبة: أعراس، أعياد ميلاد، تخرّج، افتتاح، مؤتمرات وحفلات رسمية</li>
             <li>زر «أضف الموعد لتقويمك»</li>
-            <li>كل مزايا الذهبية: الأغنية وتأكيد الحضور</li>
+            <li>جميع مزايا الذهبية: الأغنية وتأكيد الحضور</li>
           </ul>
           <a href="#builder" class="btn btn-diamond" data-pick="lanterns">اختر الماسية</a>
         </div>
       </div>
-      <div class="pay-strip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/></svg><span>الدفع <b>أونلاين فقط</b> عبر بوابة <b>Wayl</b>. بدون اشتراك، تدفع مرة وحدة لكل دعوة.</span></div>
+      <div class="pay-strip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/></svg><span>الدفع <b>أونلاين فقط</b> عبر بوابة <b>Wayl</b>. دون اشتراك، تدفع مرةً واحدة لكل دعوة.</span></div>
+      <div class="cmp" role="region" aria-label="مقارنة الباقات" tabindex="0"><table>
+        <thead><tr><th></th><th>الفضية<small>٥٬٠٠٠ د.ع</small></th><th class="hot">الذهبية<small>١٠٬٠٠٠ د.ع</small></th><th class="dia">الماسية<small>٢٠٬٠٠٠ د.ع</small></th></tr></thead>
+        <tbody><tr><th scope="row">القوالب</th><td>٣ قوالب</td><td>٧ قوالب تفاعلية</td><td>مشاهد سينمائية</td></tr><tr><th scope="row">عدّاد تنازلي وموقع القاعة</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr><tr><th scope="row">رابط خاص ورمز QR</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr><tr><th scope="row">تعديل خلال ٢٤ ساعة</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr><tr><th scope="row">أغنيتك (ملف أو يوتيوب)</th><td class="n">—</td><td class="y">✓</td><td class="y">✓</td></tr><tr><th scope="row">تأكيد الحضور ولوحة المتابعة</th><td class="n">—</td><td class="y">✓</td><td class="y">✓</td></tr><tr><th scope="row">اسم كل ضيف على دعوته</th><td class="n">—</td><td class="n">—</td><td class="y">✓</td></tr><tr><th scope="row">زر «أضف إلى التقويم»</th><td class="n">—</td><td class="n">—</td><td class="y">✓</td></tr><tr><th scope="row">ألعاب نارية بصوتٍ حقيقي</th><td class="n">—</td><td class="n">—</td><td class="y">✓</td></tr></tbody></table></div>
     </div>
   </section>
 
   <section id="faq" style="padding-top:20px">
     <div class="wrap">
-      <div class="sec-head" style="justify-content:center;text-align:center"><div><span class="k">الأسئلة</span><h2>قبل <em>ما تبدي</em></h2></div></div>
+      <div class="sec-head" style="justify-content:center;text-align:center"><div><span class="k">الأسئلة</span><h2>قبل <em>أن تبدأ</em></h2></div></div>
       <div class="faq">
-        <details><summary>شوكت يتفعّل الرابط؟</summary><p>أول ما يتم الدفع عبر Wayl يتفعّل رابطك مباشرة، بدون انتظار ولا مراجعة.</p></details>
-        <details><summary>أكدر أعدّل بعد الدفع؟</summary><p>إي، خلال ٢٤ ساعة من الدفع تعدّل الأسماء والتاريخ والمكان والكلمات من «رابط التعديل» اللي يوصلك بصفحة النجاح، ونفس رابط الدعوة يبقى.</p></details>
-        <details><summary>بس للأعراس؟</summary><p>لا. أكو خطوبة، عقد قران، زفاف، حنّة، عيد ميلاد، مولود، تخرّج، عودة من الحج، ذكرى زواج، إفطار رمضاني، معايدة، افتتاح، مؤتمر، حفل رسمي، تكريم، إطلاق منتج، ومجلس فاتحة. والدعوة تطلع بالعربي أو الكوردي أو الإنكليزي.</p></details>
-        <details><summary>أكدر أحط أغنية من يوتيوب؟</summary><p>إي، بالباقة الذهبية والماسية. تحط الرابط وتحدد من أي دقيقة تبدي ووين تخلص. يوتيوب يطلب إن المشغّل يبين، فتطلع بقسم «أغنيتنا» بالدعوة. إذا تريدها تشتغل لوحدها أول ما الضيف يفتح على كل الأجهزة، ارفع ملف MP3.</p></details>
-        <details><summary>الضيف يحتاج تطبيق؟</summary><p>لا. الرابط يفتح على أي موبايل من واتساب أو إنستغرام مباشرة.</p></details>
-        <details><summary>أكدر أخفي اسم العروس؟</summary><p>إي، بضغطة وحدة بالخطوة الأولى. تطلع الدعوة باسم العريس والعائلة فقط.</p></details>
-        <details><summary>شنو طرق الدفع؟</summary><p>الدفع أونلاين فقط عبر بوابة Wayl الآمنة: فيزا، ماستركارد وبطاقة كي. ما نحفظ بيانات بطاقتك عندنا.</p></details>
-        <details><summary>شلون أعرف منو جاي؟</summary><p>بالباقة الذهبية والماسية، بعد الدفع يوصلك رابط لوحة خاصة إلك. بيها كل الردود: منو جاي، عدد الأشخاص، والتهاني. وبالماسية تكدر تسوي منها رابط باسم كل ضيف.</p></details>
-        <details><summary>شكد يبقى الرابط شغّال؟</summary><p>من لحظة الدفع لحد ٣٠ يوم بعد موعد الحفل.</p></details>
+        <details><summary>متى يتفعّل الرابط؟</summary><p>فور إتمام الدفع عبر Wayl يتفعّل رابطك مباشرة، دون انتظار أو مراجعة.</p></details>
+        <details><summary>هل أستطيع التعديل بعد الدفع؟</summary><p>نعم، خلال ٢٤ ساعة من الدفع تعدّل الأسماء والتاريخ والمكان والكلمات من «رابط التعديل» الذي يصلك في صفحة النجاح، ويبقى رابط الدعوة نفسه.</p></details>
+        <details><summary>هل الخدمة للأعراس فقط؟</summary><p>لا. تشمل الخطوبة وعقد القران والزفاف والحنّة وعيد الميلاد والمولود والتخرّج والعودة من الحج وذكرى الزواج والإفطار الرمضاني والمعايدة والافتتاح والمؤتمر والحفل الرسمي والتكريم وإطلاق المنتجات ومجلس الفاتحة. وتصدر الدعوة بالعربية أو الكوردية أو الإنكليزية.</p></details>
+        <details><summary>هل أستطيع إضافة أغنية من يوتيوب؟</summary><p>نعم، في الباقتين الذهبية والماسية. تضع الرابط وتحدد بداية المقطع ونهايته. يشترط يوتيوب ظهور المشغّل، لذلك تظهر الأغنية في قسم «أغنيتنا» داخل الدعوة. وإن أردتها أن تعمل تلقائيًا على جميع الأجهزة فرفع ملف MP3.</p></details>
+        <details><summary>هل يحتاج الضيف إلى تطبيق؟</summary><p>لا. يفتح الرابط على أي هاتف مباشرة من واتساب أو إنستغرام.</p></details>
+        <details><summary>هل أستطيع إخفاء اسم العروس؟</summary><p>نعم، بضغطة واحدة في الخطوة الأولى، فتظهر الدعوة باسم العريس والعائلة فقط.</p></details>
+        <details><summary>ما طرق الدفع؟</summary><p>الدفع إلكتروني فقط عبر بوابة Wayl الآمنة: فيزا وماستركارد وبطاقة كي. لا نحتفظ ببيانات بطاقتك.</p></details>
+        <details><summary>كيف أعرف من سيحضر؟</summary><p>في الباقتين الذهبية والماسية يصلك بعد الدفع رابط لوحة خاصة بك، فيها جميع الردود: من سيحضر، وعدد الأشخاص، والتهاني. وفي الماسية تنشئ منها رابطًا باسم كل ضيف.</p></details>
+        <details><summary>ما مدة صلاحية الرابط؟</summary><p>من لحظة الدفع حتى ٣٠ يومًا بعد موعد المناسبة.</p></details>
       </div>
     </div>
   </section>
@@ -1007,7 +1236,7 @@ body.edit-mode .edit-banner{display:block}
 
 <footer>
   <div class="wrap">
-    <a href="#top" class="brand"><b class="gold-text">نقش</b><small>NAQSH</small></a>
+    <a href="#top" class="brand"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path class="m-arch" d="M8 37V17C8 9.5 13.5 5 20 2.5 26.5 5 32 9.5 32 17v20"/><path class="m-n" d="M13.2 19.5c0 6.8 2.9 10 6.8 10s6.8-3.2 6.8-10"/><circle class="m-dot" cx="20" cy="13.4" r="1.9"/><path class="m-base" d="M3.5 37h33"/></svg><b>نقش</b></a>
     <span class="foot-links"><button type="button" class="linkbtn" id="btnTerms">الشروط والاسترجاع</button><span>إحدى خدمات مجموعة J8JI · تطوير مهند العدنان</span></span>
   </div>
 </footer>
@@ -1018,7 +1247,7 @@ body.edit-mode .edit-banner{display:block}
   <div class="dialog">
     <button class="x" type="button" data-close aria-label="إغلاق">✕</button>
     <h3 id="mineTitle">طلباتي</h3>
-    <p class="muted-s">الدعوات اللي سويتها من هذا الجهاز، مع روابط التعديل ولوحة الحضور.</p>
+    <p class="muted-s">الدعوات التي أنشأتها من هذا الجهاز، مع روابط التعديل ولوحة الحضور.</p>
     <div id="mineList" class="mine-list"></div>
   </div>
 </div>
@@ -1029,12 +1258,12 @@ body.edit-mode .edit-banner{display:block}
     <button class="x" type="button" data-close aria-label="إغلاق">✕</button>
     <h3 id="termsTitle">الشروط وسياسة الاسترجاع</h3>
     <ol>
-      <li>تدفع مرة وحدة لكل دعوة، عبر بوابة Wayl فقط. ما نحفظ بيانات بطاقتك.</li>
-      <li>رابط الدعوة يتفعّل أول ما يتأكد الدفع، ويبقى شغّال لحد ٣٠ يوم بعد موعد المناسبة.</li>
-      <li>تكدر تعدّل الأسماء والتاريخ والمكان والكلمات خلال ٢٤ ساعة من الدفع من «رابط التعديل».</li>
-      <li>إذا دفعت والرابط ما تفعّل بسبب خلل منّا، نرجّعلك المبلغ كامل أو نفعّله يدويًا.</li>
-      <li>بعد ما يتفعّل الرابط وينرسل للضيوف، ما يرجع المبلغ.</li>
-      <li>الأغنية اللي ترفعها أو رابط يوتيوب اللي تحطه مسؤوليتك، ولازم يكون إلك حق استخدامه.</li>
+      <li>تدفع مرةً واحدة لكل دعوة، عبر بوابة Wayl فقط، ولا نحتفظ ببيانات بطاقتك.</li>
+      <li>يتفعّل رابط الدعوة فور تأكيد الدفع، ويبقى فعّالًا حتى ٣٠ يومًا بعد موعد المناسبة.</li>
+      <li>يمكنك تعديل الأسماء والتاريخ والمكان والنصوص خلال ٢٤ ساعة من الدفع عبر «رابط التعديل».</li>
+      <li>إذا دفعت ولم يتفعّل الرابط بسبب خللٍ من جهتنا، نعيد إليك المبلغ كاملًا أو نفعّله يدويًا.</li>
+      <li>بعد تفعيل الرابط وإرساله إلى الضيوف لا يُسترد المبلغ.</li>
+      <li>الأغنية التي ترفعها أو رابط يوتيوب الذي تضعه مسؤوليتك، ويجب أن يكون لك حق استخدامه.</li>
       <li>نحذف بيانات الدعوة والأغنية والردود تلقائيًا بعد انتهاء مدة الرابط.</li>
     </ol>
   </div>
@@ -1046,10 +1275,10 @@ body.edit-mode .edit-banner{display:block}
     <button class="x" type="button" data-close aria-label="إغلاق">✕</button>
     <h3 id="payTitle">الدفع عبر Wayl</h3>
     <div class="summary" id="paySummary"></div>
-    <div class="pay-steps" id="payInfo"><p>راح تنتقل لصفحة الدفع الآمنة من <b>Wayl</b>، وبيها خطوتين:</p><ol><li>اكتب رقم الواتساب مالتك، ويوصلك رمز على الواتساب. اكتبه.</li><li>تطلع خانة البطاقة: فيزا، ماستركارد أو كي. ادفع.</li></ol><p>بعد الدفع ترجع هنا لوحدك ويتفعّل رابطك. رابط الدفع يبقى صالح ساعة.</p></div>
+    <div class="pay-steps" id="payInfo"><p>ستنتقل إلى صفحة الدفع الآمنة من <b>Wayl</b>، وفيها خطوتان:</p><ol><li>اكتب رقم واتساب الخاص بك، وأدخل الرمز الذي يصلك عليه.</li><li>أدخل بيانات بطاقتك: فيزا أو ماستركارد أو كي، ثم ادفع.</li></ol><p>بعد الدفع تعود إلى هنا تلقائيًا ويتفعّل رابطك. يبقى رابط الدفع صالحًا لمدة ساعة.</p></div>
     <p class="msg" id="payMsg" aria-live="polite"></p>
     <div id="payBtns" style="display:grid;gap:10px">
-      <button type="button" class="btn btn-gold" id="btnGoPay">انتقل للدفع</button>
+      <button type="button" class="btn btn-gold" id="btnGoPay">الانتقال إلى الدفع</button>
       <button type="button" class="btn btn-ghost" id="btnPaid" hidden>محاكاة دفع ناجح (معاينة فقط)</button>
       <button type="button" class="btn btn-ghost" data-close>رجوع</button>
     </div>
@@ -1064,26 +1293,26 @@ body.edit-mode .edit-banner{display:block}
     <h1 id="ppTitle">لوحة الحضور</h1>
     <p class="muted-s" id="ppSub"></p>
     <div class="pp-tiles">
-      <div><b id="ppPeople">٠</b><span>شخص جاي</span></div>
+      <div><b id="ppPeople">٠</b><span>شخص سيحضر</span></div>
       <div><b id="ppYes">٠</b><span>رد بالحضور</span></div>
       <div><b id="ppNo">٠</b><span>اعتذار</span></div>
       <div><b id="ppAll">٠</b><span>كل الردود</span></div>
     </div>
     <div class="pp-card">
       <h2>رابط باسم ضيف</h2>
-      <p class="muted-s">اكتب اسم الضيف، ويطلعلك رابط دعوة مكتوب بيه «دعوة خاصة إلى» واسمه.</p>
-      <div class="pp-gen"><input type="text" id="ppGuest" maxlength="40" placeholder="مثلًا: الحاج أبو علي" aria-label="اسم الضيف"><button type="button" class="btn btn-gold btn-sm" id="ppMake">سوّي الرابط</button></div>
+      <p class="muted-s">اكتب اسم الضيف، فيظهر لك رابط دعوة مكتوب فيه «دعوة خاصة إلى» واسمه.</p>
+      <div class="pp-gen"><input type="text" id="ppGuest" maxlength="40" placeholder="مثلًا: الحاج أبو علي" aria-label="اسم الضيف"><button type="button" class="btn btn-gold btn-sm" id="ppMake">أنشئ الرابط</button></div>
       <div id="ppOut" hidden><div class="big-link" id="ppLink"></div><div class="row-btns"><button type="button" class="btn btn-ghost btn-sm" id="ppCopy">نسخ</button><a class="btn btn-ghost btn-sm" id="ppWa" href="#" target="_blank" rel="noopener">إرسال على واتساب</a></div></div>
     </div>
     <div class="pp-card">
       <h2>الردود</h2>
-      <div id="ppList" class="pp-list"><p class="muted-s">ماكو ردود بعد.</p></div>
+      <div id="ppList" class="pp-list"><p class="muted-s">لا توجد ردود بعد.</p></div>
     </div>
   </div>
 </div>
 
 <!-- guest loading / not found -->
-<div class="gate" id="gate" hidden><div class="gate-in"><b class="gold-text brand-b">نقش</b><div class="spinner" id="gateSpin"></div><p id="gateTxt">نجهّز دعوتك…</p><a href="/" class="btn btn-gold btn-sm" id="gateHome" hidden>اصنع دعوتك من نقش</a></div></div>
+<div class="gate" id="gate" hidden><div class="gate-in"><b class="gold-text brand-b">نقش</b><div class="spinner" id="gateSpin"></div><p id="gateTxt">نُجهّز دعوتك…</p><a href="/" class="btn btn-gold btn-sm" id="gateHome" hidden>اصنع دعوتك من نقش</a></div></div>
 
 <!-- full guest view -->
 <div class="overlay full" id="fullView" role="dialog" aria-modal="true" aria-label="الدعوة كما يراها الضيف">
@@ -1107,11 +1336,11 @@ const songOK=t=>t!=='silver';
 const TPL={
   lanterns:{name:'فوانيس',desc:'فوانيس تطير فوق النهر',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#36204d 50%,#ffb25a 50%)'},
   fireworks:{name:'ألعاب نارية',desc:'سماء بغداد تكتب أسماءكم',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#0a1236 50%,#ffd27a 50%)'},
-  candles:{name:'شموع',desc:'تشعل الشموع وحدة وحدة',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#1a0f08 50%,#f2c27a 50%)'},
-  door:{name:'طَرقة',desc:'اطرق ٣ مرات وينفتح الباب',tier:'gold',intro:'door',sw:'linear-gradient(135deg,#6b4220 50%,#efe3cb 50%)'},
-  curtain:{name:'سِتارة',desc:'ستارة تنفتح وحمام يطير',tier:'gold',intro:'curtain',sw:'linear-gradient(135deg,#fbf5e8 50%,#9c7633 50%)'},
-  union:{name:'لقاء',desc:'نوران يلتقيان بممر أقواس',tier:'gold',intro:'union',sw:'linear-gradient(135deg,#361a37 50%,#f0c98a 50%)'},
-  ring:{name:'مِحبس',desc:'علبة تنفتح ويطلع المحبس',tier:'gold',intro:'ring',sw:'linear-gradient(135deg,#6e1729 50%,#ecc98d 50%)'},
+  candles:{name:'شموع',desc:'تُضاء الشموع واحدةً تلو الأخرى',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#1a0f08 50%,#f2c27a 50%)'},
+  door:{name:'طَرقة',desc:'اطرق ٣ مرات فينفتح الباب',tier:'gold',intro:'door',sw:'linear-gradient(135deg,#6b4220 50%,#efe3cb 50%)'},
+  curtain:{name:'سِتارة',desc:'ستارة تنفتح وحمامٌ يطير',tier:'gold',intro:'curtain',sw:'linear-gradient(135deg,#fbf5e8 50%,#9c7633 50%)'},
+  union:{name:'لقاء',desc:'نوران يلتقيان في ممر أقواس',tier:'gold',intro:'union',sw:'linear-gradient(135deg,#361a37 50%,#f0c98a 50%)'},
+  ring:{name:'مِحبس',desc:'علبةٌ تنفتح عن المحبس',tier:'gold',intro:'ring',sw:'linear-gradient(135deg,#6e1729 50%,#ecc98d 50%)'},
   royal:{name:'ملكي',desc:'ذهب يصعد وأشعة تدور',tier:'gold',sw:'linear-gradient(135deg,#0a090b 50%,#d9b66b 50%)',seal:['#d8b05a','#6d4e17']},
   night:{name:'ليل بغداد',desc:'نجوم وشهب وهلال',tier:'gold',sw:'linear-gradient(135deg,#0f1a44 50%,#edcb81 50%)',seal:['#4a63b8','#121d4a']},
   emerald:{name:'زمرّد',desc:'نقوش إسلامية تدور',tier:'gold',sw:'linear-gradient(135deg,#14594b 50%,#dcbc6c 50%)',seal:['#2f8a70','#0a3a2f']},
@@ -1173,7 +1402,8 @@ function scnLoop(t){
   scnRaf=null;
   for(const sc of SCN){
     if(!sc.c.isConnected){SCN.delete(sc);scnVis&&scnVis.unobserve(sc.c);continue}
-    if(sc.hidden||sc.c.closest('.off')||sc.c.closest('.gone'))continue;
+    if(sc.hidden||sc.c.closest('.gone'))continue;
+    if(sc.c.closest('.off')&&(sc._n||0)>100)continue;
     try{sc.frame(t)}catch(e){console.error(e);SCN.delete(sc)}
   }
   if(SCN.size)scnRaf=requestAnimationFrame(scnLoop);
@@ -1185,7 +1415,7 @@ function mountScene(c){
   const sc={c,ctx:c.getContext('2d'),kind,mode,W:0,H:0,dpr:1,cap:mode==='thumb'?1:(LOWEND?1.5:2.5),hidden:false,S:{},text:c.dataset.text||''};
   sc.size=()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return false;const d=Math.min(window.devicePixelRatio||1,sc.cap);if(w!==sc.W||h!==sc.H||d!==sc.dpr){sc.W=w;sc.H=h;sc.dpr=d;c.width=Math.round(w*d);c.height=Math.round(h*d);sc.onResize&&sc.onResize()}return true};
   IMPL[kind](sc);
-  sc.frame=t=>{if(!sc.size())return;const dt=Math.min(.05,(t-(sc.last||t))/1000);sc.last=t;sc.ctx.setTransform(sc.dpr,0,0,sc.dpr,0,0);sc.ctx.globalCompositeOperation='source-over';sc.ctx.globalAlpha=1;sc.draw(dt,t/1000)};
+  sc.frame=t=>{if(!sc.size())return;const dt=Math.min(.05,(t-(sc.last||t))/1000);sc.last=t;sc.ctx.setTransform(sc.dpr,0,0,sc.dpr,0,0);sc.ctx.globalCompositeOperation='source-over';sc.ctx.globalAlpha=1;sc.draw(dt,t/1000);sc._n=(sc._n||0)+1};
   c._sc=sc;SCN.add(sc);scnVis&&scnVis.observe(c);
   if(!scnRaf)scnRaf=requestAnimationFrame(scnLoop);
   return sc;
@@ -1442,7 +1672,7 @@ const VERSES={
 };
 const verseFor=o=>o.kind==='couple'?VERSES.couple:o.kind==='mourning'?VERSES.mourning:o.kind==='org'?VERSES.org:(VERSES[o.id]||'');
 const I18N={
-  ar:{dir:'rtl',invite:'يتشرّفون بدعوتكم لحضور',inviteOrg:'تتشرّف بدعوتكم لحضور',mourn:'تقيم مجلس الفاتحة على روح الفقيد',late:'المرحوم',and:'و',when:'موعدنا',where:'المكان',scroll:'اسحب للأسفل',map:'افتح الموقع على الخريطة',cal:'أضف الموعد لتقويمك',rsvp:'تأكيد الحضور',name:'اسمك',yes:'أكيد جاي',no:'أعتذر',count:'عدد الأشخاص',msg:'اكتب تهنئة (اختياري)',msgM:'اكتب كلمة مواساة (اختياري)',send:'إرسال الرد',to:'دعوة خاصة إلى',song:'أغنيتنا',units:['يوم','ساعة','دقيقة','ثانية'],now:'حان الموعد',am:'صباحًا',noon:'عصرًا',pm:'مساءً',at:'الساعة',general:'بحضوركم تكتمل فرحتنا',generalM:'إنّا لله وإنّا إليه راجعون',generalOrg:'نتشرّف بحضوركم',sent:'وصل ردّك، شكرًا لك',sentNo:'وصل اعتذارك، شكرًا لك',play:'تشغيل الأغنية',pause:'إيقاف الأغنية'},
+  ar:{dir:'rtl',invite:'يتشرّفون بدعوتكم لحضور',inviteOrg:'تتشرّف بدعوتكم لحضور',mourn:'تقيم مجلس الفاتحة على روح الفقيد',late:'المرحوم',and:'و',when:'موعدنا',where:'المكان',scroll:'اسحب للأسفل',map:'افتح الموقع على الخريطة',cal:'أضف الموعد لتقويمك',rsvp:'تأكيد الحضور',name:'اسمك',yes:'سأحضر بكل سرور',no:'أعتذر',count:'عدد الأشخاص',msg:'اكتب تهنئة (اختياري)',msgM:'اكتب كلمة مواساة (اختياري)',send:'إرسال الرد',to:'دعوة خاصة إلى',song:'أغنيتنا',units:['يوم','ساعة','دقيقة','ثانية'],now:'حان الموعد',am:'صباحًا',noon:'عصرًا',pm:'مساءً',at:'الساعة',general:'بحضوركم تكتمل فرحتنا',generalM:'إنّا لله وإنّا إليه راجعون',generalOrg:'نتشرّف بحضوركم',sent:'وصل ردّك، شكرًا لك',sentNo:'وصل اعتذارك، شكرًا لك',play:'تشغيل الأغنية',pause:'إيقاف الأغنية'},
   en:{dir:'ltr',invite:'request the pleasure of your company at',inviteOrg:'request the pleasure of your company at',mourn:'hold a Fatiha gathering for the soul of',late:'the late',and:'&',when:'Save the date',where:'Venue',scroll:'Scroll down',map:'Open in Maps',cal:'Add to calendar',rsvp:'RSVP',name:'Your name',yes:'Will attend',no:'Can’t make it',count:'Guests',msg:'Write a message (optional)',msgM:'Write a condolence (optional)',send:'Send reply',to:'A personal invitation for',song:'Our song',units:['days','hours','min','sec'],now:'It’s time',am:'AM',noon:'PM',pm:'PM',at:'',general:'Your presence completes our joy',generalM:'To God we belong and to Him we return',generalOrg:'We look forward to welcoming you',sent:'Reply received, thank you',sentNo:'Thank you for letting us know',play:'Play music',pause:'Pause music'},
   ku:{dir:'rtl',invite:'بە شانازییەوە بانگهێشتتان دەکەن بۆ',inviteOrg:'بە شانازییەوە بانگهێشتتان دەکات بۆ',mourn:'مەجلیسی فاتیحە ساز دەکەن بۆ گیانی',late:'خوالێخۆشبوو',and:'و',when:'کات',where:'شوێن',scroll:'بۆ خوارەوە ڕابکێشە',map:'شوێنەکە لەسەر نەخشە',cal:'زیادکردن بۆ ساڵنامە',rsvp:'دڵنیاکردنەوەی ئامادەبوون',name:'ناوت',yes:'دێم',no:'ببورە، نایەم',count:'ژمارەی کەسەکان',msg:'پیرۆزبایی بنووسە (ئارەزوومەندانە)',msgM:'سەرەخۆشی بنووسە (ئارەزوومەندانە)',send:'ناردنی وەڵام',to:'بانگهێشتی تایبەت بۆ',song:'گۆرانییەکەمان',units:['ڕۆژ','کاتژمێر','خولەک','چرکە'],now:'کاتی هات',am:'بەیانی',noon:'دوانیوەڕۆ',pm:'ئێوارە',at:'کاتژمێر',general:'ئامادەبوونتان خۆشییەکەمان تەواو دەکات',generalM:'ئێمە هی خوداین و بۆ لای ئەو دەگەڕێینەوە',generalOrg:'بە ئامادەبوونتان شانازی دەکەین',sent:'وەڵامەکەت گەیشت، سوپاس',sentNo:'سوپاس بۆ ئاگادارکردنەوە',play:'لێدانی گۆرانی',pause:'ڕاگرتنی گۆرانی'}
 };
@@ -1589,35 +1819,95 @@ const SAMPLES={
 };
 const sample=k=>Object.assign({},DEF,SAMPLES[k],{verse:true,countdown:true,hideBride:false});
 
-/* ---------- hero ---------- */
-const big=document.getElementById('bigWord');
-big.classList.remove('gold-text');
-big.innerHTML='<span class="gold-text" style="display:inline-block;animation:letterIn 1.3s cubic-bezier(.2,.8,.2,1) both">دعوتك</span>';
-const hs=document.getElementById('heroStack'),hd=document.getElementById('heroDots'),hn=document.getElementById('heroName');
-hs.innerHTML=`<div class="inv-frame on">${thumbHTML(sample(KEYS[0]),KEYS[0])}</div>`;
-hd.innerHTML=KEYS.map((k,i)=>`<i class="${i?'':'on'}"></i>`).join('');
-hn.textContent=TPL[KEYS[0]].name;
-let hi=0;
-function heroGo(n){hi=n;const old=[...hs.children];const f=document.createElement('div');f.className='inv-frame';f.innerHTML=thumbHTML(sample(KEYS[hi]),KEYS[hi]);hs.appendChild(f);requestAnimationFrame(()=>requestAnimationFrame(()=>{f.classList.add('on');old.forEach(o=>o.classList.remove('on'))}));setTimeout(()=>old.forEach(o=>o.remove()),1300);[...hd.children].forEach((c,i)=>c.classList.toggle('on',i===hi));hn.textContent=TPL[KEYS[hi]].name}
-if(!RM)setInterval(()=>heroGo((hi+1)%KEYS.length),4200);
-const stage=document.getElementById('stage'),tilt=document.getElementById('tilt');
+/* ---------- hero: scroll story ---------- */
+const hs=document.getElementById('heroStack'),hn=document.getElementById('heroName');
+const STORY_KEYS=['royal','door','emerald'];
+let hi=-1;
+function heroGo(n){if(n===hi)return;hi=n;const k=STORY_KEYS[n];const old=[...hs.children];const f=document.createElement('div');f.className='inv-frame poster';f.innerHTML=`<img src="/thumbs/${k}.webp" width="300" height="500" decoding="async" alt="">`;hs.appendChild(f);requestAnimationFrame(()=>requestAnimationFrame(()=>{f.classList.add('on');old.forEach(o=>o.classList.remove('on'))}));setTimeout(()=>old.forEach(o=>o.remove()),1300);hn.textContent=TPL[k].name+' · '+TIERS[TPL[k].tier].name}
+['royal','door','emerald'].forEach(k=>{const im=new Image();im.src='/thumbs/'+k+'.webp'});heroGo(0);
+const story=document.getElementById('story'),dev=document.getElementById('stage'),tilt=document.getElementById('tilt');
+const CH=[...story.querySelectorAll('.ch')],arch=story.querySelector('.st-arch');
+const formCard=story.querySelector('.form-card'),chatCard=story.querySelector('.chat-card'),frows=[...formCard.querySelectorAll('.fr b')];
+const hdr=document.querySelector('.top');
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),ez=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const win=(p,a,b,f=.05)=>cl(Math.min((p-a)/f,(b-p)/f));
+function storyFrame(){
+  const r=story.getBoundingClientRect(),vh=VH,mob=MOB,y=scrollY;
+  const p=cl(-r.top/(SH-vh));
+  hdr.classList.toggle('scrolled',y>8);
+  hdr.style.setProperty('--sp',cl(y/DH).toFixed(4));
+  if(r.bottom<0||r.top>vh)return;
+  
+  // chapter 0: the title leaves softly
+  const o0=1-cl((p-.05)/.1);
+  CH[0].style.opacity=o0;CH[0].style.transform=`translateY(${(-70*(1-o0)).toFixed(1)}px) scale(${(1-.05*(1-o0)).toFixed(4)})`;
+  CH[0].style.pointerEvents=o0>.5?'':'none';
+  // chapters 1–3
+  [[.17,.45],[.45,.68],[.68,.96]].forEach(([a,b],i)=>{const o=win(p,a,b,.06),el=CH[i+1];if(o===0&&el._o===0)return;el._o=o;el.style.opacity=o.toFixed(3);el.style.visibility=o?'':'hidden';
+    const dir=p<(a+b)/2?1:-1;el.style.transform=`translateY(calc(${mob?'0px':'-50%'} + ${(dir*46*(1-o)).toFixed(1)}px))`;});
+  // the phone rises in, then rests
+  const e=ez(cl((p-.03)/.2)),sc=mob?Math.min(1,(vh*.52)/620):Math.min(1,(vh*.84)/620);
+  const ty=(mob?vh*.13:0)+(1-e)*vh*.95,ex=ez(cl((p-.7)/.1));
+  dev.style.transform=`translate3d(0,${ty.toFixed(1)}px,0) perspective(1400px) rotateX(${((1-e)*30).toFixed(2)}deg) scale(${(sc*(.84+.16*e)*(1-.05*ex)).toFixed(4)})`;
+  // templates change while you read chapter 1
+  heroGo(Math.min(2,Math.floor(cl((p-.17)/.28)*3)));
+  // chapter 2: details type themselves in
+  const o2=win(p,.47,.7,.04);formCard.style.opacity=o2;formCard.style.transform=`translateY(${(30*(1-o2)).toFixed(1)}px) scale(${(.94+.06*o2).toFixed(3)})`;
+  const tp=cl((p-.48)/.15);frows.forEach((b,i)=>b.style.setProperty('--t',(cl(tp*4-i)*100).toFixed(1)+'%'));
+  // chapter 3: it lands in a chat
+  const o3=win(p,.72,1.2,.05);chatCard.style.opacity=o3;chatCard.style.transform=`translateY(${(40*(1-o3)).toFixed(1)}px) scale(${(.9+.1*o3).toFixed(3)})`;
+}
+let VH=innerHeight,MOB=innerWidth<=1000,SH=story.offsetHeight,DH=1;const measure=()=>{VH=innerHeight;MOB=innerWidth<=1000;SH=story.offsetHeight;DH=Math.max(1,document.documentElement.scrollHeight-VH)};measure();addEventListener('load',measure);setTimeout(measure,1500);
+let scT=0;const docEl=document.documentElement;addEventListener('scroll',()=>{if(!docEl.classList.contains('scrolling'))docEl.classList.add('scrolling');clearTimeout(scT);scT=setTimeout(()=>docEl.classList.remove('scrolling'),180)},{passive:true});
+let sTick=false;const sReq=()=>{if(!sTick){sTick=true;requestAnimationFrame(()=>{sTick=false;storyFrame();fillFrame()})}};
+addEventListener('scroll',sReq,{passive:true});addEventListener('resize',()=>{measure();sReq()});
 if(!RM&&matchMedia('(pointer:fine)').matches){
-  stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;tilt.style.setProperty('--ry',(x*16).toFixed(1)+'deg');tilt.style.setProperty('--rx',(-y*12).toFixed(1)+'deg')});
-  stage.addEventListener('pointerleave',()=>{tilt.style.setProperty('--ry','0deg');tilt.style.setProperty('--rx','0deg')});
+  dev.addEventListener('pointermove',e=>{const r=dev.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;tilt.style.setProperty('--ry',(x*14).toFixed(1)+'deg');tilt.style.setProperty('--rx',(-y*10).toFixed(1)+'deg')});
+  dev.addEventListener('pointerleave',()=>{tilt.style.setProperty('--ry','0deg');tilt.style.setProperty('--rx','0deg')});
 }
 
-document.querySelectorAll('[data-count]').forEach(el=>{
-  if(RM)return;const to=+el.dataset.count;const t0=performance.now();const dur=1600;
-  (function f(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);el.textContent=money(Math.round(to*e));if(p<1)requestAnimationFrame(f)})(t0);
-});
+/* statement: words light up as you scroll */
+const fillEl=document.getElementById('fillText');
+fillEl.innerHTML=fillEl.textContent.trim().split(/\s+/).map(w=>`<span class="fw${/نقش/.test(w)?' gw':''}">${w}</span> `).join('');
+const fws=[...fillEl.querySelectorAll('.fw')];
+let fN=-1;function fillFrame(){const r=fillEl.getBoundingClientRect(),vh=VH;if(r.top>vh||r.bottom<0)return;const q=cl((vh*.85-r.top)/(r.height+vh*.35));const n=Math.round(q*fws.length);if(n===fN)return;fN=n;fws.forEach((w,i)=>w.classList.toggle('on',i<n))}
+
+/* cinematic reveals everywhere */
+(function(){
+  const heads=document.querySelectorAll('main .sec-head h2');
+  heads.forEach(h=>{let d=0;const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const parts=c.textContent.split(/(\s+)/);const fr=document.createDocumentFragment();parts.forEach(t=>{if(!t)return;if(/^\s+$/.test(t)){fr.append(t);return}const m=document.createElement('span');m.className='wm';m.innerHTML=`<span style="--d:${(d++*.07).toFixed(2)}s">${t}</span>`;fr.append(m)});c.replaceWith(fr)}else if(c.nodeType===1)walk(c)})};walk(h)});
+  const groups=['.sec-head .k','.sec-head p','.tier-head','.gallery .card','.plan','.cmp','.pay-strip','.faq details','.wiz','.preview-col','.occ-run'];
+  groups.forEach(sel=>{const seen=new Map();document.querySelectorAll('main '+sel).forEach(el=>{const par=el.parentElement;const i=seen.get(par)||0;seen.set(par,i+1);el.classList.add('nrv');el.style.setProperty('--d',((i%6)*.09).toFixed(2)+'s')})});
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  document.querySelectorAll('main .nrv, main .sec-head').forEach(el=>io.observe(el));
+  if(RM)document.querySelectorAll('.nrv,.sec-head').forEach(el=>el.classList.add('in'));
+  // magnetic primary buttons + card tilt (desktop)
+  if(!RM&&matchMedia('(pointer:fine)').matches){
+    document.querySelectorAll('main .btn-gold, .plan .btn').forEach(b=>{b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${((e.clientX-r.left-r.width/2)*.18).toFixed(1)}px,${((e.clientY-r.top-r.height/2)*.25).toFixed(1)}px)`});b.addEventListener('pointerleave',()=>b.style.transform='')});
+    document.querySelectorAll('.plan').forEach(c=>{c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(1000px) rotateY(${(x*6).toFixed(2)}deg) rotateX(${(-y*6).toFixed(2)}deg) translateY(-4px)`});c.addEventListener('pointerleave',()=>c.style.transform='')});
+  }
+})();
+
+/* smooth scrolling on desktop (Lenis); phones keep their native momentum */
+if(!RM&&matchMedia('(pointer:fine)').matches&&!/[?&]og=1/.test(location.search)){
+  document.querySelectorAll('.overlay').forEach(o=>o.setAttribute('data-lenis-prevent',''));
+  const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js';
+  sc.onload=()=>{try{const L=new Lenis({lerp:.085,wheelMultiplier:1,anchors:{offset:-70}});window.lenis=L;L.on('scroll',sReq);(function raf(t){L.raf(t);requestAnimationFrame(raf)})(performance.now());
+    const nat=window.scrollTo.bind(window);window.scrollTo=function(o,y){if(o&&typeof o==='object'&&o.behavior==='smooth'){L.scrollTo(o.top||0,{duration:1.4});return}return nat(o,y)};
+    const mo=new MutationObserver(()=>{document.querySelector('.overlay.open')?L.stop():L.start()});document.querySelectorAll('.overlay').forEach(o=>mo.observe(o,{attributes:true,attributeFilter:['class']}));
+  }catch(e){}};document.head.appendChild(sc);
+}
+storyFrame();fillFrame();
 
 /* ---------- gallery ---------- */
 const cardHTML=k=>{const t=TPL[k];return `<article class="card">
-<button type="button" class="thumb" data-preview="${k}" aria-label="معاينة قالب ${t.name}"><div class="inv-frame lazy" data-k="${k}"></div><span class="play-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg>معاينة</span></button>
+<button type="button" class="thumb" data-preview="${k}" aria-label="معاينة قالب ${t.name}"><img src="/thumbs/${k}.webp" width="300" height="500" loading="lazy" decoding="async" alt=""><span class="play-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"/></svg>معاينة</span></button>
 <div class="meta"><h3>${t.name}</h3><small>${t.desc}</small></div>
 <button class="btn btn-ghost btn-sm" type="button" data-use="${k}">اختر ${t.name}</button></article>`};
 ['diamond','gold','silver'].forEach(t=>{document.getElementById('gal'+t[0].toUpperCase()+t.slice(1)).innerHTML=KEYS.filter(k=>TPL[k].tier===t).map(cardHTML).join('')});
-const lazyIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target;el.innerHTML=thumbHTML(sample(el.dataset.k),el.dataset.k);el.classList.remove('lazy');lazyIO.unobserve(el)}}),{rootMargin:'400px'}):null;
+const lzQ=[];let lzBusy=false;const ric=window.requestIdleCallback||(f=>setTimeout(f,40));
+function lzRun(){if(!lzQ.length){lzBusy=false;return}lzBusy=true;ric(()=>{const el=lzQ.shift();if(el&&el.classList.contains('lazy')){el.classList.add('off');el.innerHTML=thumbHTML(sample(el.dataset.k),el.dataset.k);el.classList.remove('lazy');spotReq()}lzRun()},{timeout:300})}
+const lazyIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){lzQ.push(e.target);lazyIO.unobserve(e.target);if(!lzBusy)lzRun()}}),{rootMargin:'500px'}):null;
 document.querySelectorAll('.inv-frame.lazy').forEach(el=>{if(lazyIO)lazyIO.observe(el);else{el.innerHTML=thumbHTML(sample(el.dataset.k),el.dataset.k)}});
 document.getElementById('templates').addEventListener('click',e=>{
   const u=e.target.closest('[data-use]');if(u){pickTpl(u.dataset.use);goStep(1);scrollToBuilder();return}
@@ -1627,6 +1917,15 @@ document.querySelectorAll('a[href="#builder"]:not([data-pick])').forEach(a=>a.ad
 document.querySelectorAll('[data-pick]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();pickTpl(a.dataset.pick);goStep(1,true);scrollToWiz()}));
 function scrollToWiz(){const w=document.getElementById('wiz');const top=w.getBoundingClientRect().top+scrollY-80;window.scrollTo({top:Math.max(0,top),behavior:RM?'auto':'smooth'})}
 function scrollToBuilder(){scrollToWiz()}
+
+/* gallery spotlight: animating 13 invitations at once made scrolling heavy */
+const galFrames=[...document.querySelectorAll('.card .inv-frame')],galVis=new Set();let galHov=null,galOn=null,spT=false;
+function spot(){spT=false;let best=galHov&&galVis.has(galHov)?galHov:null;if(!best){let bd=1e9;const mid=innerHeight/2;galVis.forEach(f=>{const r=f.getBoundingClientRect();const d=Math.abs(r.top+r.height/2-mid);if(d<bd){bd=d;best=f}})}
+  if(best===galOn)return;galOn=best;galFrames.forEach(f=>f.classList.toggle('off',f!==best))}
+function spotReq(){if(!spT){spT=true;requestAnimationFrame(spot)}}
+if('IntersectionObserver' in window){const gio=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?galVis.add(e.target):galVis.delete(e.target));spotReq()},{threshold:.35});galFrames.forEach(f=>{f.classList.add('off');gio.observe(f)})}
+addEventListener('scroll',()=>{if(galVis.size)spotReq()},{passive:true});
+if(matchMedia('(pointer:fine)').matches)galFrames.forEach(f=>{const c=f.closest('.card');c.addEventListener('pointerenter',()=>{galHov=f;spotReq()});c.addEventListener('pointerleave',()=>{galHov=null;spotReq()})});
 
 /* ---------- form ---------- */
 const form=document.getElementById('form');
@@ -1720,12 +2019,12 @@ function checkSlug(){
   checkSlugLocal();
   if(!LIVE||!slugOK)return;
   const s=state.slug,st=document.getElementById('slugStatus'),my=++slugSeq;
-  slugOK=false;st.className='slug-status';st.textContent='نتأكد من الرابط…';
+  slugOK=false;st.className='slug-status';st.textContent='نتحقق من الرابط…';
   clearTimeout(slugT);slugT=setTimeout(async()=>{
     try{const r=await fetch('/api/slug/'+encodeURIComponent(s));const j=await r.json();if(my!==slugSeq)return;
       if(j.available){slugOK=true;st.className='slug-status ok';st.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>الرابط متاح'}
-      else{slugOK=false;st.className='slug-status bad';st.textContent=j.message||'هذا الرابط محجوز، جرّب واحد من الاقتراحات';showSugs(s)}
-    }catch(e){if(my!==slugSeq)return;slugOK=false;st.className='slug-status bad';st.textContent='ما كدرنا نتأكد من الرابط، تأكد من الإنترنت'}
+      else{slugOK=false;st.className='slug-status bad';st.textContent=j.message||'هذا الرابط محجوز، جرّب أحد الاقتراحات';showSugs(s)}
+    }catch(e){if(my!==slugSeq)return;slugOK=false;st.className='slug-status bad';st.textContent='تعذّر التحقق من الرابط، تأكد من اتصالك بالإنترنت'}
   },350);
 }
 function showSugs(s){const y=(new Date(state.date).getFullYear())||2027;const en=(TYPES.find(t=>t[0]===state.type)||[,'party'])[1];document.getElementById('sugs').innerHTML=[s+'-'+y,s+'-'+en,s+'-'+(Math.random()*90+10|0)].filter(x=>x.length<=30&&!TAKEN.includes(x)).map(x=>`<button type="button" data-s="${x}">${x}</button>`).join('')}
@@ -1733,9 +2032,9 @@ function checkSlugLocal(){
   const s=state.slug,st=document.getElementById('slugStatus'),sg=document.getElementById('sugs');
   document.getElementById('slugPreview').textContent='https://'+DOMAIN+'/'+(s||'…');
   sg.innerHTML='';
-  if(!/^[a-z0-9](?:[a-z0-9-]{1,28})[a-z0-9]$/.test(s)||s.includes('--')){slugOK=false;st.className='slug-status bad';st.textContent=s.length<3?'الرابط لازم يكون ٣ حروف على الأقل':'استخدم حروف إنكليزية صغيرة وأرقام وشَرطة بالنص فقط';return}
+  if(!/^[a-z0-9](?:[a-z0-9-]{1,28})[a-z0-9]$/.test(s)||s.includes('--')){slugOK=false;st.className='slug-status bad';st.textContent=s.length<3?'يجب أن يتكون الرابط من ٣ أحرف على الأقل':'استخدم حروفًا إنكليزية صغيرة وأرقامًا وشَرطة في الوسط فقط';return}
   if(!LIVE&&TAKEN.includes(s)){
-    slugOK=false;st.className='slug-status bad';st.textContent='هذا الرابط محجوز، جرّب واحد من الاقتراحات';
+    slugOK=false;st.className='slug-status bad';st.textContent='هذا الرابط محجوز، جرّب أحد الاقتراحات';
     const y=(new Date(state.date).getFullYear())||2027;const en=(TYPES.find(t=>t[0]===state.type)||[,'party'])[1];
     sg.innerHTML=[s+'-'+y,s+'-'+en,s+'-'+(Math.random()*90+10|0)].filter(x=>!TAKEN.includes(x)).map(x=>`<button type="button" data-s="${x}">${x}</button>`).join('');
     return;
@@ -1753,8 +2052,8 @@ const fmtT=s=>num(Math.floor(s/60))+':'+num(Math.floor(s%60),2);
 function setSong(file){
   if(!file)return;
   const m=document.getElementById('msg');
-  if(!/^audio\//.test(file.type)&&!/\.(mp3|m4a|aac|wav|ogg)$/i.test(file.name)){m.textContent='الملف لازم يكون أغنية (MP3 أو M4A)';return}
-  if(file.size>15*1024*1024){m.textContent='حجم الأغنية أكبر من ١٥ ميغا، اختار ملف أصغر';return}
+  if(!/^audio\//.test(file.type)&&!/\.(mp3|m4a|aac|wav|ogg)$/i.test(file.name)){m.textContent='يجب أن يكون الملف ملفًا صوتيًا (MP3 أو M4A)';return}
+  if(file.size>15*1024*1024){m.textContent='حجم الأغنية أكبر من ١٥ ميغابايت، اختر ملفًا أصغر';return}
   m.textContent='';
   if(music.url)URL.revokeObjectURL(music.url);
   music.url=URL.createObjectURL(file);music.file=file;music.name=file.name;music.size=file.size;music.start=0;
@@ -1772,7 +2071,7 @@ startIn.addEventListener('input',()=>{music.start=+startIn.value;document.getEle
 const playIc=document.getElementById('playIc'),songEq=document.getElementById('songEq');
 function pvUI(p){playIc.innerHTML=p?'<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>':'<path d="M7 4l14 8-14 8z"/>';songEq.classList.toggle('off',!p)}
 document.getElementById('btnPlay').addEventListener('click',()=>{
-  if(pv.paused){pv.currentTime=music.start;pv.play().then(()=>pvUI(true)).catch(()=>{document.getElementById('msg').textContent='المتصفح ما سمح بالتشغيل، جرّب مرة ثانية'})}else{pv.pause();pvUI(false)}
+  if(pv.paused){pv.currentTime=music.start;pv.play().then(()=>pvUI(true)).catch(()=>{document.getElementById('msg').textContent='لم يسمح المتصفح بالتشغيل، حاول مرة أخرى'})}else{pv.pause();pvUI(false)}
 });
 document.getElementById('btnRemove').addEventListener('click',()=>{pv.pause();pvUI(false);if(music.url)URL.revokeObjectURL(music.url);music.url=null;music.file=null;music.name='';tc.classList.remove('on');drop.style.display='';songIn.value=''});
 
@@ -1788,9 +2087,9 @@ function ytInput(){
   const s0=mmss(document.getElementById('f-yts').value),e0=mmss(document.getElementById('f-yte').value);
   document.getElementById('ytPrev').hidden=true;document.getElementById('ytPrev').innerHTML='';
   if(!document.getElementById('f-yt').value.trim()){state.yt=null;st.textContent='';st.className='slug-status';renderText();return}
-  if(!id){state.yt=null;st.className='slug-status bad';st.textContent='الرابط مو رابط يوتيوب صحيح. انسخه من زر «مشاركة» بيوتيوب.';return}
-  if(e0&&e0<=s0){state.yt=null;st.className='slug-status bad';st.textContent='وقت النهاية لازم يكون بعد وقت البداية';return}
-  state.yt={id,start:s0,end:e0};st.className='slug-status ok';st.textContent='تمام: تبدي من '+toMMSS(s0)+(e0?' وتخلص عند '+toMMSS(e0):' لحد آخر الأغنية')+'، وترجع تعيد.';
+  if(!id){state.yt=null;st.className='slug-status bad';st.textContent='هذا ليس رابط يوتيوب صحيحًا. انسخه من زر «مشاركة» في يوتيوب.';return}
+  if(e0&&e0<=s0){state.yt=null;st.className='slug-status bad';st.textContent='يجب أن يكون وقت النهاية بعد وقت البداية';return}
+  state.yt={id,start:s0,end:e0};st.className='slug-status ok';st.textContent='ممتاز: تبدأ من '+toMMSS(s0)+(e0?' وتنتهي عند '+toMMSS(e0):' حتى نهاية الأغنية')+'، ثم تُعاد.';
   renderText();
 }
 document.getElementById('btnYtTry').addEventListener('click',()=>{ytInput();if(!state.yt)return;const p=document.getElementById('ytPrev');p.hidden=false;
@@ -1804,9 +2103,9 @@ function paintStep(){
   bar.querySelectorAll('li').forEach(li=>{const s=+li.dataset.s;li.classList.toggle('on',s===step);li.classList.toggle('done',s<step);li.querySelector('b').textContent=s<step?'✓':num(s)});
   const mourn=occOf(state.type).kind==='mourning';
   const strong=songOK(tier())&&!mourn;
-  document.getElementById('lockTitle').textContent=mourn?'مجلس الفاتحة يكون بدون أغنية':'الأغنية متوفرة بالباقة الذهبية والماسية';
+  document.getElementById('lockTitle').textContent=mourn?'مجلس الفاتحة يكون دون أغنية':'الأغنية متاحة في الباقتين الذهبية والماسية';
   document.getElementById('lockText').hidden=mourn;document.getElementById('upChips').hidden=mourn;
-  document.getElementById('skipSong').textContent=mourn?'التالي':'أكمل بدون أغنية';
+  document.getElementById('skipSong').textContent=mourn?'التالي':'المتابعة دون أغنية';
   document.getElementById('musicLock').style.display=strong?'none':'grid';
   document.getElementById('musicOpen').style.display=strong?'grid':'none';
   if(!strong&&!pv.paused){pv.pause();pvUI(false)}
@@ -1827,7 +2126,7 @@ function summaryHTML(){
 <div><span>اللغة</span><b>${{ar:'العربية',en:'English',ku:'کوردی'}[state.lang||'ar']}</b></div>
 <div><span>الموعد</span><b>${f.wd} ${f.short}</b></div>
 <div><span>المكان</span><b>${esc(state.venue)}</b></div>
-<div><span>الأغنية</span><b>${occOf(state.type).kind==='mourning'?'بدون':strong?(music.file?'ملف مرفوع':state.yt&&state.yt.id?`يوتيوب · من ${toMMSS(state.yt.start)}${state.yt.end?' إلى '+toMMSS(state.yt.end):''}`:'بدون أغنية'):'غير متوفرة بالفضية'}</b></div>${t.tier==='diamond'?'<div><span>إضافات</span><b>اسم كل ضيف · تأكيد الحضور · التقويم</b></div>':t.tier==='gold'?'<div><span>إضافات</span><b>تأكيد الحضور ولوحة الردود</b></div>':''}
+<div><span>الأغنية</span><b>${occOf(state.type).kind==='mourning'?'بدون':strong?(music.file?'ملف مرفوع':state.yt&&state.yt.id?`يوتيوب · من ${toMMSS(state.yt.start)}${state.yt.end?' إلى '+toMMSS(state.yt.end):''}`:'بدون أغنية'):'غير متاحة في الفضية'}</b></div>${t.tier==='diamond'?'<div><span>إضافات</span><b>اسم كل ضيف · تأكيد الحضور · التقويم</b></div>':t.tier==='gold'?'<div><span>إضافات</span><b>تأكيد الحضور ولوحة الردود</b></div>':''}
 <div><span>الرابط</span><b class="ltr">${DOMAIN}/${esc(state.slug)}</b></div>
 <div><span>المبلغ</span><b class="num">${money(PRICE[t.tier])} د.ع</b></div>`;
 }
@@ -1835,18 +2134,18 @@ function buildSummary(){document.getElementById('summary').innerHTML=summaryHTML
 function validate1(){
   let ok=true;const need=[['groom','f-groom'],['date','f-date'],['venue','f-venue'],['family','f-family']];
   need.forEach(([k,id])=>{const el=document.getElementById(id);if(!String(state[k]).trim()){el.classList.add('err');ok=false}});
-  if(!ok)msg.textContent='كمّل الحقول المؤشرة بالأحمر';
-  if(ok&&state.date&&Date.parse(state.date+'T'+(state.time||'00:00'))<Date.now()-6*3600e3){document.getElementById('f-date').classList.add('err');msg.textContent='التاريخ لازم يكون بالمستقبل';ok=false}
+  if(!ok)msg.textContent='أكمل الحقول المؤشرة باللون الأحمر';
+  if(ok&&state.date&&Date.parse(state.date+'T'+(state.time||'00:00'))<Date.now()-6*3600e3){document.getElementById('f-date').classList.add('err');msg.textContent='يجب أن يكون التاريخ في المستقبل';ok=false}
   return ok;
 }
 btnNext.addEventListener('click',()=>{
   if(step===1){if(!validate1())return;goStep(2)}
   else if(step===2)goStep(3)
-  else if(step===3){if(!slugOK){msg.textContent='اختار رابط متاح أولًا';return}goStep(4)}
+  else if(step===3){if(!slugOK){msg.textContent='اختر رابطًا متاحًا أولًا';return}goStep(4)}
   else if(step===4&&editMode){saveEdit()}
   else if(step===4){document.getElementById('paySummary').innerHTML=summaryHTML();document.getElementById('payBtns').style.display='grid';document.getElementById('payWait').style.display='none';document.getElementById('payMsg').textContent='';
     document.getElementById('btnPaid').hidden=LIVE;
-    document.getElementById('btnGoPay').textContent=LIVE?'ادفع '+money(PRICE[tier()])+' د.ع عبر Wayl':'الدفع يشتغل على الموقع الرسمي';
+    document.getElementById('btnGoPay').textContent=LIVE?'ادفع '+money(PRICE[tier()])+' د.ع عبر Wayl':'الدفع متاح على الموقع الرسمي';
     document.getElementById('btnGoPay').disabled=!LIVE;
     open('payModal')}
 });
@@ -1872,7 +2171,7 @@ function showSuccess(slug,info){
     const editURL=location.origin+'/edit?s='+sl+'&k='+k,panelURL=location.origin+'/panel?s='+sl+'&k='+k;
     document.getElementById('btnEdit').href=editURL;document.getElementById('btnPanel').href=panelURL;
     document.getElementById('rowPanel').hidden=!info.rsvp;document.getElementById('panelExtra').hidden=info.tier!=='diamond';
-    if(info.editUntil)document.getElementById('editUntil').textContent='صالح لحد '+new Intl.DateTimeFormat(L,{weekday:'long',hour:'numeric',minute:'2-digit'}).format(info.editUntil);
+    if(info.editUntil)document.getElementById('editUntil').textContent='صالح حتى '+new Intl.DateTimeFormat(L,{weekday:'long',hour:'numeric',minute:'2-digit'}).format(info.editUntil);
     saveMine({slug,url:finalURL,edit:editURL,panel:info.rsvp?panelURL:'',editUntil:info.editUntil||0,title:(occOf(info.type).name)+' · '+(info.groom||''),at:Date.now()});
     ob.hidden=false}else ob.hidden=true;
   document.getElementById('btnOpen2').onclick=()=>{if(LIVE)location.href=finalURL;else openFull(state,state.tpl,{song:music.url,start:music.start})};
@@ -1885,7 +2184,7 @@ function getMine(){try{return JSON.parse(localStorage.getItem('naqsh-mine')||'[]
 function saveMine(it){try{const l=getMine().filter(x=>x.slug!==it.slug);l.unshift(it);localStorage.setItem('naqsh-mine',JSON.stringify(l.slice(0,30)))}catch(e){}}
 document.getElementById('btnMine').addEventListener('click',()=>{
   const l=getMine(),box=document.getElementById('mineList');
-  box.innerHTML=l.length?l.map(x=>`<div class="mine-item"><b>${esc(x.title||x.slug)}</b><span class="ltr">${esc(x.url.replace(/^https?:\/\//,''))}</span><div class="row-btns"><a class="btn btn-gold btn-sm" href="${esc(x.url)}">افتح الدعوة</a>${x.editUntil>Date.now()?`<a class="btn btn-ghost btn-sm" href="${esc(x.edit)}">عدّل</a>`:''}${x.panel?`<a class="btn btn-ghost btn-sm" href="${esc(x.panel)}">لوحة الحضور</a>`:''}</div></div>`).join(''):'<p class="muted-s">ماكو طلبات على هذا الجهاز بعد. أول ما تدفع دعوة، تنحفظ هنا روابطها.</p>';
+  box.innerHTML=l.length?l.map(x=>`<div class="mine-item"><b>${esc(x.title||x.slug)}</b><span class="ltr">${esc(x.url.replace(/^https?:\/\//,''))}</span><div class="row-btns"><a class="btn btn-gold btn-sm" href="${esc(x.url)}">افتح الدعوة</a>${x.editUntil>Date.now()?`<a class="btn btn-ghost btn-sm" href="${esc(x.edit)}">عدّل</a>`:''}${x.panel?`<a class="btn btn-ghost btn-sm" href="${esc(x.panel)}">لوحة الحضور</a>`:''}</div></div>`).join(''):'<p class="muted-s">لا توجد طلبات على هذا الجهاز بعد. فور دفعك لأي دعوة تُحفظ روابطها هنا.</p>';
   open('mineModal');
 });
 document.addEventListener('click',e=>{if(e.target.closest('#btnTerms,[data-terms]')){e.preventDefault();open('termsModal')}});
@@ -1897,7 +2196,7 @@ document.getElementById('btnPaid').addEventListener('click',()=>{
 });
 document.getElementById('btnGoPay').addEventListener('click',async()=>{
   if(!LIVE)return;
-  payMsg.textContent='';waitUI(true,'نجهّز صفحة الدفع…');
+  payMsg.textContent='';waitUI(true,'نُجهّز صفحة الدفع…');
   try{
     const fd=new FormData();
     const strong=songOK(tier());
@@ -1906,11 +2205,11 @@ document.getElementById('btnGoPay').addEventListener('click',async()=>{
     if(strong&&!mournP&&music.file){waitUI(true,'نرفع أغنيتك…');fd.append('song',music.file,music.file.name)}
     const r=await fetch('/api/orders',{method:'POST',body:fd});
     const j=await r.json().catch(()=>({}));
-    if(!r.ok||!j.ok||!j.url)throw new Error(j.message||'ما كدرنا نفتح الدفع، حاول مرة ثانية');
+    if(!r.ok||!j.ok||!j.url)throw new Error(j.message||'تعذّر فتح صفحة الدفع، حاول مرة أخرى');
     try{localStorage.setItem('naqsh-draft',JSON.stringify({state,ref:j.ref}))}catch(e){}
-    waitUI(true,'ننقلك لصفحة الدفع…');
+    waitUI(true,'ننقلك إلى صفحة الدفع…');
     location.href=j.url;
-  }catch(e){waitUI(false);payMsg.textContent=e.message||'صار خطأ، حاول مرة ثانية';if(/محجوز/.test(e.message||'')){close(document.getElementById('payModal'));goStep(3);state.slugTouched=true;checkSlug()}}
+  }catch(e){waitUI(false);payMsg.textContent=e.message||'حدث خطأ، حاول مرة أخرى';if(/محجوز/.test(e.message||'')){close(document.getElementById('payModal'));goStep(3);state.slugTouched=true;checkSlug()}}
 });
 async function confirmPayment(ref){
   try{const d=JSON.parse(localStorage.getItem('naqsh-draft')||'null');if(d&&d.state)Object.assign(state,d.state)}catch(e){}
@@ -1921,12 +2220,12 @@ async function confirmPayment(ref){
     try{
       const r=await fetch('/api/orders/'+encodeURIComponent(ref));const j=await r.json();
       if(j.ok&&j.status==='paid'){try{localStorage.removeItem('naqsh-draft')}catch(e){}close(document.getElementById('payModal'));document.getElementById('builder').scrollIntoView();showSuccess(j.slug,j);return}
-      if(j.ok&&j.status==='failed'){waitUI(false);payMsg.textContent='الدفع ما اكتمل أو انلغى. ما انسحب منك شي، وتكدر تحاول مرة ثانية.';document.getElementById('btnGoPay').textContent='حاول الدفع مرة ثانية';document.getElementById('btnGoPay').disabled=false;goStep(4);return}
-      if(!j.ok&&r.status===404){waitUI(false);payMsg.textContent='ما لگينا هذا الطلب.';return}
+      if(j.ok&&j.status==='failed'){waitUI(false);payMsg.textContent='لم يكتمل الدفع أو أُلغي. لم يُخصم منك أي مبلغ، ويمكنك المحاولة مرة أخرى.';document.getElementById('btnGoPay').textContent='أعد محاولة الدفع';document.getElementById('btnGoPay').disabled=false;goStep(4);return}
+      if(!j.ok&&r.status===404){waitUI(false);payMsg.textContent='لم نعثر على هذا الطلب.';return}
     }catch(e){}
     await new Promise(res=>setTimeout(res,i<10?2000:4000));
   }
-  waitUI(false);payMsg.textContent='ما وصلنا تأكيد الدفع لحد هسه. إذا دفعت، انتظر دقيقة وحدّث الصفحة. رقم طلبك: '+ref;
+  waitUI(false);payMsg.textContent='لم يصلنا تأكيد الدفع حتى الآن. إن كنت قد دفعت، انتظر دقيقة ثم حدّث الصفحة. رقم طلبك: '+ref;
 }
 document.getElementById('btnCopy').addEventListener('click',async function(){
   try{await navigator.clipboard.writeText(finalURL);this.textContent='تم النسخ ✓'}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById('finalLink'));const s=getSelection();s.removeAllRanges();s.addRange(r);this.textContent='انسخه يدويًا'}
@@ -2003,7 +2302,7 @@ function openFull(s,k,o={}){
 /* ---------- pause animations that are off screen (speed) ---------- */
 if('IntersectionObserver' in window){
   const vis=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('off',!e.isIntersecting)),{rootMargin:'120px'});
-  document.querySelectorAll('.card .inv-frame,#heroStack,#livePreview').forEach(el=>vis.observe(el));
+  document.querySelectorAll('#heroStack,#livePreview').forEach(el=>vis.observe(el));
   const hv=new IntersectionObserver(es=>es.forEach(e=>{hs.classList.toggle('off',!e.isIntersecting)}),{});
   hv.observe(document.getElementById('heroStack'));
 }
@@ -2033,15 +2332,15 @@ document.addEventListener('click',e=>{
 document.addEventListener('submit',async e=>{
   const f=e.target.closest('.rs-form');if(!f)return;e.preventDefault();
   const msg=f.querySelector('.rs-msg'),slug=f.dataset.slug,btn=f.querySelector('.rs-send');
-  const name=f.querySelector('[name=name]').value.trim();if(name.length<2){msg.textContent='اكتب اسمك أول';return}
-  if(!LIVE||!slug){msg.textContent='هذا مثال. بالدعوة الحقيقية يوصل ردّك للعرسان مباشرة.';return}
+  const name=f.querySelector('[name=name]').value.trim();if(name.length<2){msg.textContent='اكتب اسمك أولًا';return}
+  if(!LIVE||!slug){msg.textContent='هذا مثال. في الدعوة الحقيقية يصل ردّك إلى أصحاب الدعوة مباشرة.';return}
   const attending=f.querySelector('[data-a="1"]').classList.contains('on'),count=+(f.querySelector('.rs-count b').dataset.n||1);
   let cid='';try{cid=localStorage.getItem('naqsh-cid-'+slug)||''}catch(err){}
   btn.disabled=true;msg.textContent='نرسل ردّك…';
   try{const r=await fetch('/api/rsvp/'+encodeURIComponent(slug),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,attending,count,message:f.querySelector('[name=message]').value,cid})});const j=await r.json();if(!j.ok)throw new Error(j.message);
     try{localStorage.setItem('naqsh-cid-'+slug,j.cid)}catch(err){}
-    f.classList.add('sent');msg.textContent=attending?'وصل ردّك، ننتظركم بفرحة':'وصل اعتذارك، شكرًا لك';btn.textContent='تعديل الرد'}
-  catch(err){msg.textContent=err.message||'ما وصل الرد، حاول مرة ثانية'}
+    f.classList.add('sent');msg.textContent=attending?'وصل ردّك، ننتظركم بفرح':'وصل اعتذارك، شكرًا لك';btn.textContent='تعديل الرد'}
+  catch(err){msg.textContent=err.message||'لم يصل الرد، حاول مرة أخرى'}
   btn.disabled=false;
 });
 
@@ -2056,8 +2355,8 @@ async function panelBoot(){
       const w=when(Object.assign({},DEF,iv));document.getElementById('ppSub').textContent=`حفل ${iv.type} · ${w.wd} ${w.short} · ${iv.venue}`;
       document.getElementById('ppPeople').textContent=num(j.totals.people);document.getElementById('ppYes').textContent=num(j.totals.attending);document.getElementById('ppNo').textContent=num(j.totals.declined);document.getElementById('ppAll').textContent=num(j.totals.replies);
       const fmt=new Intl.DateTimeFormat(L,{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
-      document.getElementById('ppList').innerHTML=j.list.length?j.list.map(r=>`<div class="pp-row"><span class="st ${r.attending?'y':'n'}">${r.attending?'جاي · '+num(r.count):'معتذر'}</span><div><b>${esc(r.name)}</b>${r.message?`<p>${esc(r.message)}</p>`:''}</div><time>${fmt.format(r.at)}</time></div>`).join(''):'<p class="muted-s">ماكو ردود بعد. أول ما يرد ضيف يطلع هنا.</p>';
-    }catch(e){document.getElementById('ppTitle').textContent='ما كدرنا نفتح اللوحة';document.getElementById('ppSub').textContent=e.message||'تأكد من الرابط';document.getElementById('ppList').innerHTML=''}
+      document.getElementById('ppList').innerHTML=j.list.length?j.list.map(r=>`<div class="pp-row"><span class="st ${r.attending?'y':'n'}">${r.attending?'سيحضر · '+num(r.count):'معتذر'}</span><div><b>${esc(r.name)}</b>${r.message?`<p>${esc(r.message)}</p>`:''}</div><time>${fmt.format(r.at)}</time></div>`).join(''):'<p class="muted-s">لا توجد ردود بعد. ستظهر هنا فور ردّ أي ضيف.</p>';
+    }catch(e){document.getElementById('ppTitle').textContent='تعذّر فتح اللوحة';document.getElementById('ppSub').textContent=e.message||'تأكد من الرابط';document.getElementById('ppList').innerHTML=''}
   };
   document.getElementById('ppRefresh').onclick=load;
   let ppURL='';
@@ -2083,11 +2382,11 @@ async function editBoot(){
     form.querySelectorAll('#tplChips .chip').forEach(c=>{const v=c.querySelector('input').value;if(TPL[v].tier!==iv.tier){c.classList.add('dis');c.querySelector('input').disabled=true}});
     syncChips();renderFull();
     const left=j.editUntil-Date.now();
-    document.getElementById('editBanner').textContent=left>0?`وضع التعديل · باقي ${num(Math.max(1,Math.round(left/3600e3)))} ساعة`:'انتهت مدة التعديل (٢٤ ساعة بعد الدفع)';
+    document.getElementById('editBanner').textContent=left>0?`وضع التعديل · متبقٍ ${num(Math.max(1,Math.round(left/3600e3)))} ساعة`:'انتهت مدة التعديل (٢٤ ساعة بعد الدفع)';
     if(left<=0){btnNext.disabled=true}
-    document.getElementById('f-slug').value=slug;checkSlug=()=>{slugOK=true;const st=document.getElementById('slugStatus');st.className='slug-status ok';st.textContent='رابط دعوتك ثابت وما يتغيّر';document.getElementById('slugPreview').textContent=location.origin+'/'+slug};checkSlug();
+    document.getElementById('f-slug').value=slug;checkSlug=()=>{slugOK=true;const st=document.getElementById('slugStatus');st.className='slug-status ok';st.textContent='رابط دعوتك ثابت لا يتغيّر';document.getElementById('slugPreview').textContent=location.origin+'/'+slug};checkSlug();
     document.getElementById('f-slug').disabled=true;
-    if(editMode.hasSong){document.querySelector('.seg').hidden=true;document.getElementById('srcFile').innerHTML='<p class="muted-s">أغنيتك المرفوعة تبقى مثل ما هي.</p>'}
+    if(editMode.hasSong){document.querySelector('.seg').hidden=true;document.getElementById('srcFile').innerHTML='<p class="muted-s">تبقى أغنيتك المرفوعة كما هي.</p>'}
     setTimeout(scrollToWiz,300);
   }catch(e){document.getElementById('editBanner').textContent=e.message||'رابط التعديل غير صحيح';btnNext.disabled=true;setTimeout(scrollToWiz,300)}
 }
@@ -2099,11 +2398,11 @@ async function saveEdit(){
     const r=await fetch('/api/edit/'+encodeURIComponent(editMode.slug),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:editMode.key,data:d})});const j=await r.json();if(!j.ok)throw new Error(j.message);
     waitUI(false);close(document.getElementById('payModal'));
     finalURL=location.origin+'/'+editMode.slug;document.getElementById('finalLink').textContent=finalURL.replace(/^https?:\/\//,'');
-    document.querySelector('.pane.success h3').textContent='انحفظت التعديلات';document.getElementById('ownerBox').hidden=true;
+    document.querySelector('.pane.success h3').textContent='حُفظت التعديلات';document.getElementById('ownerBox').hidden=true;
     const q=document.getElementById('qr');q.innerHTML='';try{new QRCode(q,{text:finalURL,width:240,height:240,colorDark:'#0c0b0f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){}
     document.getElementById('btnWa').href='https://wa.me/?text='+encodeURIComponent(finalURL);document.getElementById('btnOpen2').onclick=()=>location.href=finalURL;
     goStep(5);
-  }catch(e){waitUI(false);payMsg.textContent=e.message||'ما انحفظ، حاول مرة ثانية'}
+  }catch(e){waitUI(false);payMsg.textContent=e.message||'لم يتم الحفظ، حاول مرة أخرى'}
 }
 
 /* ---------- admin ---------- */
@@ -2119,8 +2418,8 @@ async function adminBoot(){
       const by=t=>paid.filter(o=>o.tier===t).length;
       [[money(rev)+' د.ع','الإيراد'],[num(by('diamond')),'ماسي مدفوع'],[num(by('gold')),'ذهبي مدفوع'],[num(by('silver')),'فضّي مدفوع']].forEach(([v,l],i)=>{tiles[i].querySelector('b').textContent=v;tiles[i].querySelector('span').textContent=l});
       const fmt=new Intl.DateTimeFormat(L,{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
-      document.getElementById('ppList').innerHTML=j.orders.slice(0,200).map(o=>`<div class="pp-row"><span class="st ${o.status==='paid'?'y':'n'}">${o.status==='paid'?'مدفوع':o.status==='failed'?'فشل':'ينتظر'}</span><div><b>${esc(o.groom||'—')} · ${esc((TPL[o.tpl]||{}).name||o.tpl||'')}</b><p>${money(o.total)} د.ع · ${esc(o.slug||'')}</p></div><time>${fmt.format(o.createdAt)}</time></div>`).join('')||'<p class="muted-s">ماكو طلبات بعد.</p>';
-    }catch(e){document.getElementById('ppTitle').textContent='ما كدرنا نفتح الإدارة';document.getElementById('ppSub').textContent=e.message||''}
+      document.getElementById('ppList').innerHTML=j.orders.slice(0,200).map(o=>`<div class="pp-row"><span class="st ${o.status==='paid'?'y':'n'}">${o.status==='paid'?'مدفوع':o.status==='failed'?'فشل':'بانتظار الدفع'}</span><div><b>${esc(o.groom||'—')} · ${esc((TPL[o.tpl]||{}).name||o.tpl||'')}</b><p>${money(o.total)} د.ع · ${esc(o.slug||'')}</p></div><time>${fmt.format(o.createdAt)}</time></div>`).join('')||'<p class="muted-s">لا توجد طلبات بعد.</p>';
+    }catch(e){document.getElementById('ppTitle').textContent='تعذّر فتح لوحة الإدارة';document.getElementById('ppSub').textContent=e.message||''}
   };
   document.getElementById('ppRefresh').onclick=load;await load();setInterval(load,60000);
 }
