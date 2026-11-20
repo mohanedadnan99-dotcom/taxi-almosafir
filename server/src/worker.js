@@ -2,7 +2,7 @@
 // المفتاح السري لـ Wayl يبقى هنا كـ secret (WAYL_KEY) ولا يصل للمتصفح أبدًا.
 
 const WAYL_API = 'https://api.thewayl.com/api/v1/links';
-const PRICES = { silver: 5000, gold: 10000, diamond: 20000 };
+const PRICES = { silver: 5000, gold: 10000, diamond: 15000 };
 const RSVP_TIERS = new Set(['gold', 'diamond']);
 const EDIT_WINDOW = 24 * 3600e3;
 const TIER_NAME = { silver: 'فضّي', gold: 'ذهبي', diamond: 'ماسي' };
