@@ -7,7 +7,7 @@ const RSVP_TIERS = new Set(['gold', 'diamond', 'crown']);
 const EDIT_WINDOW = 24 * 3600e3;
 const TIER_NAME = { silver: 'فضّي', gold: 'ذهبي', diamond: 'ماسي', crown: 'التاج' };
 const TEMPLATES = {
-  letter: ['رسالة', 'crown'], yasmin: ['باب الياسمين', 'crown'],
+  letter: ['رسالة', 'crown'], zumurrud: ['باب الزمرّد', 'crown'], yasmin: ['باب الياسمين', 'crown'],
   anab: ['عنّاب', 'crown'], lulu: ['لؤلؤة', 'crown'], farah: ['باب الفرح', 'crown'], ring3d: ['الخاتم', 'crown'], caps: ['تتويج', 'crown'],
   lanterns: ['فوانيس', 'diamond'], fireworks: ['ألعاب نارية', 'diamond'], candles: ['شموع', 'diamond'],
   door: ['طَرقة', 'gold'], curtain: ['سِتارة', 'gold'], union: ['لقاء', 'gold'], ring: ['مِحبس', 'gold'],
