@@ -983,6 +983,8 @@ footer .linkbtn{color:#d6ccb6}
 .nsig-s{font-size:.6em;color:var(--mut);opacity:.85;max-width:18em}
 .nsig-b{margin-top:.5em;font-size:.62em;padding:.5em 1.3em;border-radius:999px;border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);color:var(--acc);text-decoration:none;font-weight:600}
 .rs-cta{display:block;margin-top:.6em;font-size:.72em;color:var(--acc);text-decoration:underline;text-underline-offset:.25em;text-align:center;line-height:1.5}
+.op-yasmin .vhint{text-shadow:0 2px 14px rgba(0,0,0,.55)}.op-yasmin .vhint .who{color:#fff6e2}.op-yasmin .vhint p{color:#fff}
+.t-yasmin{--bg:radial-gradient(ellipse at 50% 20%,#fffdf6,#f0e8d6 80%);--ink:#3a3226;--acc:#9b7a3c;--mut:#8a7d68;--nf:'Aref Ruqaa',serif;--acc2:#5e4a26;--nameIn:nmRise;--btnInk:#fff}
 </style>
 </head>
 <body>
@@ -1398,6 +1400,7 @@ const TPL={
   farah:{name:'باب الفرح',desc:'اطرق ٣ مرات فينفتح الباب على النور',tier:'crown',intro:'video',clip:'/tpl/farah/clip.mp4',poster:'/tpl/farah/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#3b2414 50%,#9b4f9a 50%)',knock:true},
   ring3d:{name:'الخاتم',desc:'علبة مخمل تنفتح على خاتم يلمع',tier:'crown',intro:'video',clip:'/tpl/ring3d/clip.mp4',poster:'/tpl/ring3d/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#3a0610 50%,#e3b866 50%)'},
   caps:{name:'تتويج',desc:'قبعة التخرّج تُرمى إلى سماء الغروب',tier:'crown',intro:'video',clip:'/tpl/caps/clip.mp4',poster:'/tpl/caps/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#25477e 50%,#f0a36b 50%)'},
+  yasmin:{name:'باب الياسمين',desc:'باب عاجي تحت الياسمين، تدقّه ٣ مرات',tier:'crown',intro:'video',clip:'/tpl/yasmin/clip.mp4',poster:'/tpl/yasmin/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#cbb894 50%,#f4f1e8 50%)',knock:true},
   lanterns:{name:'فوانيس',desc:'فوانيس تطير فوق النهر',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#36204d 50%,#ffb25a 50%)'},
   fireworks:{name:'ألعاب نارية',desc:'سماء بغداد تكتب أسماءكم',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#0a1236 50%,#ffd27a 50%)'},
   candles:{name:'شموع',desc:'تُضاء الشموع واحدةً تلو الأخرى',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#1a0f08 50%,#f2c27a 50%)'},
@@ -1685,7 +1688,7 @@ function intro(s,k,idle){
   const hint=(txt,top,extra='')=>`<div class="op-hint${top?' op-top':''}"><p class="who">${fam}</p><p>${txt}</p>${extra}</div>`;
   const cls=`opener${idle?' idle':''}`;
   switch(t.intro){
-    case 'video':return `<div class="${cls} op-video op-${k}" ${attrs}><div class="scene"><img class="vposter" src="${t.poster}" alt="" decoding="async">${idle?'':`<video class="vclip" src="${t.clip}" muted playsinline preload="auto" poster="${t.poster}"></video>`}</div><div class="op-hint vhint"><p class="who">${esc((s.groom.trim()||'')+(occOf(s.type).kind==='couple'&&!s.hideBride&&s.bride.trim()?' و '+s.bride.trim():''))||fam}</p><p>${{letter:'اضغط لفتح الرسالة',anab:'اضغط لفتح الرسالة',lulu:'اضغط لفتح الرسالة',farah:'اطرق على الباب ٣ مرات',ring3d:'اضغط لفتح العلبة',caps:'اضغط لترمي القبعة'}[k]||'اضغط للفتح'}</p>${t.knock?'<div class="knocks"><i></i><i></i><i></i></div>':'<span class="tap"></span>'}</div></div>`;
+    case 'video':return `<div class="${cls} op-video op-${k}" ${attrs}><div class="scene"><img class="vposter" src="${t.poster}" alt="" decoding="async">${idle?'':`<video class="vclip" src="${t.clip}" muted playsinline preload="auto" poster="${t.poster}"></video>`}</div><div class="op-hint vhint"><p class="who">${esc((s.groom.trim()||'')+(occOf(s.type).kind==='couple'&&!s.hideBride&&s.bride.trim()?' و '+s.bride.trim():''))||fam}</p><p>${{letter:'اضغط لفتح الرسالة',anab:'اضغط لفتح الرسالة',lulu:'اضغط لفتح الرسالة',farah:'اطرق على الباب ٣ مرات',ring3d:'اضغط لفتح العلبة',caps:'اضغط لترمي القبعة',yasmin:'اطرق على الباب ٣ مرات'}[k]||'اضغط للفتح'}</p>${t.knock?'<div class="knocks"><i></i><i></i><i></i></div>':'<span class="tap"></span>'}</div></div>`;
     case 'scene':{const txt=esc((s.groom.trim()||'')+(!s.hideBride&&s.bride.trim()?' و '+s.bride.trim():''));const hintTxt={lanterns:'اضغط لإطلاق الفوانيس',fireworks:'اضغط لتبدأ الألعاب النارية',candles:'اضغط لإشعال الشموع'}[k];return `<div class="${cls} op-scene op-${k}" ${attrs}><div class="scene"><canvas class="scn" data-scene="${k}" data-mode="${idle?'thumb':'intro'}" data-text="${txt}" aria-hidden="true"></canvas></div>${hint(hintTxt,false,'<span class="tap"></span>')}<div class="flash"></div></div>`}
     case 'door':return `<div class="${cls} op-door" ${attrs}><div class="scene"><div class="wall"></div><div class="d-step"></div><div class="d-wrap"><div class="d-arch"></div><div class="d-door"><div class="leaf r"><i class="pn a"></i><i class="pn b"></i><i class="knocker"></i><i class="kn"></i></div><div class="leaf l"><i class="pn a"></i><i class="pn b"></i><i class="kn"></i></div></div><div class="jas">${jasmine()}</div></div></div>${hint('اطرق على الباب ٣ مرات',true,'<div class="knocks"><i></i><i></i><i></i></div>')}<div class="flash"></div></div>`;
     case 'curtain':return `<div class="${cls} op-curtain" ${attrs}><div class="scene"><div class="glowdoor"></div><div class="chand"><i></i></div><div class="doves">${[[-40,-60],[38,-62],[-20,-75],[22,-78],[-48,-35],[46,-38]].map(([x,y],i)=>`<i class="dv" style="--tx:${x}cqw;--ty:${y}cqh;--dl:${(.25+i*.08).toFixed(2)}s">${DOVE}</i>`).join('')}</div><div class="cur r"></div><div class="cur l"></div><div class="garland">${garland()}</div></div>${hint('اضغط لفتح الستارة',false,'<span class="tap"></span>')}<div class="flash"></div></div>`;
@@ -1877,6 +1880,7 @@ try{hot&&hot.snapshot&&hot.snapshot(()=>({state,step}))}catch(e){}
 const music={url:null,name:'',size:0,dur:0,start:0};
 
 const SAMPLES={
+  yasmin:{groom:'كرار',bride:'فاطمة',family:'آل الشمري',type:'wedding'},
   letter:{groom:'آدم',bride:'ميرا',family:'آل الحسيني',type:'wedding'},
   anab:{groom:'علي',bride:'زهراء',family:'آل العبيدي',type:'wedding'},
   lulu:{groom:'حيدر',bride:'نور',family:'آل الربيعي',type:'engagement'},
