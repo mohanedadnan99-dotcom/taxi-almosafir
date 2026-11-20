@@ -989,6 +989,8 @@ footer .linkbtn{color:#d6ccb6}
 .t-zumurrud{--bg:radial-gradient(ellipse at 50% 20%,#fbfaf4,#e9efe5 80%);--ink:#1f3326;--acc:#1f6b45;--mut:#6d7d70;--nf:'Aref Ruqaa',serif;--acc2:#0f3d27;--nameIn:nmRise;--btnInk:#fff}
 .op-columns .vhint{text-shadow:0 2px 12px rgba(0,0,0,.35)}.op-columns .vhint .who{color:#7a5a24}.op-columns .vhint p{color:#5a5040}
 .t-columns{--bg:linear-gradient(180deg,#fbfaf6,#efebe2);--ink:#2f2a22;--acc:#a07a35;--mut:#857b6a;--nf:'Aref Ruqaa',serif;--acc2:#6b4f1d;--nameIn:nmRise;--btnInk:#fff}
+.op-balloons .vhint{top:9%;bottom:auto;text-shadow:0 1px 10px rgba(255,255,255,.6)}.op-balloons .vhint .who{color:#b23a66}.op-balloons .vhint p{color:#6b5a70}
+.t-balloons{--bg:linear-gradient(180deg,#fbe9ee,#e6ecfb);--ink:#3a2a40;--acc:#c0457a;--mut:#7d6a86;--nf:'Aref Ruqaa',serif;--acc2:#7a3dc0;--nameIn:nmRise;--btnInk:#fff}
 </style>
 </head>
 <body>
@@ -1407,6 +1409,7 @@ const TPL={
   yasmin:{name:'باب الياسمين',desc:'باب عاجي تحت الياسمين، تدقّه ٣ مرات',tier:'crown',intro:'video',clip:'/tpl/yasmin/clip.mp4',poster:'/tpl/yasmin/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#cbb894 50%,#f4f1e8 50%)',knock:true},
   zumurrud:{name:'باب الزمرّد',desc:'باب أخضر تحت الورد الأبيض، تدقّه ٣ مرات',tier:'crown',intro:'video',clip:'/tpl/zumurrud/clip.mp4',poster:'/tpl/zumurrud/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#0f3d27 50%,#f2efe8 50%)',knock:true},
   columns:{name:'أعمدة الرخام',desc:'بوابة رخام بين الأعمدة تنفتح على رواق مضيء',tier:'crown',intro:'video',clip:'/tpl/columns/clip.mp4',poster:'/tpl/columns/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#e9e5dd 50%,#c9a35a 50%)'},
+  balloons:{name:'بالونات',desc:'باقة بالونات تطير وتمطر قصاصات ملوّنة، لأعياد الميلاد',tier:'crown',intro:'video',clip:'/tpl/balloons/clip.mp4',poster:'/tpl/balloons/poster.jpg',dur:3500,sw:'linear-gradient(135deg,#f2a3b6 50%,#9cc3f2 50%)'},
   lanterns:{name:'فوانيس',desc:'فوانيس تطير فوق النهر',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#36204d 50%,#ffb25a 50%)'},
   fireworks:{name:'ألعاب نارية',desc:'سماء بغداد تكتب أسماءكم',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#0a1236 50%,#ffd27a 50%)'},
   candles:{name:'شموع',desc:'تُضاء الشموع واحدةً تلو الأخرى',tier:'diamond',intro:'scene',sw:'linear-gradient(135deg,#1a0f08 50%,#f2c27a 50%)'},
@@ -1886,6 +1889,7 @@ try{hot&&hot.snapshot&&hot.snapshot(()=>({state,step}))}catch(e){}
 const music={url:null,name:'',size:0,dur:0,start:0};
 
 const SAMPLES={
+  balloons:{groom:'ليان',bride:'تكمل عامها الخامس',family:'عائلة ليان',type:'birthday'},
   columns:{groom:'مصطفى',bride:'رقية',family:'آل الموسوي',type:'wedding'},
   zumurrud:{groom:'يوسف',bride:'سارة',family:'آل الجبوري',type:'wedding'},
   yasmin:{groom:'كرار',bride:'فاطمة',family:'آل الشمري',type:'wedding'},
