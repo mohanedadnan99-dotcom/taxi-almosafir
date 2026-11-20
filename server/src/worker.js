@@ -45,6 +45,10 @@ export default {
     const url = new URL(req.url);
     const p = url.pathname;
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
+    // one public address: pages on the old workers.dev host move to naqsh.j8ji.com (the API stays, for payment callbacks)
+    if (url.hostname === 'naqsh.mohanedadnan99.workers.dev' && !p.startsWith('/api/') && (req.method === 'GET' || req.method === 'HEAD')) {
+      return Response.redirect('https://naqsh.j8ji.com' + p + url.search, 301);
+    }
     if (!p.startsWith('/api/')) {
       const sm = req.method === 'GET' && p.match(/^\/([a-z0-9][a-z0-9-]{1,28}[a-z0-9])\/?$/);
       if (sm && !RESERVED.has(sm[1])) { try { const r = await ogPage(req, env, url, sm[1]); if (r) return r; } catch (e) { console.error(e); } }
